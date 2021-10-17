@@ -1,11 +1,10 @@
 #include <SFML/Graphics.hpp>
+#include "constants.h"
 #include "background/background.h"
 
 int main() {
-  int windowWidth = 1400;
-  int windowHeight = 800;
-  sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Run & Survive");
-  Background bck(windowWidth, window);
+  sf::RenderWindow window(sf::VideoMode(constants::windowWidth, constants::windowHeight), "Run & Survive");
+  Background bck(constants::windowWidth, window);
   bck.loadTexture();
 
   while (window.isOpen()) {
