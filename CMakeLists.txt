@@ -4,7 +4,8 @@ project(R_S)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(R_S
-        src/main.cpp)
+        src/main.cpp
+        src/background/background.cpp)
 
 include_directories(C:/SFML/include)
 
