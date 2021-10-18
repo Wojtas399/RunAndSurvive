@@ -11,7 +11,7 @@ private:
   sf::Texture backgroundTexture;
   sf::Sprite backgroundSpr;
   sf::Sprite secondBackgroundSpr;
-  float speed = 0.20;
+  float speed = 0.025;
 
   void setSprites();
 

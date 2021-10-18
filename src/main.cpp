@@ -1,11 +1,14 @@
 #include <SFML/Graphics.hpp>
 #include "constants.h"
 #include "background/background.h"
+#include "ground_generator/ground_generator.h"
 
 int main() {
   sf::RenderWindow window(sf::VideoMode(constants::windowWidth, constants::windowHeight), "Run & Survive");
   Background bck(constants::windowWidth, window);
+  GroundGenerator groundGenerator;
   bck.loadTexture();
+  groundGenerator.load();
 
   while (window.isOpen()) {
     sf::Event event{};
@@ -15,8 +18,10 @@ int main() {
     }
     window.clear();
     bck.draw();
+    groundGenerator.draw(window);
     window.display();
     bck.move();
+    groundGenerator.move();
   }
 
   return 0;
