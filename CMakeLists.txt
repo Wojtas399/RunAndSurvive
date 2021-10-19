@@ -7,7 +7,8 @@ add_executable(R_S
         src/main.cpp
         src/background/background.cpp
         src/ground_generator/ground_generator.cpp
-        src/ground_generator/ground_generator.h)
+        src/air_elements_generator/air_elements_generator.cpp
+        src/ground_elements_generator/ground_elements_generator.cpp)
 
 include_directories(C:/SFML/include)
 

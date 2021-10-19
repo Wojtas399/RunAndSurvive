@@ -4,9 +4,16 @@
 #include "ground_generator/ground_generator.h"
 
 int main() {
+  std::random_device random_device;
+  std::mt19937 random_engine(random_device());
+  int maxElementsAmount = 2;
+
   sf::RenderWindow window(sf::VideoMode(constants::windowWidth, constants::windowHeight), "Run & Survive");
   Background bck(constants::windowWidth, window);
-  GroundGenerator groundGenerator;
+  AirElementsGenerator airElementsGenerator(window, random_engine);
+  GroundElementsGenerator groundElementsGenerator(window, maxElementsAmount, random_engine);
+  GroundGenerator groundGenerator(airElementsGenerator, groundElementsGenerator);
+
   bck.loadTexture();
   groundGenerator.load();
 

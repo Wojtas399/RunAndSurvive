@@ -10,35 +10,31 @@ void Background::loadTexture() {
 void Background::draw() {
   window.draw(backgroundSpr);
   window.draw(secondBackgroundSpr);
+  window.draw(thirdBackgroundSpr);
 }
 
 void Background::move() {
-  setNewBckPosition();
-  setNewSecondBckPosition();
+  setNewPosition(backgroundSpr);
+  setNewPosition(secondBackgroundSpr);
+  setNewPosition(thirdBackgroundSpr);
 }
 
 void Background::setSprites() {
   backgroundSpr.setTexture(backgroundTexture);
   secondBackgroundSpr.setTexture(backgroundTexture);
-  backgroundSpr.setScale(2.48, 2.48);
-  secondBackgroundSpr.setScale(2.48, 2.48);
-  secondBackgroundSpr.setPosition(1400, 0);
+  thirdBackgroundSpr.setTexture(backgroundTexture);
+  backgroundSpr.setScale(1.7, 1.7);
+  secondBackgroundSpr.setScale(1.7, 1.7);
+  thirdBackgroundSpr.setScale(1.7, 1.7);
+  secondBackgroundSpr.setPosition(970, 0);
+  thirdBackgroundSpr.setPosition(1940, 0);
 }
 
-void Background::setNewBckPosition() {
-  sf::Vector2<float> bckPosition = backgroundSpr.getPosition();
-  if (bckPosition.x < static_cast<float>(-windowWidth)) {
-    backgroundSpr.setPosition(static_cast<float>(windowWidth), bckPosition.y);
+void Background::setNewPosition(sf::Sprite &sprite) const {
+  sf::Vector2<float> position = sprite.getPosition();
+  if (position.x < static_cast<float>(-windowWidth)) {
+    sprite.setPosition(static_cast<float>(windowWidth), position.y);
   } else {
-    backgroundSpr.setPosition(static_cast<float>(bckPosition.x - speed), bckPosition.y);
-  }
-}
-
-void Background::setNewSecondBckPosition() {
-  sf::Vector2<float> secondBckPosition = secondBackgroundSpr.getPosition();
-  if (secondBckPosition.x < static_cast<float>(-windowWidth)) {
-    secondBackgroundSpr.setPosition(static_cast<float>(windowWidth), secondBckPosition.y);
-  } else {
-    secondBackgroundSpr.setPosition(static_cast<float>(secondBckPosition.x - speed), secondBckPosition.y);
+    sprite.setPosition(static_cast<float>(position.x - constants::mapSpeed), position.y);
   }
 }

@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "../constants.h"
 
 #ifndef R_S_BACKGROUND_H
 #define R_S_BACKGROUND_H
@@ -11,13 +12,11 @@ private:
   sf::Texture backgroundTexture;
   sf::Sprite backgroundSpr;
   sf::Sprite secondBackgroundSpr;
-  float speed = 0.025;
+  sf::Sprite thirdBackgroundSpr;
 
   void setSprites();
 
-  void setNewBckPosition();
-
-  void setNewSecondBckPosition();
+  void setNewPosition(sf::Sprite &sprite) const;
 
 public:
   Background(int windowWidth, sf::RenderWindow &windowRef) : window(windowRef) {
