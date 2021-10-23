@@ -14,15 +14,21 @@ void GroundElementsGenerator::loadTexture() {
 }
 
 void GroundElementsGenerator::move() {
-  generateNewElement();
-  for (sf::Sprite &element: groundElements) {
-    setNewElementPosition(element);
+  for (MapElement &element: groundElements) {
+    setNewElementPosition(element.sprite);
   }
 }
 
-void GroundElementsGenerator::draw() {
-  for (sf::Sprite &element: groundElements) {
-    window.draw(element);
+void GroundElementsGenerator::draw(sf::RenderWindow &window) {
+  for (MapElement &groundElement: groundElements) {
+    window.draw(groundElement.sprite);
+  }
+}
+
+void GroundElementsGenerator::generateNewElementsConfiguration(int generatedNumber) {
+  std::vector<MapElement> elementsConfiguration = groundElementsConfigurator.configurations[generatedNumber];
+  for (MapElement &element: elementsConfiguration) {
+    groundElements.push_back(element);
   }
 }
 
@@ -30,31 +36,11 @@ void GroundElementsGenerator::setSprite() {
   simpleBlockSpr.setTexture(simpleBlockTexture);
   stairsSpr.setTexture(stairsTexture);
   simpleWallSpr.setTexture(simpleWallTexture);
-}
-
-void GroundElementsGenerator::generateNewElement() {
-  timerEnd = std::chrono::steady_clock::now();
-  auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(timerEnd - timerStart).count();
-  std::vector<sf::Sprite> elements = {
+  groundElementsConfigurator.set(
       simpleBlockSpr,
       stairsSpr,
-      simpleWallSpr,
-  };
-  float elementsYPositions[3] = {
-    450,
-    322,
-    450,
-  };
-  if (duration >= 3000) {
-    std::uniform_int_distribution<int> dist(0, 2);
-    if (groundElements.size() <= maxElementsAmount) {
-      int generatedNumber = dist(random_generator);
-      sf::Sprite newElement = elements[generatedNumber];
-      newElement.setPosition(1400, elementsYPositions[generatedNumber]);
-      groundElements.push_back(newElement);
-    }
-    timerStart = std::chrono::steady_clock::now();
-  }
+      simpleWallSpr
+  );
 }
 
 void GroundElementsGenerator::setNewElementPosition(sf::Sprite &element) {

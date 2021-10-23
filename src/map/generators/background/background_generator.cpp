@@ -1,25 +1,25 @@
-#include "background.h"
+#include "background_generator.h"
 
-void Background::loadTexture() {
+void BackgroundGenerator::loadTexture() {
   if (!backgroundTexture.loadFromFile("assets/map/background.png")) {
     std::cout << "Cannot load background image texture";
   }
   setSprites();
 }
 
-void Background::draw() {
+void BackgroundGenerator::draw(sf::RenderWindow &window) {
   window.draw(backgroundSpr);
   window.draw(secondBackgroundSpr);
   window.draw(thirdBackgroundSpr);
 }
 
-void Background::move() {
+void BackgroundGenerator::move() {
   setNewPosition(backgroundSpr);
   setNewPosition(secondBackgroundSpr);
   setNewPosition(thirdBackgroundSpr);
 }
 
-void Background::setSprites() {
+void BackgroundGenerator::setSprites() {
   backgroundSpr.setTexture(backgroundTexture);
   secondBackgroundSpr.setTexture(backgroundTexture);
   thirdBackgroundSpr.setTexture(backgroundTexture);
@@ -30,10 +30,10 @@ void Background::setSprites() {
   thirdBackgroundSpr.setPosition(1940, 0);
 }
 
-void Background::setNewPosition(sf::Sprite &sprite) const {
+void BackgroundGenerator::setNewPosition(sf::Sprite &sprite) {
   sf::Vector2<float> position = sprite.getPosition();
-  if (position.x < static_cast<float>(-windowWidth)) {
-    sprite.setPosition(static_cast<float>(windowWidth), position.y);
+  if (position.x < static_cast<float>(-constants::windowWidth)) {
+    sprite.setPosition(static_cast<float>(constants::windowWidth), position.y);
   } else {
     sprite.setPosition(static_cast<float>(position.x - constants::mapSpeed), position.y);
   }

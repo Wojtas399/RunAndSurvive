@@ -1,21 +1,20 @@
 #include <SFML/Graphics.hpp>
 #include "constants.h"
-#include "background/background.h"
-#include "ground_generator/ground_generator.h"
+#include "map/generators/background/background_generator.h"
+#include "map/generators/ground_elements/ground_elements_generator.h"
+#include "map/generators/air_elements/air_elements_generator.h"
+#include "map/generators/map/map_generator.h"
 
 int main() {
-  std::random_device random_device;
-  std::mt19937 random_engine(random_device());
-  int maxElementsAmount = 2;
+  srand(time(NULL));
 
   sf::RenderWindow window(sf::VideoMode(constants::windowWidth, constants::windowHeight), "Run & Survive");
-  Background bck(constants::windowWidth, window);
-  AirElementsGenerator airElementsGenerator(window, random_engine);
-  GroundElementsGenerator groundElementsGenerator(window, maxElementsAmount, random_engine);
-  GroundGenerator groundGenerator(airElementsGenerator, groundElementsGenerator);
+  BackgroundGenerator backgroundGenerator;
+  GroundElementsGenerator groundElementsGenerator;
+  AirElementsGenerator airElementsGenerator;
+  MapGenerator mapGenerator(backgroundGenerator, groundElementsGenerator, airElementsGenerator);
 
-  bck.loadTexture();
-  groundGenerator.load();
+  mapGenerator.load();
 
   while (window.isOpen()) {
     sf::Event event{};
@@ -24,13 +23,10 @@ int main() {
         window.close();
     }
     window.clear();
-    bck.draw();
-    groundGenerator.draw(window);
+    mapGenerator.draw(window);
     window.display();
-    bck.move();
-    groundGenerator.move();
+    mapGenerator.move();
   }
 
   return 0;
 }
-
