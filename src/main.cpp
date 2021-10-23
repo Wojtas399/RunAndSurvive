@@ -1,9 +1,20 @@
 #include <SFML/Graphics.hpp>
+#include "constants.h"
+#include "map/generators/background/background_generator.h"
+#include "map/generators/ground_elements/ground_elements_generator.h"
+#include "map/generators/air_elements/air_elements_generator.h"
+#include "map/generators/map/map_generator.h"
 
 int main() {
-  sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-  sf::CircleShape shape(100.f);
-  shape.setFillColor(sf::Color::Green);
+  srand(time(NULL));
+
+  sf::RenderWindow window(sf::VideoMode(constants::windowWidth, constants::windowHeight), "Run & Survive");
+  BackgroundGenerator backgroundGenerator;
+  GroundElementsGenerator groundElementsGenerator;
+  AirElementsGenerator airElementsGenerator;
+  MapGenerator mapGenerator(backgroundGenerator, groundElementsGenerator, airElementsGenerator);
+
+  mapGenerator.load();
 
   while (window.isOpen()) {
     sf::Event event{};
@@ -11,12 +22,11 @@ int main() {
       if (event.type == sf::Event::Closed)
         window.close();
     }
-
     window.clear();
-    window.draw(shape);
+    mapGenerator.draw(window);
     window.display();
+    mapGenerator.move();
   }
 
   return 0;
 }
-

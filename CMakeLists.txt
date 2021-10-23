@@ -4,7 +4,14 @@ project(R_S)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(R_S
-        src/main.cpp)
+        src/main.cpp
+        src/map/generators/background/background_generator.cpp
+        src/map/generators/map/map_generator.cpp
+        src/map/generators/air_elements/air_elements_generator.cpp
+        src/map/generators/ground_elements/ground_elements_generator.cpp
+        src/models/map/map_element.cpp
+        src/map/map_elements_configurators/air_elements_configurator/air_elements_configurator.cpp
+        src/map/map_elements_configurators/ground_elements_configurator/ground_elements_configurator.cpp)
 
 include_directories(C:/SFML/include)
 
