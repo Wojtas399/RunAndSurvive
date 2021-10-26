@@ -4,6 +4,7 @@
 #include "map/generators/ground_elements/ground_elements_generator.h"
 #include "map/generators/air_elements/air_elements_generator.h"
 #include "map/generators/map/map_generator.h"
+#include "robot/robot.h"
 
 int main() {
   srand(time(NULL));
@@ -13,8 +14,10 @@ int main() {
   GroundElementsGenerator groundElementsGenerator;
   AirElementsGenerator airElementsGenerator;
   MapGenerator mapGenerator(backgroundGenerator, groundElementsGenerator, airElementsGenerator);
+  Robot robot;
 
   mapGenerator.load();
+  robot.load();
 
   while (window.isOpen()) {
     sf::Event event{};
@@ -24,8 +27,9 @@ int main() {
     }
     window.clear();
     mapGenerator.draw(window);
+    robot.draw(window);
     window.display();
-    mapGenerator.move();
+//    mapGenerator.move();
   }
 
   return 0;

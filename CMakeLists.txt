@@ -11,7 +11,9 @@ add_executable(R_S
         src/map/generators/ground_elements/ground_elements_generator.cpp
         src/models/map/map_element.cpp
         src/map/map_elements_configurators/air_elements_configurator/air_elements_configurator.cpp
-        src/map/map_elements_configurators/ground_elements_configurator/ground_elements_configurator.cpp)
+        src/map/map_elements_configurators/ground_elements_configurator/ground_elements_configurator.cpp
+        src/robot/robot.cpp
+        src/robot/robot_animations/robot_animations.cpp)
 
 include_directories(C:/SFML/include)
 
