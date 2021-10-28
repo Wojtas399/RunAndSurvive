@@ -1,50 +1,16 @@
 #include "robot_animations.h"
 
 void RobotAnimations::loadTextures() {
-  loadIdleTextures();
   loadRunTextures();
   loadJumpTextures();
-}
-
-void RobotAnimations::idle(sf::Sprite &character) {
-  move(character, idleTextures);
 }
 
 void RobotAnimations::run(sf::Sprite &character) {
   move(character, runTextures);
 }
 
-void RobotAnimations::jump(sf::Sprite &character) {
-  move(character, jumpTextures);
-}
-
-void RobotAnimations::loadIdleTextures() {
-  if (
-      !idle1Texture.loadFromFile("assets/robot/idle_1.png") ||
-      !idle2Texture.loadFromFile("assets/robot/idle_2.png") ||
-      !idle3Texture.loadFromFile("assets/robot/idle_3.png") ||
-      !idle4Texture.loadFromFile("assets/robot/idle_4.png") ||
-      !idle5Texture.loadFromFile("assets/robot/idle_5.png") ||
-      !idle6Texture.loadFromFile("assets/robot/idle_6.png") ||
-      !idle7Texture.loadFromFile("assets/robot/idle_7.png") ||
-      !idle8Texture.loadFromFile("assets/robot/idle_8.png") ||
-      !idle9Texture.loadFromFile("assets/robot/idle_9.png") ||
-      !idle10Texture.loadFromFile("assets/robot/idle_10.png")
-      ) {
-    std::cout << "Cannot load one of the idle textures";
-  }
-  idleTextures.insert(idleTextures.end(), {
-      idle1Texture,
-      idle2Texture,
-      idle3Texture,
-      idle4Texture,
-      idle5Texture,
-      idle6Texture,
-      idle7Texture,
-      idle8Texture,
-      idle9Texture,
-      idle10Texture,
-  });
+void RobotAnimations::jump(sf::Sprite &character, int jumpNumber) {
+  character.setTexture(jumpTextures[jumpNumber]);
 }
 
 void RobotAnimations::loadRunTextures() {

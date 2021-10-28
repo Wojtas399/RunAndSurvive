@@ -10,11 +10,17 @@ int main() {
   srand(time(NULL));
 
   sf::RenderWindow window(sf::VideoMode(constants::windowWidth, constants::windowHeight), "Run & Survive");
+  //Map
   BackgroundGenerator backgroundGenerator;
   GroundElementsGenerator groundElementsGenerator;
   AirElementsGenerator airElementsGenerator;
   MapGenerator mapGenerator(backgroundGenerator, groundElementsGenerator, airElementsGenerator);
-  Robot robot;
+  //Robot
+  sf::Sprite robotSpr;
+  enums::RobotMoveType moveType = enums::RobotMoveType::run;
+  RobotAnimations robotAnimations;
+  RobotController robotController(moveType, robotSpr);
+  Robot robot(robotSpr, moveType, robotAnimations, robotController);
 
   mapGenerator.load();
   robot.load();
@@ -22,14 +28,21 @@ int main() {
   while (window.isOpen()) {
     sf::Event event{};
     while (window.pollEvent(event)) {
-      if (event.type == sf::Event::Closed)
+      if (event.type == sf::Event::Closed) {
         window.close();
+      }
+      robot.movementController(event);
     }
+
+    //movement
+    mapGenerator.move();
+    robot.move();
+
+    //drawing
     window.clear();
     mapGenerator.draw(window);
     robot.draw(window);
     window.display();
-//    mapGenerator.move();
   }
 
   return 0;

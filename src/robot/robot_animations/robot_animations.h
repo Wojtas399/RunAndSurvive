@@ -6,16 +6,6 @@
 
 class RobotAnimations {
 private:
-  sf::Texture idle1Texture;
-  sf::Texture idle2Texture;
-  sf::Texture idle3Texture;
-  sf::Texture idle4Texture;
-  sf::Texture idle5Texture;
-  sf::Texture idle6Texture;
-  sf::Texture idle7Texture;
-  sf::Texture idle8Texture;
-  sf::Texture idle9Texture;
-  sf::Texture idle10Texture;
   sf::Texture run1Texture;
   sf::Texture run2Texture;
   sf::Texture run3Texture;
@@ -34,13 +24,10 @@ private:
   sf::Texture jump8Texture;
   sf::Texture jump9Texture;
   sf::Texture jump10Texture;
-  std::vector<sf::Texture> idleTextures;
   std::vector<sf::Texture> runTextures;
   std::vector<sf::Texture> jumpTextures;
   sf::Clock clock;
   int counter = 0;
-
-  void loadIdleTextures();
 
   void loadRunTextures();
 
@@ -50,11 +37,9 @@ private:
 public:
   void loadTextures();
 
-  void idle(sf::Sprite &character);
-
   void run(sf::Sprite &character);
 
-  void jump(sf::Sprite &character);
+  void jump(sf::Sprite &character, int jumpNumber);
 };
 
 #endif //R_S_ROBOT_ANIMATIONS_H

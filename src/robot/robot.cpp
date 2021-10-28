@@ -2,11 +2,28 @@
 
 void Robot::load() {
   animations.loadTextures();
-  characterSpr.setScale(0.18, 0.18);
-  characterSpr.setPosition(500, 421);
+  robot.setScale(xScale, yScale);
+  robot.setPosition(500, 432);
+}
+
+void Robot::move() {
+  controller.move(jumpNumber);
 }
 
 void Robot::draw(sf::RenderWindow &window) {
-  animations.run(characterSpr);
-  window.draw(characterSpr);
+  switch (moveType) {
+    case enums::RobotMoveType::run: {
+      animations.run(robot);
+      break;
+    }
+    case enums::RobotMoveType::jump: {
+      animations.jump(robot, jumpNumber);
+      break;
+    }
+  }
+  window.draw(robot);
+}
+
+void Robot::movementController(sf::Event &event) {
+  controller.keyController(event, jumpNumber);
 }
