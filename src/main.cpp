@@ -4,7 +4,8 @@
 #include "map/generators/ground_elements/ground_elements_generator.h"
 #include "map/generators/air_elements/air_elements_generator.h"
 #include "map/generators/map/map_generator.h"
-#include "robot/robot.h"
+#include "object_collisions/robot/robot_collisions.h"
+#include "robot/robot_controller.h"
 
 int main() {
   srand(time(NULL));
@@ -16,32 +17,32 @@ int main() {
   AirElementsGenerator airElementsGenerator;
   MapGenerator mapGenerator(backgroundGenerator, groundElementsGenerator, airElementsGenerator);
   //Robot
-  sf::Sprite robotSpr;
-  enums::RobotMoveType moveType = enums::RobotMoveType::run;
+  Robot robot;
   RobotAnimations robotAnimations;
-  RobotController robotController(moveType, robotSpr);
-  Robot robot(robotSpr, moveType, robotAnimations, robotController);
+  RobotCollisions robotCollisions(airElementsGenerator.airElements, groundElementsGenerator.groundElements, robot);
+  RobotMovementController robotMovementController(robot, robotAnimations, robotCollisions);
+  RobotController robotController(robot, robotAnimations, robotMovementController);
 
   mapGenerator.load();
-  robot.load();
+  robotController.loadTextures();
 
   while (window.isOpen()) {
     sf::Event event{};
     while (window.pollEvent(event)) {
-      if (event.type == sf::Event::Closed) {
+      if (event.type == sf::Event::Closed || robot.getPosition().x + robot.spriteWidth < 0) {
         window.close();
       }
-      robot.movementController(event);
+      robotController.eventController(event);
     }
 
     //movement
     mapGenerator.move();
-    robot.move();
+    robotController.move();
 
     //drawing
     window.clear();
     mapGenerator.draw(window);
-    robot.draw(window);
+    robotController.draw(window);
     window.display();
   }
 

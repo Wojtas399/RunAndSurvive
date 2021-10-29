@@ -24,8 +24,19 @@ private:
   sf::Texture jump8Texture;
   sf::Texture jump9Texture;
   sf::Texture jump10Texture;
+  sf::Texture idle1Texture;
+  sf::Texture idle2Texture;
+  sf::Texture idle3Texture;
+  sf::Texture idle4Texture;
+  sf::Texture idle5Texture;
+  sf::Texture idle6Texture;
+  sf::Texture idle7Texture;
+  sf::Texture idle8Texture;
+  sf::Texture idle9Texture;
+  sf::Texture idle10Texture;
   std::vector<sf::Texture> runTextures;
   std::vector<sf::Texture> jumpTextures;
+  std::vector<sf::Texture> idleTextures;
   sf::Clock clock;
   int counter = 0;
 
@@ -33,13 +44,16 @@ private:
 
   void loadJumpTextures();
 
-  void move(sf::Sprite &character, const std::vector<sf::Texture> &textures);
+  void loadIdleTextures();
+
 public:
   void loadTextures();
 
-  void run(sf::Sprite &character);
+  void runAnim(sf::Sprite &character);
 
-  void jump(sf::Sprite &character, int jumpNumber);
+  void jumpAnim(sf::Sprite &robotSprite, float velocityY, float maxYPosition);
+
+  void idleAnim(sf::Sprite &robotSprite);
 };
 
 #endif //R_S_ROBOT_ANIMATIONS_H

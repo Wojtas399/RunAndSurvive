@@ -47,7 +47,6 @@ void MapGenerator::generateNewElementsConfiguration() {
   bool isTheLastAirElementOnTheMap = isThereTheLastElementOnTheMap(airElements);
   bool isTheLastGroundElementOnTheMap = isThereTheLastElementOnTheMap(groundElements);
   if (isTheLastAirElementOnTheMap && isTheLastGroundElementOnTheMap) {
-    std::uniform_int_distribution<int> dist(0, 5);
     int number = rand() % 6;
     groundElementsGenerator.generateNewElementsConfiguration(number);
     airElementsGenerator.generateNewElementsConfiguration(number);
