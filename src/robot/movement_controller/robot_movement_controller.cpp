@@ -9,7 +9,9 @@ void RobotMovementController::keyController(sf::Event &event) {
       robot.moveType = RobotMoveType::jump;
       velocityY = -0.08;
       accelerationY = 0.000005;
-    } else if (event.key.code == sf::Keyboard::Down && robot.moveType == RobotMoveType::jump) {
+    } else if (
+        event.key.code == sf::Keyboard::Down &&
+        (robot.moveType == RobotMoveType::jump || robot.moveType == RobotMoveType::fallDown)) {
       accelerationY = 0.00009;
     }
   }
@@ -21,7 +23,8 @@ void RobotMovementController::move() {
       run();
       break;
     }
-    case RobotMoveType::jump: {
+    case RobotMoveType::jump:
+    case RobotMoveType::fallDown: {
       jump();
       break;
     }
@@ -44,7 +47,7 @@ void RobotMovementController::run() {
       robot.getPosition().y < 432
       ) {
     velocityY = 0.045;
-    robot.moveType = RobotMoveType::jump;
+    robot.moveType = RobotMoveType::fallDown;
   } else {
     robotAnimations.runAnim(robot.sprite);
   }
@@ -93,7 +96,11 @@ void RobotMovementController::jump() {
     jumpAfterTopCollision = false;
   }
   robot.sprite.setPosition(x, y);
-  robotAnimations.jumpAnim(robot.sprite, velocityY, maxYPosition);
+  if (robot.moveType == RobotMoveType::jump) {
+    robotAnimations.jumpAnim(robot.sprite, velocityY, maxYPosition);
+  } else if (robot.moveType == RobotMoveType::fallDown) {
+    robotAnimations.jumpAnim(robot.sprite, velocityY, maxYPosition + 80);
+  }
 }
 
 void RobotMovementController::idle() {

@@ -5,7 +5,7 @@
 #include "../../constants.h"
 
 enum RobotMoveType {
-  run, jump, idle
+  run, jump, idle, fallDown
 };
 
 class Robot {
