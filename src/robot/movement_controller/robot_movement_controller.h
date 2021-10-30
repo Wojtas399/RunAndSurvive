@@ -18,6 +18,7 @@ private:
   float gravity = 0.00006;
   float maxYPosition = 352;
   bool jumpAfterIdle = false;
+  bool jumpAfterTopCollision = false;
 
   void run();
 

@@ -21,6 +21,7 @@ public:
 
   bool isCollisionWithGroundElement(float widthReduction, float heightReduction);
 
+  bool isCollisionWithAirElement(float widthReduction, float heightReduction);
 };
 
 #endif //R_S_ROBOT_COLLISIONS_H

@@ -10,7 +10,7 @@ void RobotAnimations::runAnim(sf::Sprite &character) {
   if (clock.getElapsedTime().asSeconds() > 0.09f) {
     character.setTexture(runTextures[counter]);
     counter++;
-    if (counter >= runTextures.size()) {
+    if (counter >= runTextures.size() - 1) {
       counter = 0;
     }
     clock.restart();
@@ -19,7 +19,7 @@ void RobotAnimations::runAnim(sf::Sprite &character) {
 
 void RobotAnimations::jumpAnim(sf::Sprite &robotSprite, float velocityY, float maxYPosition) {
   float uppermostSections[5] = {75, 70, 65, 60, 55};
-  float downwardsSections[5] = {10, 20, 30, 40, 50};
+  float downwardsSections[5] = {5, 10, 15, 20, 25};
   float y = robotSprite.getPosition().y;
   if (velocityY < 0) {
     bool isSet = false;

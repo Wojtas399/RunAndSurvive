@@ -33,9 +33,16 @@ void RobotMovementController::move() {
 }
 
 void RobotMovementController::run() {
-  if (robotCollisions.isCollisionWithGroundElement(24, 8)) {
+  if (
+      robotCollisions.isCollisionWithGroundElement(24, 8) ||
+      robotCollisions.isCollisionWithAirElement(24, 8)
+      ) {
     robot.moveType = RobotMoveType::idle;
-  } else if (!robotCollisions.isCollisionWithGroundElement(24, 4) && robot.getPosition().y < 432) {
+  } else if (
+      !robotCollisions.isCollisionWithGroundElement(24, 4) &&
+      !robotCollisions.isCollisionWithAirElement(24, 4) &&
+      robot.getPosition().y < 432
+      ) {
     velocityY = 0.045;
     robot.moveType = RobotMoveType::jump;
   } else {
@@ -48,14 +55,27 @@ void RobotMovementController::jump() {
   float y = robot.getPosition().y;
   y += velocityY;
   velocityY += accelerationY;
-  if (robotCollisions.isCollisionWithGroundElement(24, 8)) {
-    if (jumpAfterIdle || !robotCollisions.isCollisionWithGroundElement(26, 8)) {
+  bool isGroundElementCollision = robotCollisions.isCollisionWithGroundElement(24, 8);
+  bool isAirElementCollision = robotCollisions.isCollisionWithAirElement(24, 8);
+  bool isCollisionWithGroundElementInFront = robotCollisions.isCollisionWithGroundElement(26, 8);
+  bool isCollisionWithAirElementInFront = robotCollisions.isCollisionWithAirElement(26, 8);
+  if (isGroundElementCollision || isAirElementCollision) {
+    if (
+        jumpAfterIdle ||
+        !isCollisionWithGroundElementInFront &&
+        !isCollisionWithAirElementInFront
+        ) {
       x -= constants::mapSpeed;
     } else {
-      y -= 2;
-      velocityY = 0;
-      robot.moveType = RobotMoveType::run;
-      maxYPosition = y - 80;
+      if (velocityY < 0 && isAirElementCollision) {
+        velocityY = 0.03;
+        jumpAfterTopCollision = true;
+      } else if (!jumpAfterTopCollision) {
+        y -= 2;
+        velocityY = 0;
+        robot.moveType = RobotMoveType::run;
+        maxYPosition = y - 80;
+      }
     }
   } else if (y < maxYPosition) {
     velocityY += gravity;
@@ -68,12 +88,18 @@ void RobotMovementController::jump() {
     }
     maxYPosition = y - 80;
   }
+  if (!isAirElementCollision) {
+    jumpAfterTopCollision = false;
+  }
   robot.sprite.setPosition(x, y);
   robotAnimations.jumpAnim(robot.sprite, velocityY, maxYPosition);
 }
 
 void RobotMovementController::idle() {
-  if (robotCollisions.isCollisionWithGroundElement(24, 8)) {
+  if (
+      robotCollisions.isCollisionWithGroundElement(24, 8) ||
+      robotCollisions.isCollisionWithAirElement(24, 8)
+      ) {
     sf::Vector2<float> robotPosition = robot.getPosition();
     robot.sprite.setPosition(robotPosition.x - constants::mapSpeed, robotPosition.y);
     robotAnimations.idleAnim(robot.sprite);
