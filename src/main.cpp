@@ -32,7 +32,7 @@ int main() {
       if (event.type == sf::Event::Closed || robot.getPosition().x + robot.spriteWidth < 0) {
         window.close();
       }
-      robotController.eventController(event);
+      robotController.eventController();
     }
 
     //movement

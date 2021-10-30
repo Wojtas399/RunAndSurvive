@@ -28,7 +28,7 @@ public:
 
   void draw(sf::RenderWindow &window) const;
 
-  void eventController(sf::Event &event);
+  void eventController();
 };
 
 #endif //R_S_ROBOT_CONTROLLER_H

@@ -14,6 +14,6 @@ void RobotController::draw(sf::RenderWindow &window) const {
   window.draw(robot.sprite);
 }
 
-void RobotController::eventController(sf::Event &event) {
-  movementController.keyController(event);
+void RobotController::eventController() {
+  movementController.keyController();
 }

@@ -1,19 +1,28 @@
 #include "robot_movement_controller.h"
 
-void RobotMovementController::keyController(sf::Event &event) {
-  if (event.type == sf::Event::KeyPressed) {
-    if (event.key.code == sf::Keyboard::Up && robot.moveType != RobotMoveType::jump) {
-      if (robot.moveType == RobotMoveType::idle) {
-        jumpAfterIdle = true;
-      }
-      robot.moveType = RobotMoveType::jump;
-      velocityY = -0.08;
-      accelerationY = 0.000005;
-    } else if (
-        event.key.code == sf::Keyboard::Down &&
-        (robot.moveType == RobotMoveType::jump || robot.moveType == RobotMoveType::fallDown)) {
-      accelerationY = 0.00009;
+void RobotMovementController::keyController() {
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && robot.moveType != RobotMoveType::jump) {
+    if (robot.moveType == RobotMoveType::idle) {
+      jumpAfterIdle = true;
     }
+    robot.moveType = RobotMoveType::jump;
+    velocityY = -0.08;
+    accelerationY = 0.000005;
+  }
+
+  if (
+      sf::Keyboard::isKeyPressed(sf::Keyboard::Down) &&
+      (robot.moveType == RobotMoveType::jump || robot.moveType == RobotMoveType::fallDown)
+      ) {
+    accelerationY = 0.00009;
+  }
+
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+    velocityX = 0.025;
+  } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+    velocityX = -0.045;
+  } else {
+    velocityX = 0;
   }
 }
 
@@ -49,6 +58,8 @@ void RobotMovementController::run() {
     velocityY = 0.045;
     robot.moveType = RobotMoveType::fallDown;
   } else {
+    sf::Vector2<float> robotPosition = robot.getPosition();
+    robot.sprite.setPosition(robotPosition.x + velocityX, robotPosition.y);
     robotAnimations.runAnim(robot.sprite);
   }
 }
@@ -56,6 +67,7 @@ void RobotMovementController::run() {
 void RobotMovementController::jump() {
   float x = robot.getPosition().x;
   float y = robot.getPosition().y;
+  x += velocityX;
   y += velocityY;
   velocityY += accelerationY;
   bool isGroundElementCollision = robotCollisions.isCollisionWithGroundElement(24, 8);

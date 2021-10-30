@@ -13,6 +13,7 @@ private:
   Robot &robot;
   RobotAnimations &robotAnimations;
   RobotCollisions &robotCollisions;
+  float velocityX = 0;
   float velocityY = 0;
   float accelerationY = 0.000005;
   float gravity = 0.00006;
@@ -33,7 +34,7 @@ public:
       RobotCollisions &robotCollisions
   ) : robot(robot), robotAnimations(robotAnimations), robotCollisions(robotCollisions) {}
 
-  void keyController(sf::Event &event);
+  void keyController();
 
   void move();
 };
