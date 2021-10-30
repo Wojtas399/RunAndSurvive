@@ -8,10 +8,10 @@ void RobotAnimations::loadTextures() {
 
 void RobotAnimations::runAnim(sf::Sprite &character) {
   if (clock.getElapsedTime().asSeconds() > 0.09f) {
-    character.setTexture(runTextures[counter]);
-    counter++;
-    if (counter >= runTextures.size() - 1) {
-      counter = 0;
+    character.setTexture(runTextures[runTextureCounter]);
+    runTextureCounter++;
+    if (runTextureCounter >= runTextures.size()) {
+      runTextureCounter = 0;
     }
     clock.restart();
   }
@@ -46,10 +46,10 @@ void RobotAnimations::jumpAnim(sf::Sprite &robotSprite, float velocityY, float m
 
 void RobotAnimations::idleAnim(sf::Sprite &robotSprite) {
   if (clock.getElapsedTime().asSeconds() > 0.09f) {
-    robotSprite.setTexture(idleTextures[counter]);
-    counter++;
-    if (counter >= idleTextures.size()) {
-      counter = 0;
+    robotSprite.setTexture(idleTextures[idleTextureCounter]);
+    idleTextureCounter++;
+    if (idleTextureCounter >= idleTextures.size()) {
+      idleTextureCounter = 0;
     }
     clock.restart();
   }

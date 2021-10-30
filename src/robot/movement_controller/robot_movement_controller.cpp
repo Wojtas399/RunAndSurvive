@@ -63,7 +63,8 @@ void RobotMovementController::jump() {
     if (
         jumpAfterIdle ||
         !isCollisionWithGroundElementInFront &&
-        !isCollisionWithAirElementInFront
+        !isCollisionWithAirElementInFront &&
+        y > maxYPosition
         ) {
       x -= constants::mapSpeed;
     } else {

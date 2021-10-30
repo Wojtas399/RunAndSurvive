@@ -38,7 +38,8 @@ private:
   std::vector<sf::Texture> jumpTextures;
   std::vector<sf::Texture> idleTextures;
   sf::Clock clock;
-  int counter = 0;
+  int runTextureCounter = 0;
+  int idleTextureCounter = 0;
 
   void loadRunTextures();
 

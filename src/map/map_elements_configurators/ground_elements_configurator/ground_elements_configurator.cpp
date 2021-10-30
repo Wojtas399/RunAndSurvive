@@ -85,11 +85,11 @@ void GroundElementsConfigurator::set(sf::Sprite simpleBlock, sf::Sprite stairs, 
   MapElement config6Block2(MapElementType::groundBlock, simpleBlock);
   simpleBlock.setPosition(2008, 450);
   MapElement config6Block3(MapElementType::groundBlock, simpleBlock);
-  simpleWall.setPosition(2392, 450);
+  simpleWall.setPosition(2360, 450);
   MapElement config6Wall1(MapElementType::groundWall, simpleWall);
   simpleBlock.setPosition(2456, 450);
   MapElement config6Block4(MapElementType::groundBlock, simpleBlock);
-  simpleWall.setPosition(2616, 450);
+  simpleWall.setPosition(2648, 450);
   MapElement config6Wall2(MapElementType::groundWall, simpleWall);
   elementsConfiguration.insert(elementsConfiguration.end(), {
       config6Block1,
