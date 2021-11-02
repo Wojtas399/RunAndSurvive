@@ -4,9 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "../../constants.h"
 
-enum RobotMoveType {
-  run, jump, idle, fallDown
-};
+enum RobotMoveType {run, jump, idle, fallDown, slide};
 
 class Robot {
 public:

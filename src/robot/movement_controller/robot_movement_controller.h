@@ -28,6 +28,8 @@ private:
 
   void idle();
 
+  void slide();
+
   void setNewRobotPosition(float x, float y);
 
   void setNewRobotMoveType(RobotMoveType type);

@@ -4,6 +4,7 @@ void RobotAnimations::loadTextures() {
   loadRunTextures();
   loadJumpTextures();
   loadIdleTextures();
+  loadSlideTextures();
 }
 
 void RobotAnimations::runAnim(sf::Sprite &character) {
@@ -50,6 +51,17 @@ void RobotAnimations::idleAnim(sf::Sprite &robotSprite) {
     idleTextureCounter++;
     if (idleTextureCounter >= idleTextures.size()) {
       idleTextureCounter = 0;
+    }
+    clock.restart();
+  }
+}
+
+void RobotAnimations::slideAnim(sf::Sprite &robotSprite) {
+  if (clock.getElapsedTime().asSeconds() > 0.09f) {
+    robotSprite.setTexture(slideTextures[slideTextureCounter]);
+    slideTextureCounter++;
+    if (slideTextureCounter >= slideTextures.size()) {
+      slideTextureCounter = 0;
     }
     clock.restart();
   }
@@ -135,5 +147,34 @@ void RobotAnimations::loadIdleTextures() {
       idle8Texture,
       idle9Texture,
       idle10Texture
+  });
+}
+
+void RobotAnimations::loadSlideTextures() {
+  if (
+      !slide1Texture.loadFromFile("assets/robot/slide_1.png") ||
+      !slide2Texture.loadFromFile("assets/robot/slide_2.png") ||
+      !slide3Texture.loadFromFile("assets/robot/slide_3.png") ||
+      !slide4Texture.loadFromFile("assets/robot/slide_4.png") ||
+      !slide5Texture.loadFromFile("assets/robot/slide_5.png") ||
+      !slide6Texture.loadFromFile("assets/robot/slide_6.png") ||
+      !slide7Texture.loadFromFile("assets/robot/slide_7.png") ||
+      !slide8Texture.loadFromFile("assets/robot/slide_8.png") ||
+      !slide9Texture.loadFromFile("assets/robot/slide_9.png") ||
+      !slide10Texture.loadFromFile("assets/robot/slide_10.png")
+      ) {
+    std::cout << "Cannot load one of the slide textures";
+  }
+  slideTextures.insert(slideTextures.end(), {
+      slide1Texture,
+      slide2Texture,
+      slide3Texture,
+      slide4Texture,
+      slide5Texture,
+      slide6Texture,
+      slide7Texture,
+      slide8Texture,
+      slide9Texture,
+      slide10Texture
   });
 }

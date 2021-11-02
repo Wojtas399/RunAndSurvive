@@ -12,11 +12,12 @@ void RobotMovementController::keyController() {
     velocityY = -0.08;
     accelerationY = 0.000005;
     setNewRobotMoveType(RobotMoveType::jump);
-  } else if (
-      sf::Keyboard::isKeyPressed(sf::Keyboard::Down) &&
-      (robot.moveType == RobotMoveType::jump || robot.moveType == RobotMoveType::fallDown)
-      ) {
-    accelerationY = 0.00009;
+  } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+    if (robot.moveType == RobotMoveType::jump || robot.moveType == RobotMoveType::fallDown) {
+      accelerationY = 0.00009;
+    } else if (robot.moveType == RobotMoveType::run) {
+      robot.moveType = RobotMoveType::slide;
+    }
   }
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
@@ -44,6 +45,10 @@ void RobotMovementController::move() {
     }
     case RobotMoveType::idle: {
       idle();
+      break;
+    }
+    case RobotMoveType::slide: {
+      slide();
       break;
     }
   }
@@ -124,6 +129,10 @@ void RobotMovementController::idle() {
   } else {
     setNewRobotMoveType(RobotMoveType::run);
   }
+}
+
+void RobotMovementController::slide() {
+  robotAnimations.slideAnim(robot.sprite);
 }
 
 void RobotMovementController::setNewRobotPosition(float x, float y) {
