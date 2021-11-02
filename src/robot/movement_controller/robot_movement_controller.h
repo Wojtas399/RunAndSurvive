@@ -20,12 +20,25 @@ private:
   float maxYPosition = 352;
   bool jumpAfterIdle = false;
   bool jumpAfterTopCollision = false;
+  bool reversedSprite = false;
 
   void run();
 
   void jump();
 
   void idle();
+
+  void setNewRobotPosition(float x, float y);
+
+  void setNewRobotMoveType(RobotMoveType type);
+
+  void setNormalRobotParams();
+
+  void setReversedRobotParams();
+
+  bool isGroundElementCollision(float widthReduction, float heightReduction);
+
+  bool isAirElementCollision(float widthReduction, float heightReduction);
 
 public:
   RobotMovementController(

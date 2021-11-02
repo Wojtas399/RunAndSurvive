@@ -1,9 +1,11 @@
 #include "robot_collisions.h"
 
-bool RobotCollisions::isCollisionWithGroundElement(float widthReduction, float heightReduction) {
+bool RobotCollisions::isCollisionWithGroundElement(float widthReduction, float heightReduction, bool isReversed) {
   sf::Vector2<float> robotPosition = robot.getPosition();
   float robotWidth = robot.spriteWidth - widthReduction;
   float robotHeight = robot.spriteHeight - heightReduction;
+  float robotRightBorder = isReversed ? robotPosition.x - widthReduction : robotPosition.x + robotWidth;
+  float robotLeftBorder = isReversed ? robotPosition.x - robotWidth : robotPosition.x + widthReduction;
   for (MapElement &groundElement: groundElements) {
     sf::Vector2<float> elementPosition = groundElement.getSpritePosition();
     auto elementWidth = static_cast<float>(groundElement.width);
@@ -12,8 +14,8 @@ bool RobotCollisions::isCollisionWithGroundElement(float widthReduction, float h
         groundElement.type == MapElementType::groundWall
         ) {
       if (
-          robotPosition.x + robotWidth > elementPosition.x &&
-          robotPosition.x + widthReduction < elementPosition.x + elementWidth &&
+          robotRightBorder > elementPosition.x &&
+          robotLeftBorder < elementPosition.x + elementWidth &&
           robotPosition.y + robotHeight > elementPosition.y
           ) {
         return true;
@@ -21,18 +23,18 @@ bool RobotCollisions::isCollisionWithGroundElement(float widthReduction, float h
     } else if (groundElement.type == MapElementType::groundStairs) {
       if (
           (
-              robotPosition.x + robotWidth > elementPosition.x &&
-              robotPosition.x + widthReduction < elementPosition.x + 128 &&
+              robotRightBorder > elementPosition.x &&
+              robotLeftBorder < elementPosition.x + 128 &&
               robotPosition.y + robotHeight > elementPosition.y + 128
           ) ||
           (
-              robotPosition.x + robotWidth > elementPosition.x + 128 &&
-              robotPosition.x + widthReduction < elementPosition.x + 256 &&
+              robotRightBorder > elementPosition.x + 128 &&
+              robotLeftBorder < elementPosition.x + 256 &&
               robotPosition.y + robotHeight > elementPosition.y + 64
           ) ||
           (
-              robotPosition.x + robotWidth > elementPosition.x + 256 &&
-              robotPosition.x + widthReduction < elementPosition.x + elementWidth &&
+              robotRightBorder > elementPosition.x + 256 &&
+              robotLeftBorder < elementPosition.x + elementWidth &&
               robotPosition.y + robotHeight > elementPosition.y
           )
           ) {
@@ -43,18 +45,20 @@ bool RobotCollisions::isCollisionWithGroundElement(float widthReduction, float h
   return false;
 }
 
-bool RobotCollisions::isCollisionWithAirElement(float widthReduction, float heightReduction) {
+bool RobotCollisions::isCollisionWithAirElement(float widthReduction, float heightReduction, bool isReversed) {
   sf::Vector2<float> robotPosition = robot.getPosition();
   float robotWidth = robot.spriteWidth - widthReduction;
   float robotHeight = robot.spriteHeight - heightReduction;
+  float robotRightBorder = isReversed ? robotPosition.x - widthReduction : robotPosition.x + robotWidth;
+  float robotLeftBorder = isReversed ? robotPosition.x - robotWidth : robotPosition.x + widthReduction;
   for (MapElement &airElement: airElements) {
     sf::Vector2<float> elementPosition = airElement.getSpritePosition();
     auto elementWidth = static_cast<float>(airElement.width);
     auto elementHeight = static_cast<float>(airElement.height);
     if (airElement.type == MapElementType::airGround) {
       if (
-          robotPosition.x + robotWidth > elementPosition.x &&
-          robotPosition.x + widthReduction < elementPosition.x + elementWidth &&
+          robotRightBorder > elementPosition.x &&
+          robotLeftBorder < elementPosition.x + elementWidth &&
           robotPosition.y + robotHeight > elementPosition.y &&
           robotPosition.y + heightReduction < elementPosition.y + elementHeight
           ) {
@@ -63,14 +67,14 @@ bool RobotCollisions::isCollisionWithAirElement(float widthReduction, float heig
     } else if (airElement.type == MapElementType::airDoubleLevel) {
       if (
           (
-              robotPosition.x + robotWidth > elementPosition.x &&
-              robotPosition.x + widthReduction < elementPosition.x + 128 &&
+              robotRightBorder > elementPosition.x &&
+              robotLeftBorder < elementPosition.x + 128 &&
               robotPosition.y + robotHeight > elementPosition.y + 64 &&
               robotPosition.y + heightReduction < elementPosition.y + elementHeight
           ) ||
           (
-              robotPosition.x + robotWidth > elementPosition.x + 128 &&
-              robotPosition.x + widthReduction < elementPosition.x + elementWidth &&
+              robotRightBorder > elementPosition.x + 128 &&
+              robotLeftBorder < elementPosition.x + elementWidth &&
               robotPosition.y + robotHeight > elementPosition.y &&
               robotPosition.y + heightReduction < elementPosition.y + 32
           )
@@ -80,14 +84,14 @@ bool RobotCollisions::isCollisionWithAirElement(float widthReduction, float heig
     } else if (airElement.type == MapElementType::airDoubleLevelReversed) {
       if (
           (
-              robotPosition.x + robotWidth > elementPosition.x &&
-              robotPosition.x + widthReduction < elementPosition.x + 160 &&
+              robotRightBorder > elementPosition.x &&
+              robotLeftBorder < elementPosition.x + 160 &&
               robotPosition.y + robotHeight > elementPosition.y &&
               robotPosition.y + heightReduction < elementPosition.y + 32
           ) ||
           (
-              robotPosition.x + robotWidth > elementPosition.x + 160 &&
-              robotPosition.x + widthReduction < elementPosition.x + elementWidth &&
+              robotRightBorder > elementPosition.x + 160 &&
+              robotLeftBorder < elementPosition.x + elementWidth &&
               robotPosition.y + robotHeight > elementPosition.y + 64 &&
               robotPosition.y + heightReduction < elementPosition.y + elementHeight
           )

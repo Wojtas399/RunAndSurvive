@@ -1,16 +1,18 @@
 #include "robot_movement_controller.h"
 
 void RobotMovementController::keyController() {
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && robot.moveType != RobotMoveType::jump) {
+  if (
+      sf::Keyboard::isKeyPressed(sf::Keyboard::Up) &&
+      robot.moveType != RobotMoveType::jump &&
+      robot.moveType != RobotMoveType::fallDown
+      ) {
     if (robot.moveType == RobotMoveType::idle) {
       jumpAfterIdle = true;
     }
-    robot.moveType = RobotMoveType::jump;
     velocityY = -0.08;
     accelerationY = 0.000005;
-  }
-
-  if (
+    setNewRobotMoveType(RobotMoveType::jump);
+  } else if (
       sf::Keyboard::isKeyPressed(sf::Keyboard::Down) &&
       (robot.moveType == RobotMoveType::jump || robot.moveType == RobotMoveType::fallDown)
       ) {
@@ -18,11 +20,14 @@ void RobotMovementController::keyController() {
   }
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-    velocityX = 0.025;
+    velocityX = 0.015;
+    setNormalRobotParams();
   } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-    velocityX = -0.045;
+    velocityX = -0.06;
+    setReversedRobotParams();
   } else {
     velocityX = 0;
+    setNormalRobotParams();
   }
 }
 
@@ -45,21 +50,17 @@ void RobotMovementController::move() {
 }
 
 void RobotMovementController::run() {
-  if (
-      robotCollisions.isCollisionWithGroundElement(24, 8) ||
-      robotCollisions.isCollisionWithAirElement(24, 8)
-      ) {
-    robot.moveType = RobotMoveType::idle;
+  if (isGroundElementCollision(24, 8) || isAirElementCollision(24, 8)) {
+    setNewRobotMoveType(RobotMoveType::idle);
   } else if (
-      !robotCollisions.isCollisionWithGroundElement(24, 4) &&
-      !robotCollisions.isCollisionWithAirElement(24, 4) &&
+      !isGroundElementCollision(24, 4) &&
+      !isAirElementCollision(24, 4) &&
       robot.getPosition().y < 432
       ) {
     velocityY = 0.045;
-    robot.moveType = RobotMoveType::fallDown;
+    setNewRobotMoveType(RobotMoveType::fallDown);
   } else {
-    sf::Vector2<float> robotPosition = robot.getPosition();
-    robot.sprite.setPosition(robotPosition.x + velocityX, robotPosition.y);
+    setNewRobotPosition(robot.getPosition().x + velocityX, robot.getPosition().y);
     robotAnimations.runAnim(robot.sprite);
   }
 }
@@ -70,26 +71,23 @@ void RobotMovementController::jump() {
   x += velocityX;
   y += velocityY;
   velocityY += accelerationY;
-  bool isGroundElementCollision = robotCollisions.isCollisionWithGroundElement(24, 8);
-  bool isAirElementCollision = robotCollisions.isCollisionWithAirElement(24, 8);
-  bool isCollisionWithGroundElementInFront = robotCollisions.isCollisionWithGroundElement(26, 8);
-  bool isCollisionWithAirElementInFront = robotCollisions.isCollisionWithAirElement(26, 8);
-  if (isGroundElementCollision || isAirElementCollision) {
+  if (isGroundElementCollision(24, 8) || isAirElementCollision(24, 8)) {
     if (
         jumpAfterIdle ||
-        !isCollisionWithGroundElementInFront &&
-        !isCollisionWithAirElementInFront &&
+        !isGroundElementCollision(26, 8) &&
+        !isAirElementCollision(26, 8) &&
         y > maxYPosition
         ) {
       x -= constants::mapSpeed;
+      velocityX = 0;
     } else {
-      if (velocityY < 0 && isAirElementCollision) {
+      if (velocityY < 0 && isAirElementCollision(24, 8)) {
         velocityY = 0.03;
         jumpAfterTopCollision = true;
       } else if (!jumpAfterTopCollision) {
         y -= 2;
         velocityY = 0;
-        robot.moveType = RobotMoveType::run;
+        setNewRobotMoveType(RobotMoveType::run);
         maxYPosition = y - 80;
       }
     }
@@ -100,14 +98,14 @@ void RobotMovementController::jump() {
   if (y >= 432) {
     y = 432;
     if (robot.getPosition().y == 432) {
-      robot.moveType = RobotMoveType::run;
+      setNewRobotMoveType(RobotMoveType::run);
     }
     maxYPosition = y - 80;
   }
-  if (!isAirElementCollision) {
+  if (!isAirElementCollision(24, 8)) {
     jumpAfterTopCollision = false;
   }
-  robot.sprite.setPosition(x, y);
+  setNewRobotPosition(x, y);
   if (robot.moveType == RobotMoveType::jump) {
     robotAnimations.jumpAnim(robot.sprite, velocityY, maxYPosition);
   } else if (robot.moveType == RobotMoveType::fallDown) {
@@ -117,11 +115,47 @@ void RobotMovementController::jump() {
 
 void RobotMovementController::idle() {
   if (
-      robotCollisions.isCollisionWithGroundElement(24, 8) ||
-      robotCollisions.isCollisionWithAirElement(24, 8)
+      isGroundElementCollision(24, 8) ||
+      isAirElementCollision(24, 8)
       ) {
     sf::Vector2<float> robotPosition = robot.getPosition();
-    robot.sprite.setPosition(robotPosition.x - constants::mapSpeed, robotPosition.y);
+    setNewRobotPosition(robotPosition.x - constants::mapSpeed, robotPosition.y);
     robotAnimations.idleAnim(robot.sprite);
+  } else {
+    setNewRobotMoveType(RobotMoveType::run);
   }
+}
+
+void RobotMovementController::setNewRobotPosition(float x, float y) {
+  robot.sprite.setPosition(x, y);
+}
+
+void RobotMovementController::setNewRobotMoveType(RobotMoveType type) {
+  robot.moveType = type;
+}
+
+void RobotMovementController::setReversedRobotParams() {
+  if (!reversedSprite) {
+    reversedSprite = true;
+    setNewRobotPosition((robot.getPosition().x - 3) + robot.spriteWidth, robot.getPosition().y);
+    robot.sprite.setScale(-constants::robotScale, constants::robotScale);
+    setNewRobotMoveType(RobotMoveType::run);
+  }
+}
+
+void RobotMovementController::setNormalRobotParams() {
+  if (reversedSprite) {
+    reversedSprite = false;
+    setNewRobotPosition(robot.getPosition().x - robot.spriteWidth, robot.getPosition().y);
+    robot.sprite.setScale(constants::robotScale, constants::robotScale);
+    setNewRobotMoveType(RobotMoveType::run);
+  }
+}
+
+bool RobotMovementController::isGroundElementCollision(float widthReduction, float heightReduction) {
+  return robotCollisions.isCollisionWithGroundElement(widthReduction, heightReduction, reversedSprite);
+}
+
+bool RobotMovementController::isAirElementCollision(float widthReduction, float heightReduction) {
+  return robotCollisions.isCollisionWithAirElement(widthReduction, heightReduction, reversedSprite);
 }
