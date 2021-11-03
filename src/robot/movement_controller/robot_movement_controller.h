@@ -20,6 +20,8 @@ private:
   float maxYPosition = 352;
   bool jumpAfterIdle = false;
   bool jumpAfterTopCollision = false;
+  bool fallDownAfterSlide = false;
+  bool blockedSlide = false;
   bool reversedSprite = false;
 
   void run();
