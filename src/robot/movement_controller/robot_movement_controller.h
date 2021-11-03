@@ -40,7 +40,11 @@ private:
 
   bool isGroundElementCollision(float widthReduction, float heightReduction);
 
-  bool isAirElementCollision(float widthReduction, float heightReduction);
+  bool isAirElementCollision(
+      float widthReduction,
+      float topReduction,
+      float bottomReduction
+  );
 
 public:
   RobotMovementController(

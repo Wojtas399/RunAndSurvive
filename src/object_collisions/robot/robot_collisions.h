@@ -21,7 +21,12 @@ public:
 
   bool isCollisionWithGroundElement(float widthReduction, float heightReduction, bool isReversed);
 
-  bool isCollisionWithAirElement(float widthReduction, float heightReduction, bool isReversed);
+  bool isCollisionWithAirElement(
+      float widthReduction,
+      float topReduction,
+      float bottomReduction,
+      bool isReversed
+  );
 };
 
 #endif //R_S_ROBOT_COLLISIONS_H
