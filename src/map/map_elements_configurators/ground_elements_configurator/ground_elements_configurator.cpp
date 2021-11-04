@@ -101,4 +101,32 @@ void GroundElementsConfigurator::set(sf::Sprite simpleBlock, sf::Sprite stairs, 
   });
   configurations.push_back(elementsConfiguration);
   elementsConfiguration.clear();
+  //configuration 7
+  simpleBlock.setPosition(96 + constants::windowWidth, 450);
+  MapElement config7Block1(MapElementType::groundBlock, simpleBlock);
+  elementsConfiguration.insert(elementsConfiguration.end(), {
+      config7Block1,
+  });
+  configurations.push_back(elementsConfiguration);
+  elementsConfiguration.clear();
+  //configuration 8
+  simpleBlock.setPosition(96 + constants::windowWidth, 450);
+  MapElement config8Block1(MapElementType::groundBlock, simpleBlock);
+  simpleBlock.setPosition(352 + constants::windowWidth, 450);
+  MapElement config8Block2(MapElementType::groundBlock, simpleBlock);
+  simpleBlock.setPosition(480 + constants::windowWidth, 450);
+  MapElement config8Block3(MapElementType::groundBlock, simpleBlock);
+  simpleBlock.setPosition(608 + constants::windowWidth, 450);
+  MapElement config8Block4(MapElementType::groundBlock, simpleBlock);
+  simpleWall.setPosition(928 + constants::windowWidth, 450);
+  MapElement config8Wall1(MapElementType::groundWall, simpleWall);
+  elementsConfiguration.insert(elementsConfiguration.end(), {
+      config8Block1,
+      config8Block2,
+      config8Block3,
+      config8Block4,
+      config8Wall1,
+  });
+  configurations.push_back(elementsConfiguration);
+  elementsConfiguration.clear();
 }

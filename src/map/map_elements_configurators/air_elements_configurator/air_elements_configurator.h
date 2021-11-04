@@ -5,6 +5,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "../../../models/map/map_element.h"
+#include "../../../constants.h"
 
 class AirElementsConfigurator {
 public:

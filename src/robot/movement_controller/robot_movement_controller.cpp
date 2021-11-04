@@ -27,7 +27,7 @@ void RobotMovementController::keyController() {
     }
   } else {
     if (robot.moveType == RobotMoveType::slide) {
-      if (isAirElementCollision(26, 27, 12)) {
+      if (isAirElementCollision(26, 17, 12)) {
         blockedSlide = true;
       } else {
         setNewRobotMoveType(RobotMoveType::run);
@@ -153,12 +153,12 @@ void RobotMovementController::idle() {
 
 void RobotMovementController::slide() {
   if (blockedSlide) {
-    if (!isAirElementCollision(22, 27, 12)) {
+    if (!isAirElementCollision(22, 17, 12)) {
       setNewRobotMoveType(RobotMoveType::run);
       blockedSlide = false;
     }
   } else {
-    if (isGroundElementCollision(24, 8) || isAirElementCollision(24, 28, 8)) {
+    if (isGroundElementCollision(24, 8) || isAirElementCollision(24, 19, 8)) {
       setNewRobotMoveType(RobotMoveType::idle);
     } else if (
         !isGroundElementCollision(24, 4) &&

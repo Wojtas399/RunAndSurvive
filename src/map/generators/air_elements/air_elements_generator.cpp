@@ -14,8 +14,8 @@ void AirElementsGenerator::loadTexture() {
 }
 
 void AirElementsGenerator::move() {
-  for (MapElement &element: airElements) {
-    setNewElementPosition(element);
+  for (int i = 0; i < airElements.size(); i++) {
+    setNewElementPosition(i);
   }
 }
 
@@ -43,10 +43,11 @@ void AirElementsGenerator::setSprite() {
   );
 }
 
-void AirElementsGenerator::setNewElementPosition(MapElement &element) {
+void AirElementsGenerator::setNewElementPosition(int index) {
+  MapElement &element = airElements[index];
   sf::Vector2<float> position = element.getSpritePosition();
   if (position.x + static_cast<float>(element.width) <= 0) {
-    airElements.erase(airElements.begin());
+    airElements.erase(airElements.begin() + index);
   } else {
     element.sprite.setPosition(position.x - constants::mapSpeed, position.y);
   }

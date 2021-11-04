@@ -50,7 +50,7 @@ bool RobotCollisions::isCollisionWithAirElement(
     float topReduction,
     float bottomReduction,
     bool isReversed
-    ) {
+) {
   sf::Vector2<float> robotPosition = robot.getPosition();
   float robotWidth = robot.spriteWidth - widthReduction;
   float robotHeight = robot.spriteHeight - bottomReduction;
@@ -79,6 +79,12 @@ bool RobotCollisions::isCollisionWithAirElement(
           ) ||
           (
               robotRightBorder > elementPosition.x + 128 &&
+              robotLeftBorder < elementPosition.x + 160 &&
+              robotPosition.y + robotHeight > elementPosition.y &&
+              robotPosition.y + topReduction < elementPosition.y + elementHeight
+          ) ||
+          (
+              robotRightBorder > elementPosition.x + 128 &&
               robotLeftBorder < elementPosition.x + elementWidth &&
               robotPosition.y + robotHeight > elementPosition.y &&
               robotPosition.y + topReduction < elementPosition.y + 32
@@ -90,9 +96,15 @@ bool RobotCollisions::isCollisionWithAirElement(
       if (
           (
               robotRightBorder > elementPosition.x &&
-              robotLeftBorder < elementPosition.x + 160 &&
+              robotRightBorder < elementPosition.x + 128 &&
               robotPosition.y + robotHeight > elementPosition.y &&
               robotPosition.y + topReduction < elementPosition.y + 32
+          ) ||
+          (
+              robotRightBorder > elementPosition.x + 128 &&
+              robotLeftBorder < elementPosition.x + 160 &&
+              robotPosition.y + robotHeight > elementPosition.y &&
+              robotPosition.y + topReduction < elementPosition.y + elementHeight
           ) ||
           (
               robotRightBorder > elementPosition.x + 160 &&

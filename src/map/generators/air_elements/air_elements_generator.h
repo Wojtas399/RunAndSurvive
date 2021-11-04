@@ -20,7 +20,7 @@ private:
 
   void setSprite();
 
-  void setNewElementPosition(MapElement &element);
+  void setNewElementPosition(int index);
 
 public:
   std::vector<MapElement> airElements;

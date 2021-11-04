@@ -20,7 +20,7 @@ private:
 
   void setSprite();
 
-  void setNewElementPosition(sf::Sprite &element);
+  void setNewElementPosition(int index);
 
 public:
   std::vector<MapElement> groundElements;

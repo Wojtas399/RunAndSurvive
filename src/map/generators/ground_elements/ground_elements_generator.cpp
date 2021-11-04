@@ -14,8 +14,8 @@ void GroundElementsGenerator::loadTexture() {
 }
 
 void GroundElementsGenerator::move() {
-  for (MapElement &element: groundElements) {
-    setNewElementPosition(element.sprite);
+  for (int i = 0; i < groundElements.size(); i++) {
+    setNewElementPosition(i);
   }
 }
 
@@ -43,11 +43,12 @@ void GroundElementsGenerator::setSprite() {
   );
 }
 
-void GroundElementsGenerator::setNewElementPosition(sf::Sprite &element) {
-  sf::Vector2<float> position = element.getPosition();
+void GroundElementsGenerator::setNewElementPosition(int index) {
+  MapElement &element = groundElements[index];
+  sf::Vector2<float> position = element.getSpritePosition();
   if (position.x <= -400) {
     groundElements.erase(groundElements.begin());
   } else {
-    element.setPosition(position.x - constants::mapSpeed, position.y);
+    element.sprite.setPosition(position.x - constants::mapSpeed, position.y);
   }
 }
