@@ -12,6 +12,8 @@ public:
 
   void set(
       sf::Sprite block,
+      sf::Sprite blockDouble,
+      sf::Sprite blockTriple,
       sf::Sprite stairs,
       sf::Sprite wall
   );

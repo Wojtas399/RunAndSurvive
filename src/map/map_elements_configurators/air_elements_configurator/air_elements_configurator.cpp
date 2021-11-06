@@ -53,7 +53,7 @@ void AirElementsConfigurator::set(
   configurations.push_back(elementsConfiguration);
   elementsConfiguration.clear();
   //configuration 4
-  ground2.setPosition(96 + constants::windowWidth, 418);
+  ground2.setPosition(96 + constants::windowWidth, 434);
   MapElement config4Ground2_1(MapElementType::airGround2, ground2);
   doubleLevel.setPosition(352 + constants::windowWidth, 300);
   MapElement config4DoubleLevel1(MapElementType::airDoubleLevel, doubleLevel);
@@ -95,9 +95,9 @@ void AirElementsConfigurator::set(
   MapElement config7Ground1_2(MapElementType::airGround1, ground1);
   ground1.setPosition(928 + constants::windowWidth, 354);
   MapElement config7Ground1_3(MapElementType::airGround1, ground1);
-  ground2.setPosition(640 + constants::windowWidth, 258);
+  ground2.setPosition(640 + constants::windowWidth, 274);
   MapElement config7Ground2_1(MapElementType::airGround2, ground2);
-  ground2.setPosition(896 + constants::windowWidth, 258);
+  ground2.setPosition(896 + constants::windowWidth, 274);
   MapElement config7Ground2_2(MapElementType::airGround2, ground2);
   doubleLevelReversed.setPosition(1088 + constants::windowWidth, 354);
   MapElement config7DoubleLevelReversed1(MapElementType::airDoubleLevelReversed, doubleLevelReversed);
@@ -113,7 +113,7 @@ void AirElementsConfigurator::set(
   configurations.push_back(elementsConfiguration);
   elementsConfiguration.clear();
   //configuration 8
-  ground2.setPosition(512 + constants::windowWidth, 354);
+  ground2.setPosition(512 + constants::windowWidth, 370);
   MapElement config8Ground2_1(MapElementType::airGround2, ground2);
   ground1.setPosition(768 + constants::windowWidth, 290);
   MapElement config8Ground1_1(MapElementType::airGround1, ground1);

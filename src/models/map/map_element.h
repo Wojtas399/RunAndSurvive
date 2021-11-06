@@ -9,6 +9,8 @@ enum MapElementType {
   airGround1,
   airGround2,
   groundBlock,
+  groundBlockDouble,
+  groundBlockTriple,
   groundWall,
   groundStairs,
 };

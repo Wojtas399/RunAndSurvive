@@ -11,6 +11,8 @@ bool RobotCollisions::isCollisionWithGroundElement(float widthReduction, float h
     auto elementWidth = static_cast<float>(groundElement.width);
     if (
         groundElement.type == MapElementType::groundBlock ||
+        groundElement.type == MapElementType::groundBlockDouble ||
+        groundElement.type == MapElementType::groundBlockTriple ||
         groundElement.type == MapElementType::groundWall
         ) {
       if (
@@ -55,7 +57,7 @@ bool RobotCollisions::isCollisionWithAirElement(float widthReduction, float topR
     sf::Vector2<float> elementPosition = airElement.getSpritePosition();
     auto elementWidth = static_cast<float>(airElement.width);
     auto elementHeight = static_cast<float>(airElement.height);
-    if (airElement.type == MapElementType::airGround1) {
+    if (airElement.type == MapElementType::airGround1 || airElement.type == MapElementType::airGround2) {
       if (
           robotRightBorder > elementPosition.x &&
           robotLeftBorder < elementPosition.x + elementWidth &&
@@ -69,7 +71,7 @@ bool RobotCollisions::isCollisionWithAirElement(float widthReduction, float topR
           (
               robotRightBorder > elementPosition.x &&
               robotLeftBorder < elementPosition.x + 128 &&
-              robotPosition.y + robotHeight > elementPosition.y + 64 &&
+              robotPosition.y + robotHeight > elementPosition.y + 80 &&
               robotPosition.y + topReduction < elementPosition.y + elementHeight
           ) ||
           (
@@ -82,7 +84,7 @@ bool RobotCollisions::isCollisionWithAirElement(float widthReduction, float topR
               robotRightBorder > elementPosition.x + 128 &&
               robotLeftBorder < elementPosition.x + elementWidth &&
               robotPosition.y + robotHeight > elementPosition.y &&
-              robotPosition.y + topReduction < elementPosition.y + 32
+              robotPosition.y + topReduction < elementPosition.y + 16
           )
           ) {
         return true;
@@ -93,7 +95,7 @@ bool RobotCollisions::isCollisionWithAirElement(float widthReduction, float topR
               robotRightBorder > elementPosition.x &&
               robotRightBorder < elementPosition.x + 128 &&
               robotPosition.y + robotHeight > elementPosition.y &&
-              robotPosition.y + topReduction < elementPosition.y + 32
+              robotPosition.y + topReduction < elementPosition.y + 16
           ) ||
           (
               robotRightBorder > elementPosition.x + 128 &&
@@ -104,7 +106,7 @@ bool RobotCollisions::isCollisionWithAirElement(float widthReduction, float topR
           (
               robotRightBorder > elementPosition.x + 160 &&
               robotLeftBorder < elementPosition.x + elementWidth &&
-              robotPosition.y + robotHeight > elementPosition.y + 64 &&
+              robotPosition.y + robotHeight > elementPosition.y + 80 &&
               robotPosition.y + topReduction < elementPosition.y + elementHeight
           )
           ) {

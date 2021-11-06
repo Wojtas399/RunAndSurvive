@@ -2,13 +2,19 @@
 
 void GroundElementsGenerator::loadTexture() {
   if (!blockTexture.loadFromFile("assets/map/ground_block.png")) {
-    std::cout << "Cannot load simple block texture";
+    std::cout << "Cannot load ground block texture";
+  }
+  if (!blockDoubleTexture.loadFromFile("assets/map/ground_block_double.png")) {
+    std::cout << "Cannot load ground block double texture";
+  }
+  if (!blockTripleTexture.loadFromFile("assets/map/ground_block_triple.png")) {
+    std::cout << "Cannot load ground block triple texture";
   }
   if (!stairsTexture.loadFromFile("assets/map/ground_stairs.png")) {
-    std::cout << "Cannot load stairs texture";
+    std::cout << "Cannot load ground stairs texture";
   }
   if (!wallTexture.loadFromFile("assets/map/ground_wall.png")) {
-    std::cout << "Cannot load simple wall texture";
+    std::cout << "Cannot load ground wall texture";
   }
   setSprite();
 }
@@ -34,10 +40,14 @@ void GroundElementsGenerator::generateNewElementsConfiguration(int generatedNumb
 
 void GroundElementsGenerator::setSprite() {
   blockSpr.setTexture(blockTexture);
+  blockDoubleSpr.setTexture(blockDoubleTexture);
+  blockTripleSpr.setTexture(blockTripleTexture);
   stairsSpr.setTexture(stairsTexture);
   wallSpr.setTexture(wallTexture);
   groundElementsConfigurator.set(
       blockSpr,
+      blockDoubleSpr,
+      blockTripleSpr,
       stairsSpr,
       wallSpr
   );

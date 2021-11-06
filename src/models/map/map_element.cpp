@@ -20,9 +20,20 @@ void MapElement::setSize() {
     case MapElementType::airGround2: {
       width = 158;
       height = 16;
+      break;
     }
     case MapElementType::groundBlock: {
       width = 128;
+      height = 64;
+      break;
+    }
+    case MapElementType::groundBlockDouble: {
+      width = 256;
+      height = 64;
+      break;
+    }
+    case MapElementType::groundBlockTriple: {
+      width = 384;
       height = 64;
       break;
     }

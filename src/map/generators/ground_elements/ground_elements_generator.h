@@ -11,9 +11,13 @@
 class GroundElementsGenerator {
 private:
   sf::Texture blockTexture;
+  sf::Texture blockDoubleTexture;
+  sf::Texture blockTripleTexture;
   sf::Texture stairsTexture;
   sf::Texture wallTexture;
   sf::Sprite blockSpr;
+  sf::Sprite blockDoubleSpr;
+  sf::Sprite blockTripleSpr;
   sf::Sprite stairsSpr;
   sf::Sprite wallSpr;
   GroundElementsConfigurator groundElementsConfigurator;
