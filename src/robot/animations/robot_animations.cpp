@@ -7,8 +7,9 @@ void RobotAnimations::loadTextures() {
   loadSlideTextures();
 }
 
-void RobotAnimations::runAnim(sf::Sprite &character) {
-  if (clock.getElapsedTime().asSeconds() > 0.09f) {
+void RobotAnimations::runAnim(sf::Sprite &character, bool isFastRun) {
+  float timeElapsed = isFastRun ? 0.07f : 0.1f;
+  if (clock.getElapsedTime().asSeconds() > timeElapsed) {
     character.setTexture(runTextures[runTextureCounter]);
     runTextureCounter++;
     if (runTextureCounter >= runTextures.size()) {

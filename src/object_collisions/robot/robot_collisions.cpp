@@ -1,11 +1,11 @@
 #include "robot_collisions.h"
 
-bool RobotCollisions::isCollisionWithGroundElement(float widthReduction, float heightReduction, bool isReversed) {
+bool RobotCollisions::isCollisionWithGroundElement(float widthReduction, float heightReduction) {
   sf::Vector2<float> robotPosition = robot.getPosition();
   float robotWidth = robot.spriteWidth - widthReduction;
   float robotHeight = robot.spriteHeight - heightReduction;
-  float robotRightBorder = isReversed ? robotPosition.x - widthReduction : robotPosition.x + robotWidth;
-  float robotLeftBorder = isReversed ? robotPosition.x - robotWidth : robotPosition.x + widthReduction;
+  float robotRightBorder = robot.isReversed ? robotPosition.x - widthReduction : robotPosition.x + robotWidth;
+  float robotLeftBorder = robot.isReversed ? robotPosition.x - robotWidth : robotPosition.x + widthReduction;
   for (MapElement &groundElement: groundElements) {
     sf::Vector2<float> elementPosition = groundElement.getSpritePosition();
     auto elementWidth = static_cast<float>(groundElement.width);
@@ -45,17 +45,12 @@ bool RobotCollisions::isCollisionWithGroundElement(float widthReduction, float h
   return false;
 }
 
-bool RobotCollisions::isCollisionWithAirElement(
-    float widthReduction,
-    float topReduction,
-    float bottomReduction,
-    bool isReversed
-) {
+bool RobotCollisions::isCollisionWithAirElement(float widthReduction, float topReduction, float bottomReduction) {
   sf::Vector2<float> robotPosition = robot.getPosition();
   float robotWidth = robot.spriteWidth - widthReduction;
   float robotHeight = robot.spriteHeight - bottomReduction;
-  float robotRightBorder = isReversed ? robotPosition.x - widthReduction : robotPosition.x + robotWidth;
-  float robotLeftBorder = isReversed ? robotPosition.x - robotWidth : robotPosition.x + widthReduction;
+  float robotRightBorder = robot.isReversed ? robotPosition.x - widthReduction : robotPosition.x + robotWidth;
+  float robotLeftBorder = robot.isReversed ? robotPosition.x - robotWidth : robotPosition.x + widthReduction;
   for (MapElement &airElement: airElements) {
     sf::Vector2<float> elementPosition = airElement.getSpritePosition();
     auto elementWidth = static_cast<float>(airElement.width);

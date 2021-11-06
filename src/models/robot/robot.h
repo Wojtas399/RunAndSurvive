@@ -10,6 +10,7 @@ class Robot {
 public:
   sf::Sprite sprite;
   RobotMoveType moveType = RobotMoveType::run;
+  bool isReversed = false;
   float spriteWidth = 567 * constants::robotScale;
   float spriteHeight = 556 * constants::robotScale;
 

@@ -16,7 +16,8 @@ add_executable(R_S
         src/robot/robot_controller.cpp
         src/robot/animations/robot_animations.cpp
         src/robot/movement_controller/robot_movement_controller.cpp
-        src/object_collisions/robot/robot_collisions.cpp)
+        src/object_collisions/robot/robot_collisions.cpp
+        src/robot/movement/robot_movement.cpp)
 
 include_directories(C:/SFML/include)
 

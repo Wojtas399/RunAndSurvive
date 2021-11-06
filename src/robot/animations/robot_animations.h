@@ -64,7 +64,7 @@ private:
 public:
   void loadTextures();
 
-  void runAnim(sf::Sprite &character);
+  void runAnim(sf::Sprite &character, bool isFastRun);
 
   void jumpAnim(sf::Sprite &robotSprite, float velocityY, float maxYPosition);
 

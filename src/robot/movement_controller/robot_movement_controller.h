@@ -3,16 +3,12 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "../../object_collisions/robot/robot_collisions.h"
-#include "../../models/robot/robot.h"
-#include "../animations/robot_animations.h"
-#include "../../constants.h"
+#include "../movement/robot_movement.h"
 
 class RobotMovementController {
 private:
   Robot &robot;
-  RobotAnimations &robotAnimations;
-  RobotCollisions &robotCollisions;
+  RobotMovement &robotMovement;
   float velocityX = 0;
   float velocityY = 0;
   float accelerationY = 0.000005;
@@ -22,38 +18,28 @@ private:
   bool jumpAfterTopCollision = false;
   bool fallDownAfterSlide = false;
   bool blockedSlide = false;
-  bool reversedSprite = false;
 
-  void run();
+  void keyUp();
 
-  void jump();
+  void keyDown();
 
-  void idle();
+  void neitherKeyUpNorKeyDown();
 
-  void slide();
+  void keyLeft();
 
-  void setNewRobotPosition(float x, float y);
+  void keyRight();
 
-  void setNewRobotMoveType(RobotMoveType type);
-
-  void setNormalRobotParams();
+  void neitherKeyLeftNorKeyRight();
 
   void setReversedRobotParams();
 
-  bool isGroundElementCollision(float widthReduction, float heightReduction);
-
-  bool isAirElementCollision(
-      float widthReduction,
-      float topReduction,
-      float bottomReduction
-  );
+  void setNormalRobotParams();
 
 public:
   RobotMovementController(
       Robot &robot,
-      RobotAnimations &robotAnimations,
-      RobotCollisions &robotCollisions
-  ) : robot(robot), robotAnimations(robotAnimations), robotCollisions(robotCollisions) {}
+      RobotMovement &robotMovement
+  ) : robot(robot), robotMovement(robotMovement) {}
 
   void keyController();
 

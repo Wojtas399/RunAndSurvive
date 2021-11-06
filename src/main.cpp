@@ -20,7 +20,8 @@ int main() {
   Robot robot;
   RobotAnimations robotAnimations;
   RobotCollisions robotCollisions(airElementsGenerator.airElements, groundElementsGenerator.groundElements, robot);
-  RobotMovementController robotMovementController(robot, robotAnimations, robotCollisions);
+  RobotMovement robotMovement(robot, robotAnimations, robotCollisions);
+  RobotMovementController robotMovementController(robot, robotMovement);
   RobotController robotController(robot, robotAnimations, robotMovementController);
 
   mapGenerator.load();
