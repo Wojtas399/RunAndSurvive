@@ -1,14 +1,17 @@
 #include "air_elements_generator.h"
 
 void AirElementsGenerator::loadTexture() {
-  if (!simpleGroundTexture.loadFromFile("assets/map/simple_ground.png")) {
-    std::cout << "Cannot load simple ground texture";
+  if (!ground1Texture.loadFromFile("assets/map/air_ground_1.png")) {
+    std::cout << "Cannot load air ground 1 texture";
   }
-  if (!doubleLevelGroundTexture.loadFromFile("assets/map/double_level_ground.png")) {
-    std::cout << "Cannot load double level ground texture";
+  if (!ground2Texture.loadFromFile("assets/map/air_ground_2.png")) {
+    std::cout << "Cannot load air ground 2 texture";
   }
-  if (!doubleLevelGroundReversedTexture.loadFromFile("assets/map/double_level_ground_reversed.png")) {
-    std::cout << "Cannot load double level ground reversed texture";
+  if (!doubleLevelTexture.loadFromFile("assets/map/air_double_level.png")) {
+    std::cout << "Cannot load air double level texture";
+  }
+  if (!doubleLevelReversedTexture.loadFromFile("assets/map/air_double_level_reversed.png")) {
+    std::cout << "Cannot load air double level reversed texture";
   }
   setSprite();
 }
@@ -33,13 +36,15 @@ void AirElementsGenerator::generateNewElementsConfiguration(int generatedNumber)
 }
 
 void AirElementsGenerator::setSprite() {
-  simpleGroundSpr.setTexture(simpleGroundTexture);
-  doubleLevelGroundSpr.setTexture(doubleLevelGroundTexture);
-  doubleLevelGroundReversedSpr.setTexture(doubleLevelGroundReversedTexture);
+  ground1Spr.setTexture(ground1Texture);
+  ground2Spr.setTexture(ground2Texture);
+  doubleLevelSpr.setTexture(doubleLevelTexture);
+  doubleLevelReversedSpr.setTexture(doubleLevelReversedTexture);
   airElementsConfigurator.set(
-      simpleGroundSpr,
-      doubleLevelGroundSpr,
-      doubleLevelGroundReversedSpr
+      ground1Spr,
+      ground2Spr,
+      doubleLevelSpr,
+      doubleLevelReversedSpr
   );
 }
 

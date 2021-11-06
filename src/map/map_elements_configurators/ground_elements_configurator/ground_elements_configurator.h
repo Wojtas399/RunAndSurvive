@@ -11,9 +11,9 @@ public:
   std::vector<std::vector<MapElement>> configurations;
 
   void set(
-      sf::Sprite simpleBlock,
+      sf::Sprite block,
       sf::Sprite stairs,
-      sf::Sprite simpleWall
+      sf::Sprite wall
   );
 };
 

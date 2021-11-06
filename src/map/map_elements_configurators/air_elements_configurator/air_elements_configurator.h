@@ -10,7 +10,8 @@
 class AirElementsConfigurator {
 public:
   void set(
-      sf::Sprite &simpleGround,
+      sf::Sprite &ground1,
+      sf::Sprite &ground2,
       sf::Sprite &doubleLevel,
       sf::Sprite &doubleLevelReversed
   );

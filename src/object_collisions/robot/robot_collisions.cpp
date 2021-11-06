@@ -55,7 +55,7 @@ bool RobotCollisions::isCollisionWithAirElement(float widthReduction, float topR
     sf::Vector2<float> elementPosition = airElement.getSpritePosition();
     auto elementWidth = static_cast<float>(airElement.width);
     auto elementHeight = static_cast<float>(airElement.height);
-    if (airElement.type == MapElementType::airGround) {
+    if (airElement.type == MapElementType::airGround1) {
       if (
           robotRightBorder > elementPosition.x &&
           robotLeftBorder < elementPosition.x + elementWidth &&

@@ -1,13 +1,13 @@
 #include "ground_elements_generator.h"
 
 void GroundElementsGenerator::loadTexture() {
-  if (!simpleBlockTexture.loadFromFile("assets/map/simple_block.png")) {
+  if (!blockTexture.loadFromFile("assets/map/ground_block.png")) {
     std::cout << "Cannot load simple block texture";
   }
-  if (!stairsTexture.loadFromFile("assets/map/stairs.png")) {
+  if (!stairsTexture.loadFromFile("assets/map/ground_stairs.png")) {
     std::cout << "Cannot load stairs texture";
   }
-  if (!simpleWallTexture.loadFromFile("assets/map/simple_wall.png")) {
+  if (!wallTexture.loadFromFile("assets/map/ground_wall.png")) {
     std::cout << "Cannot load simple wall texture";
   }
   setSprite();
@@ -33,13 +33,13 @@ void GroundElementsGenerator::generateNewElementsConfiguration(int generatedNumb
 }
 
 void GroundElementsGenerator::setSprite() {
-  simpleBlockSpr.setTexture(simpleBlockTexture);
+  blockSpr.setTexture(blockTexture);
   stairsSpr.setTexture(stairsTexture);
-  simpleWallSpr.setTexture(simpleWallTexture);
+  wallSpr.setTexture(wallTexture);
   groundElementsConfigurator.set(
-      simpleBlockSpr,
+      blockSpr,
       stairsSpr,
-      simpleWallSpr
+      wallSpr
   );
 }
 
