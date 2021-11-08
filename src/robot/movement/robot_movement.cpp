@@ -1,6 +1,6 @@
 #include "robot_movement.h"
 
-void RobotMovement::run(float &velocityX, float &velocityY) {
+void RobotMovement::run(float &velocityX, float &velocityY, bool &isRightFastRun) {
   if (isNormalGroundCollision() || isNormalAirCollision()) {
     robot.moveType = RobotMoveType::idle;
   } else if (isFreeSpaceUnder()) {
@@ -8,6 +8,9 @@ void RobotMovement::run(float &velocityX, float &velocityY) {
   } else {
     setNewRobotPosition(robot.getPosition().x + velocityX, robot.getPosition().y);
     robotAnimations.runAnim(robot.sprite, velocityX != 0);
+    if (isRightFastRun) {
+      velocityX = 0.015;
+    }
   }
 }
 

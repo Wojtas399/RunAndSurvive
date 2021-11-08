@@ -29,7 +29,7 @@ void RobotMovementController::keyController() {
 void RobotMovementController::move() {
   switch (robot.moveType) {
     case RobotMoveType::run: {
-      robotMovement.run(velocityX, velocityY);
+      robotMovement.run(velocityX, velocityY, isRightFastRun);
       break;
     }
     case RobotMoveType::jump:
@@ -88,11 +88,13 @@ void RobotMovementController::neitherKeyUpNorKeyDown() {
 
 void RobotMovementController::keyLeft() {
   velocityX = -0.06;
+  isRightFastRun = false;
   setReversedRobotParams();
 }
 
 void RobotMovementController::keyRight() {
   velocityX = 0.015;
+  isRightFastRun = true;
   if (
       robot.moveType == RobotMoveType::slide &&
       !robotMovement.isAirElementCollision(24, 24, 17, 8)
@@ -105,6 +107,7 @@ void RobotMovementController::keyRight() {
 
 void RobotMovementController::neitherKeyLeftNorKeyRight() {
   velocityX = 0;
+  isRightFastRun = false;
   setNormalRobotParams();
 }
 

@@ -59,7 +59,7 @@ void MapGenerator::setGenerators() {
   backgroundGenerator.loadTexture();
   groundElementsGenerator.loadTexture();
   airElementsGenerator.loadTexture();
-  int firstConfigurationNumber = 7;
+  int firstConfigurationNumber = rand() % 8;
   groundElementsGenerator.generateNewElementsConfiguration(firstConfigurationNumber);
   airElementsGenerator.generateNewElementsConfiguration(firstConfigurationNumber);
 }
