@@ -14,7 +14,6 @@ private:
   float accelerationY = 0.000005;
   float gravity = 0.00006;
   float maxYPosition = 352;
-  bool jumpAfterIdle = false;
   bool jumpAfterTopCollision = false;
   bool fallDownAfterSlide = false;
   bool blockedSlide = false;

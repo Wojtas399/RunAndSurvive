@@ -5,7 +5,7 @@ void RobotMovementController::keyController() {
       sf::Keyboard::isKeyPressed(sf::Keyboard::Up) &&
       robot.moveType != RobotMoveType::jump &&
       robot.moveType != RobotMoveType::fallDown &&
-      !robotMovement.isAirElementCollision(26, 27, 12)
+      !robotMovement.isAirElementCollision(26, 26, 27, 12)
       ) {
     keyUp();
   } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
@@ -18,7 +18,7 @@ void RobotMovementController::keyController() {
     keyRight();
   } else if (
       sf::Keyboard::isKeyPressed(sf::Keyboard::Left) &&
-      !robotMovement.isAirElementCollision(26, 27, 8)
+      !robotMovement.isAirElementCollision(26, 26, 27, 8)
       ) {
     keyLeft();
   } else {
@@ -40,7 +40,6 @@ void RobotMovementController::move() {
           accelerationY,
           maxYPosition,
           gravity,
-          jumpAfterIdle,
           jumpAfterTopCollision
       );
       break;
@@ -57,9 +56,6 @@ void RobotMovementController::move() {
 }
 
 void RobotMovementController::keyUp() {
-  if (robot.moveType == RobotMoveType::idle) {
-    jumpAfterIdle = true;
-  }
   velocityY = -0.08;
   accelerationY = 0.000005;
   robot.moveType = RobotMoveType::jump;
@@ -81,7 +77,7 @@ void RobotMovementController::keyDown() {
 
 void RobotMovementController::neitherKeyUpNorKeyDown() {
   if (robot.moveType == RobotMoveType::slide) {
-    if (robotMovement.isAirElementCollision(26, 17, 12)) {
+    if (robotMovement.isAirElementCollision(26, 26, 17, 12)) {
       blockedSlide = true;
     } else {
       robot.moveType = RobotMoveType::run;
@@ -99,7 +95,7 @@ void RobotMovementController::keyRight() {
   velocityX = 0.015;
   if (
       robot.moveType == RobotMoveType::slide &&
-      !robotMovement.isAirElementCollision(24, 17, 8)
+      !robotMovement.isAirElementCollision(24, 24, 17, 8)
       ) {
     robot.moveType = RobotMoveType::run;
   } else {
@@ -123,7 +119,6 @@ void RobotMovementController::setReversedRobotParams() {
 void RobotMovementController::setNormalRobotParams() {
   if (robot.isReversed) {
     robot.isReversed = false;
-    std::cout << "?\n";
     robot.sprite.setPosition(robot.getPosition().x - robot.spriteWidth, robot.getPosition().y);
     robot.sprite.setScale(constants::robotScale, constants::robotScale);
   }

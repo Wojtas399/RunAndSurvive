@@ -1,24 +1,12 @@
 #include "robot_movement.h"
 
 void RobotMovement::run(float &velocityX, float &velocityY) {
-  if (
-      isGroundElementCollision(24, 8) ||
-      isAirElementCollision(24, 8, 8)
-      ) {
+  if (isNormalGroundCollision() || isNormalAirCollision()) {
     robot.moveType = RobotMoveType::idle;
-  } else if (
-      !isGroundElementCollision(24, 4) &&
-      !isAirElementCollision(24, 4, 4) &&
-      robot.getPosition().y < 432
-      ) {
-    velocityY = 0.045;
-    robot.moveType = RobotMoveType::fallDown;
+  } else if (isFreeSpaceUnder()) {
+    setFallDownMovement(velocityY);
   } else {
-    if (robot.getPosition().x + (robot.spriteWidth - 24) > constants::windowWidth) {
-      robot.sprite.setPosition(robot.getPosition().x - constants::mapSpeed, robot.getPosition().y);
-    } else {
-      robot.sprite.setPosition(robot.getPosition().x + velocityX, robot.getPosition().y);
-    }
+    setNewRobotPosition(robot.getPosition().x + velocityX, robot.getPosition().y);
     robotAnimations.runAnim(robot.sprite, velocityX != 0);
   }
 }
@@ -29,7 +17,6 @@ void RobotMovement::jump(
     float &accelerationY,
     float &maxYPosition,
     float &gravity,
-    bool &jumpAfterIdle,
     bool &jumpAfterTopCollision
 ) {
   float x = robot.getPosition().x;
@@ -42,7 +29,6 @@ void RobotMovement::jump(
       y,
       velocityX,
       velocityY,
-      jumpAfterIdle,
       jumpAfterTopCollision,
       maxYPosition,
       gravity
@@ -54,14 +40,10 @@ void RobotMovement::jump(
     }
     maxYPosition = y - 80;
   }
-  if (!isAirElementCollision(24, 8, 8)) {
+  if (!isNormalAirCollision()) {
     jumpAfterTopCollision = false;
   }
-  if (x + (robot.spriteWidth - 24) > constants::windowWidth) {
-    robot.sprite.setPosition(x - constants::mapSpeed, y);
-  } else {
-    robot.sprite.setPosition(x, y);
-  }
+  setNewRobotPosition(x, y);
   if (robot.moveType == RobotMoveType::jump) {
     robotAnimations.jumpAnim(robot.sprite, velocityY, maxYPosition);
   } else if (robot.moveType == RobotMoveType::fallDown) {
@@ -70,12 +52,9 @@ void RobotMovement::jump(
 }
 
 void RobotMovement::idle() {
-  if (
-      isGroundElementCollision(26, 8) ||
-      isAirElementCollision(24, 8, 8)
-      ) {
+  if (isCollisionForward()) {
     sf::Vector2<float> robotPosition = robot.getPosition();
-    robot.sprite.setPosition(robotPosition.x - constants::mapSpeed, robotPosition.y);
+    setNewRobotPosition(robotPosition.x - constants::mapSpeed, robotPosition.y);
     robotAnimations.idleAnim(robot.sprite);
   } else {
     robot.moveType = RobotMoveType::run;
@@ -84,37 +63,33 @@ void RobotMovement::idle() {
 
 void RobotMovement::slide(bool &blockedSlide, float &velocityY, bool &fallDownAfterSlide) {
   if (blockedSlide) {
-    if (!isAirElementCollision(22, 17, 12)) {
+    if (!isAirElementCollision(22, 22, 17, 12)) {
       robot.moveType = RobotMoveType::run;
       blockedSlide = false;
     }
   } else {
-    if (isGroundElementCollision(24, 8) || isAirElementCollision(24, 19, 8)) {
+    if (isNormalGroundCollision() || isAirElementCollision(24, 24, 19, 8)) {
       robot.moveType = RobotMoveType::idle;
-    } else if (
-        !isGroundElementCollision(24, 4) &&
-        !isAirElementCollision(24, 4, 4) &&
-        robot.getPosition().y < 432
-        ) {
-      velocityY = 0.045;
+    } else if (isFreeSpaceUnder()) {
+      setFallDownMovement(velocityY);
       fallDownAfterSlide = true;
-      robot.moveType = RobotMoveType::fallDown;
     } else {
       robotAnimations.slideAnim(robot.sprite);
     }
   }
 }
 
-bool RobotMovement::isGroundElementCollision(float widthReduction, float heightReduction) {
-  return robotCollisions.isCollisionWithGroundElement(widthReduction, heightReduction);
+bool RobotMovement::isGroundElementCollision(float leftReduction, float rightReduction, float heightReduction) {
+  return robotCollisions.isCollisionWithGroundElement(leftReduction, rightReduction, heightReduction);
 }
 
 bool RobotMovement::isAirElementCollision(
-    float widthReduction,
+    float leftReduction,
+    float rightReduction,
     float topReduction,
     float bottomReduction
 ) {
-  return robotCollisions.isCollisionWithAirElement(widthReduction, topReduction, bottomReduction);
+  return robotCollisions.isCollisionWithAirElement(leftReduction, rightReduction, topReduction, bottomReduction);
 }
 
 void RobotMovement::jumpCollision(
@@ -122,31 +97,31 @@ void RobotMovement::jumpCollision(
     float &y,
     float &velocityX,
     float &velocityY,
-    bool &jumpAfterIdle,
     bool &jumpAfterTopCollision,
     float &maxYPosition,
     float &gravity
 ) {
-  if (isGroundElementCollision(24, 8) || isAirElementCollision(24, 8, 8)) {
+  if (isNormalGroundCollision() || isNormalAirCollision()) {
     if (
-        jumpAfterIdle ||
         (
-            !isGroundElementCollision(26, 8) &&
-            isGroundElementCollision(24, 8)
+            !isGroundElementCollision(26, 26, 8) &&
+            isNormalGroundCollision()
         ) ||
         (
-            !isAirElementCollision(26, 8, 8) &&
-            isAirElementCollision(24, 8, 8)
+            !isAirElementCollision(26, 26, 8, 8) &&
+            isNormalAirCollision()
         )
         ) {
-      if (isGroundElementCollision(24, 8) && isAirElementCollision(24, 8, 8)) {
+      if (isNormalGroundCollision() && isNormalAirCollision()) {
         stopMovementVertically(y, velocityY, maxYPosition);
       } else {
-        x -= constants::mapSpeed;
-        velocityX = 0;
+        if (isCollisionForward()) {
+          x -= constants::mapSpeed;
+          velocityX = 0;
+        }
       }
     } else {
-      if (velocityY < 0 && isAirElementCollision(24, 8, 8)) {
+      if (velocityY < 0 && isNormalAirCollision()) {
         velocityY = 0.03;
         jumpAfterTopCollision = true;
       } else if (!jumpAfterTopCollision) {
@@ -155,7 +130,14 @@ void RobotMovement::jumpCollision(
     }
   } else if (y < maxYPosition) {
     velocityY += gravity;
-    jumpAfterIdle = false;
+  }
+}
+
+void RobotMovement::setNewRobotPosition(float x, float y) {
+  if (x + (robot.spriteWidth - 24) > constants::windowWidth) {
+    robot.sprite.setPosition(x - constants::mapSpeed, y);
+  } else {
+    robot.sprite.setPosition(x, y);
   }
 }
 
@@ -164,4 +146,33 @@ void RobotMovement::stopMovementVertically(float &y, float &velocityY, float &ma
   velocityY = 0;
   robot.moveType = RobotMoveType::run;
   maxYPosition = y - 80;
+}
+
+void RobotMovement::setFallDownMovement(float &velocityY) {
+  velocityY = 0.045;
+  robot.moveType = RobotMoveType::fallDown;
+}
+
+bool RobotMovement::isNormalGroundCollision() {
+  return isGroundElementCollision(24, 24, 8);
+}
+
+bool RobotMovement::isNormalAirCollision() {
+  return isAirElementCollision(24, 24, 8, 8);
+}
+
+bool RobotMovement::isCollisionForward() {
+  if (robot.isReversed) {
+    return isGroundElementCollision(24, 26, 8) ||
+           isAirElementCollision(24, 26, 8, 8);
+  } else {
+    return isGroundElementCollision(26, 24, 8) ||
+           isAirElementCollision(26, 24, 8, 8);
+  }
+}
+
+bool RobotMovement::isFreeSpaceUnder() {
+  return !isGroundElementCollision(24, 24, 4) &&
+         !isAirElementCollision(24, 24, 4, 4) &&
+         robot.getPosition().y < 432;
 }
