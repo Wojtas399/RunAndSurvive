@@ -4,6 +4,7 @@
 namespace constants {
   static const int windowHeight = 600;
   static const int windowWidth = 1400;
+  static const float robotScale = 0.16;
   static const float mapSpeed = 0.03;
 }
 

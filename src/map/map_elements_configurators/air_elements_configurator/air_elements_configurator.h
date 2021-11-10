@@ -5,11 +5,13 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "../../../models/map/map_element.h"
+#include "../../../constants.h"
 
 class AirElementsConfigurator {
 public:
   void set(
-      sf::Sprite &simpleGround,
+      sf::Sprite &ground1,
+      sf::Sprite &ground2,
       sf::Sprite &doubleLevel,
       sf::Sprite &doubleLevelReversed
   );

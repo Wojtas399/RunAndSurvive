@@ -12,9 +12,14 @@ void MapElement::setSize() {
       height = 96;
       break;
     }
-    case MapElementType::airGround: {
+    case MapElementType::airGround1: {
       width = 160;
-      height = 32;
+      height = 16;
+      break;
+    }
+    case MapElementType::airGround2: {
+      width = 158;
+      height = 16;
       break;
     }
     case MapElementType::groundBlock: {
@@ -22,9 +27,19 @@ void MapElement::setSize() {
       height = 64;
       break;
     }
+    case MapElementType::groundBlockDouble: {
+      width = 256;
+      height = 64;
+      break;
+    }
+    case MapElementType::groundBlockTriple: {
+      width = 384;
+      height = 64;
+      break;
+    }
     case MapElementType::groundWall: {
       width = 32;
-      height = 64;
+      height = 57;
       break;
     }
     case MapElementType::groundStairs: {

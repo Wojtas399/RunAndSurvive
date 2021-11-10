@@ -10,17 +10,19 @@
 
 class AirElementsGenerator {
 private:
-  sf::Texture simpleGroundTexture;
-  sf::Texture doubleLevelGroundTexture;
-  sf::Texture doubleLevelGroundReversedTexture;
-  sf::Sprite simpleGroundSpr;
-  sf::Sprite doubleLevelGroundSpr;
-  sf::Sprite doubleLevelGroundReversedSpr;
+  sf::Texture ground1Texture;
+  sf::Texture ground2Texture;
+  sf::Texture doubleLevelTexture;
+  sf::Texture doubleLevelReversedTexture;
+  sf::Sprite ground1Spr;
+  sf::Sprite ground2Spr;
+  sf::Sprite doubleLevelSpr;
+  sf::Sprite doubleLevelReversedSpr;
   AirElementsConfigurator airElementsConfigurator;
 
   void setSprite();
 
-  void setNewElementPosition(MapElement &element);
+  void setNewElementPosition(int index);
 
 public:
   std::vector<MapElement> airElements;

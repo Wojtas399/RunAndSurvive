@@ -6,8 +6,11 @@
 enum MapElementType {
   airDoubleLevel,
   airDoubleLevelReversed,
-  airGround,
+  airGround1,
+  airGround2,
   groundBlock,
+  groundBlockDouble,
+  groundBlockTriple,
   groundWall,
   groundStairs,
 };

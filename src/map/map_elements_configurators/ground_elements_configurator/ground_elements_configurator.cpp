@@ -1,16 +1,22 @@
 #include "ground_elements_configurator.h"
 
-void GroundElementsConfigurator::set(sf::Sprite simpleBlock, sf::Sprite stairs, sf::Sprite simpleWall) {
+void GroundElementsConfigurator::set(
+    sf::Sprite block,
+    sf::Sprite blockDouble,
+    sf::Sprite blockTriple,
+    sf::Sprite stairs,
+    sf::Sprite wall
+    ) {
   std::vector<MapElement> elementsConfiguration;
   //configuration 1
-  simpleBlock.setPosition(1464, 450);
-  MapElement config1Block1(MapElementType::groundBlock, simpleBlock);
-  simpleWall.setPosition(2008, 450);
-  MapElement config1Wall1(MapElementType::groundWall, simpleWall);
-  simpleBlock.setPosition(2328, 450);
-  MapElement config1Block2(MapElementType::groundBlock, simpleBlock);
-  simpleWall.setPosition(2712, 450);
-  MapElement config1Wall2(MapElementType::groundWall, simpleWall);
+  block.setPosition(64 + constants::windowWidth, 450);
+  MapElement config1Block1(MapElementType::groundBlock, block);
+  wall.setPosition(608 + constants::windowWidth, 457);
+  MapElement config1Wall1(MapElementType::groundWall, wall);
+  block.setPosition(928 + constants::windowWidth, 450);
+  MapElement config1Block2(MapElementType::groundBlock, block);
+  wall.setPosition(1312 + constants::windowWidth, 457);
+  MapElement config1Wall2(MapElementType::groundWall, wall);
   elementsConfiguration.insert(elementsConfiguration.end(), {
       config1Block1,
       config1Wall1,
@@ -20,12 +26,12 @@ void GroundElementsConfigurator::set(sf::Sprite simpleBlock, sf::Sprite stairs, 
   configurations.push_back(elementsConfiguration);
   elementsConfiguration.clear();
   //configuration 2
-  stairs.setPosition(1464, 322);
+  stairs.setPosition(64 + constants::windowWidth, 322);
   MapElement config2Stairs1(MapElementType::groundStairs, stairs);
-  simpleBlock.setPosition(2104, 450);
-  MapElement config2Block1(MapElementType::groundBlock, simpleBlock);
-  simpleBlock.setPosition(2488, 450);
-  MapElement config2Block2(MapElementType::groundBlock, simpleBlock);
+  block.setPosition(704 + constants::windowWidth, 450);
+  MapElement config2Block1(MapElementType::groundBlock, block);
+  block.setPosition(1088 + constants::windowWidth, 450);
+  MapElement config2Block2(MapElementType::groundBlock, block);
   elementsConfiguration.insert(elementsConfiguration.end(), {
       config2Stairs1,
       config2Block1,
@@ -34,19 +40,16 @@ void GroundElementsConfigurator::set(sf::Sprite simpleBlock, sf::Sprite stairs, 
   configurations.push_back(elementsConfiguration);
   elementsConfiguration.clear();
   //configuration 3
-  simpleBlock.setPosition(1464, 450);
-  MapElement config3Block1(MapElementType::groundBlock, simpleBlock);
-  simpleBlock.setPosition(1592, 450);
-  MapElement config3Block2(MapElementType::groundBlock, simpleBlock);
-  simpleWall.setPosition(2072, 450);
-  MapElement config3Wall1(MapElementType::groundWall, simpleWall);
-  simpleWall.setPosition(2328, 450);
-  MapElement config3Wall2(MapElementType::groundWall, simpleWall);
-  simpleBlock.setPosition(2584, 450);
-  MapElement config3Block3(MapElementType::groundBlock, simpleBlock);
+  blockDouble.setPosition(64 + constants::windowWidth, 450);
+  MapElement config3BlockDouble1(MapElementType::groundBlockDouble, blockDouble);
+  wall.setPosition(672 + constants::windowWidth, 457);
+  MapElement config3Wall1(MapElementType::groundWall, wall);
+  wall.setPosition(928 + constants::windowWidth, 457);
+  MapElement config3Wall2(MapElementType::groundWall, wall);
+  block.setPosition(1184 + constants::windowWidth, 450);
+  MapElement config3Block3(MapElementType::groundBlock, block);
   elementsConfiguration.insert(elementsConfiguration.end(), {
-      config3Block1,
-      config3Block2,
+      config3BlockDouble1,
       config3Wall1,
       config3Wall2,
       config3Block3,
@@ -54,7 +57,7 @@ void GroundElementsConfigurator::set(sf::Sprite simpleBlock, sf::Sprite stairs, 
   configurations.push_back(elementsConfiguration);
   elementsConfiguration.clear();
   //configuration 4
-  stairs.setPosition(2168, 322);
+  stairs.setPosition(768 + constants::windowWidth, 322);
   MapElement config4Stairs1(MapElementType::groundStairs, stairs);
   elementsConfiguration.insert(elementsConfiguration.end(), {
       config4Stairs1,
@@ -62,14 +65,14 @@ void GroundElementsConfigurator::set(sf::Sprite simpleBlock, sf::Sprite stairs, 
   configurations.push_back(elementsConfiguration);
   elementsConfiguration.clear();
   //configuration 5
-  simpleWall.setPosition(1528, 450);
-  MapElement config5Wall1(MapElementType::groundWall, simpleWall);
-  simpleBlock.setPosition(1752, 450);
-  MapElement config5Block1(MapElementType::groundBlock, simpleBlock);
-  simpleWall.setPosition(2424, 450);
-  MapElement config5Wall2(MapElementType::groundWall, simpleWall);
-  simpleBlock.setPosition(2648, 450);
-  MapElement config5Block2(MapElementType::groundBlock, simpleBlock);
+  wall.setPosition(128 + constants::windowWidth, 457);
+  MapElement config5Wall1(MapElementType::groundWall, wall);
+  block.setPosition(352 + constants::windowWidth, 450);
+  MapElement config5Block1(MapElementType::groundBlock, block);
+  wall.setPosition(1024 + constants::windowWidth, 457);
+  MapElement config5Wall2(MapElementType::groundWall, wall);
+  block.setPosition(1248 + constants::windowWidth, 450);
+  MapElement config5Block2(MapElementType::groundBlock, block);
   elementsConfiguration.insert(elementsConfiguration.end(), {
       config5Wall1,
       config5Block1,
@@ -79,18 +82,18 @@ void GroundElementsConfigurator::set(sf::Sprite simpleBlock, sf::Sprite stairs, 
   configurations.push_back(elementsConfiguration);
   elementsConfiguration.clear();
   //configuration 6
-  simpleBlock.setPosition(1496, 450);
-  MapElement config6Block1(MapElementType::groundWall, simpleBlock);
-  simpleBlock.setPosition(1752, 450);
-  MapElement config6Block2(MapElementType::groundBlock, simpleBlock);
-  simpleBlock.setPosition(2008, 450);
-  MapElement config6Block3(MapElementType::groundBlock, simpleBlock);
-  simpleWall.setPosition(2392, 450);
-  MapElement config6Wall1(MapElementType::groundWall, simpleWall);
-  simpleBlock.setPosition(2456, 450);
-  MapElement config6Block4(MapElementType::groundBlock, simpleBlock);
-  simpleWall.setPosition(2616, 450);
-  MapElement config6Wall2(MapElementType::groundWall, simpleWall);
+  block.setPosition(96 + constants::windowWidth, 450);
+  MapElement config6Block1(MapElementType::groundBlock, block);
+  block.setPosition(352 + constants::windowWidth, 450);
+  MapElement config6Block2(MapElementType::groundBlock, block);
+  block.setPosition(608 + constants::windowWidth, 450);
+  MapElement config6Block3(MapElementType::groundBlock, block);
+  wall.setPosition(960 + constants::windowWidth, 457);
+  MapElement config6Wall1(MapElementType::groundWall, wall);
+  block.setPosition(1056 + constants::windowWidth, 450);
+  MapElement config6Block4(MapElementType::groundBlock, block);
+  wall.setPosition(1248 + constants::windowWidth, 457);
+  MapElement config6Wall2(MapElementType::groundWall, wall);
   elementsConfiguration.insert(elementsConfiguration.end(), {
       config6Block1,
       config6Block2,
@@ -98,6 +101,28 @@ void GroundElementsConfigurator::set(sf::Sprite simpleBlock, sf::Sprite stairs, 
       config6Wall1,
       config6Block4,
       config6Wall2,
+  });
+  configurations.push_back(elementsConfiguration);
+  elementsConfiguration.clear();
+  //configuration 7
+  block.setPosition(96 + constants::windowWidth, 450);
+  MapElement config7Block1(MapElementType::groundBlock, block);
+  elementsConfiguration.insert(elementsConfiguration.end(), {
+      config7Block1,
+  });
+  configurations.push_back(elementsConfiguration);
+  elementsConfiguration.clear();
+  //configuration 8
+  block.setPosition(96 + constants::windowWidth, 450);
+  MapElement config8Block1(MapElementType::groundBlock, block);
+  blockTriple.setPosition(352 + constants::windowWidth, 450);
+  MapElement config8BlockTriple1(MapElementType::groundBlockTriple, blockTriple);
+  wall.setPosition(928 + constants::windowWidth, 457);
+  MapElement config8Wall1(MapElementType::groundWall, wall);
+  elementsConfiguration.insert(elementsConfiguration.end(), {
+      config8Block1,
+      config8BlockTriple1,
+      config8Wall1,
   });
   configurations.push_back(elementsConfiguration);
   elementsConfiguration.clear();

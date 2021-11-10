@@ -47,8 +47,7 @@ void MapGenerator::generateNewElementsConfiguration() {
   bool isTheLastAirElementOnTheMap = isThereTheLastElementOnTheMap(airElements);
   bool isTheLastGroundElementOnTheMap = isThereTheLastElementOnTheMap(groundElements);
   if (isTheLastAirElementOnTheMap && isTheLastGroundElementOnTheMap) {
-    std::uniform_int_distribution<int> dist(0, 5);
-    int number = rand() % 6;
+    int number = rand() % 8;
     groundElementsGenerator.generateNewElementsConfiguration(number);
     airElementsGenerator.generateNewElementsConfiguration(number);
     std::cout << "Ground elements amount: " << groundElementsGenerator.groundElements.size() << "\n";
@@ -60,7 +59,7 @@ void MapGenerator::setGenerators() {
   backgroundGenerator.loadTexture();
   groundElementsGenerator.loadTexture();
   airElementsGenerator.loadTexture();
-  int firstConfigurationNumber = rand() % 6;
+  int firstConfigurationNumber = rand() % 8;
   groundElementsGenerator.generateNewElementsConfiguration(firstConfigurationNumber);
   airElementsGenerator.generateNewElementsConfiguration(firstConfigurationNumber);
 }
