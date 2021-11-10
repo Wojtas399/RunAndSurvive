@@ -44,10 +44,25 @@ private:
   sf::Texture slide8Texture;
   sf::Texture slide9Texture;
   sf::Texture slide10Texture;
+  sf::Texture shoot1Texture;
+  sf::Texture shoot2Texture;
+  sf::Texture shoot3Texture;
+  sf::Texture shoot4Texture;
+  sf::Texture runShoot1Texture;
+  sf::Texture runShoot2Texture;
+  sf::Texture runShoot3Texture;
+  sf::Texture runShoot4Texture;
+  sf::Texture runShoot5Texture;
+  sf::Texture runShoot6Texture;
+  sf::Texture runShoot7Texture;
+  sf::Texture runShoot8Texture;
+  sf::Texture runShoot9Texture;
   std::vector<sf::Texture> runTextures;
   std::vector<sf::Texture> jumpTextures;
   std::vector<sf::Texture> idleTextures;
   std::vector<sf::Texture> slideTextures;
+  std::vector<sf::Texture> shootTextures;
+  std::vector<sf::Texture> runShootTextures;
   sf::Clock clock;
   int runTextureCounter = 0;
   int idleTextureCounter = 0;
@@ -60,6 +75,10 @@ private:
   void loadIdleTextures();
 
   void loadSlideTextures();
+
+  void loadShootTextures();
+
+  void loadRunShootTextures();
 
 public:
   void loadTextures();

@@ -5,6 +5,8 @@ void RobotAnimations::loadTextures() {
   loadJumpTextures();
   loadIdleTextures();
   loadSlideTextures();
+  loadShootTextures();
+  loadRunShootTextures();
 }
 
 void RobotAnimations::runAnim(sf::Sprite &character, bool isFastRun) {
@@ -177,5 +179,49 @@ void RobotAnimations::loadSlideTextures() {
       slide8Texture,
       slide9Texture,
       slide10Texture
+  });
+}
+
+void RobotAnimations::loadShootTextures() {
+  if (
+      !shoot1Texture.loadFromFile("assets/robot/shoot_1.png") ||
+      !shoot2Texture.loadFromFile("assets/robot/shoot_2.png") ||
+      !shoot3Texture.loadFromFile("assets/robot/shoot_3.png") ||
+      !shoot4Texture.loadFromFile("assets/robot/shoot_4.png")
+      ) {
+    std::cout << "Cannot load one of the shoot textures";
+  }
+  shootTextures.insert(shootTextures.end(), {
+      shoot1Texture,
+      shoot2Texture,
+      shoot3Texture,
+      shoot4Texture
+  });
+}
+
+void RobotAnimations::loadRunShootTextures() {
+  if (
+      !runShoot1Texture.loadFromFile("assets/robot/run_shoot_1.png") ||
+      !runShoot2Texture.loadFromFile("assets/robot/run_shoot_2.png") ||
+      !runShoot3Texture.loadFromFile("assets/robot/run_shoot_3.png") ||
+      !runShoot4Texture.loadFromFile("assets/robot/run_shoot_4.png") ||
+      !runShoot5Texture.loadFromFile("assets/robot/run_shoot_5.png") ||
+      !runShoot6Texture.loadFromFile("assets/robot/run_shoot_6.png") ||
+      !runShoot7Texture.loadFromFile("assets/robot/run_shoot_7.png") ||
+      !runShoot8Texture.loadFromFile("assets/robot/run_shoot_8.png") ||
+      !runShoot9Texture.loadFromFile("assets/robot/run_shoot_9.png")
+      ) {
+    std::cout << "Cannot load one of the run shoot textures";
+  }
+  runShootTextures.insert(runShootTextures.end(), {
+      runShoot1Texture,
+      runShoot2Texture,
+      runShoot3Texture,
+      runShoot4Texture,
+      runShoot5Texture,
+      runShoot6Texture,
+      runShoot7Texture,
+      runShoot8Texture,
+      runShoot9Texture
   });
 }
