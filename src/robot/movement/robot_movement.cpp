@@ -1,6 +1,6 @@
 #include "robot_movement.h"
 
-void RobotMovement::run(float &velocityX, float &velocityY, bool &isRightFastRun) {
+void RobotMovement::run(float &velocityX, float &velocityY, bool &isFastRun) {
   if (isNormalGroundCollision() || isNormalAirCollision()) {
     robot.moveType = RobotMoveType::idle;
   } else if (isFreeSpaceUnder()) {
@@ -8,8 +8,8 @@ void RobotMovement::run(float &velocityX, float &velocityY, bool &isRightFastRun
   } else {
     setNewRobotPosition(robot.getPosition().x + velocityX, robot.getPosition().y);
     robotAnimations.runAnim(robot.sprite, velocityX != 0);
-    if (isRightFastRun) {
-      velocityX = 0.015;
+    if (isFastRun) {
+      velocityX = robot.isReversed ? -0.06 : 0.015;
     }
   }
 }
@@ -59,6 +59,9 @@ void RobotMovement::idle() {
     sf::Vector2<float> robotPosition = robot.getPosition();
     setNewRobotPosition(robotPosition.x - constants::mapSpeed, robotPosition.y);
     robotAnimations.idleAnim(robot.sprite);
+    if (robot.isReversed) {
+      robot.moveType = RobotMoveType::run;
+    }
   } else {
     robot.moveType = RobotMoveType::run;
   }
@@ -133,6 +136,11 @@ void RobotMovement::jumpCollision(
     }
   } else if (y < maxYPosition) {
     velocityY += gravity;
+    if (robot.isReversed) {
+      velocityX = -0.06;
+    }
+  } else if (robot.isReversed) {
+    velocityX = -0.06;
   }
 }
 

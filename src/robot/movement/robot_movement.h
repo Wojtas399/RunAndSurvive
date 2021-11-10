@@ -41,7 +41,7 @@ public:
             RobotCollisions &robotCollisions
     ) : robot(robot), robotAnimations(robotAnimations), robotCollisions(robotCollisions) {}
 
-    void run(float &velocityX, float &velocityY, bool &isRightFastRun);
+    void run(float &velocityX, float &velocityY, bool &isFastRun);
 
     void jump(
             float &velocityX,

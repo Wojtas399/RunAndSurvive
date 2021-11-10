@@ -11,10 +11,10 @@ private:
   RobotMovement &robotMovement;
   float velocityX = 0;
   float velocityY = 0;
-  bool isRightFastRun = false;
   float accelerationY = 0.000005;
   float gravity = 0.00006;
   float maxYPosition = 352;
+  bool isFastRun = false;
   bool jumpAfterTopCollision = false;
   bool fallDownAfterSlide = false;
   bool blockedSlide = false;
