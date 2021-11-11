@@ -18,6 +18,7 @@ private:
   bool jumpAfterTopCollision = false;
   bool fallDownAfterSlide = false;
   bool blockedSlide = false;
+  bool isShoot = false;
 
   void keyUp();
 
@@ -30,6 +31,8 @@ private:
   void keyRight();
 
   void neitherKeyLeftNorKeyRight();
+
+  void keySpace();
 
   void setReversedRobotParams();
 
