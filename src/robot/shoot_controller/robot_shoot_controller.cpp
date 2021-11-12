@@ -22,6 +22,7 @@ void RobotShootController::shoot() {
   newBullet.sprite.setScale(0.0, 0.0);
   newBullet.setPosition(robot.isReversed ? robotPosition.x - 64 : robotPosition.x + 64, robotPosition.y + 44);
   allBullets.push_back(newBullet);
+  std::cout << "Bullets amount on the map: " << allBullets.size() << "\n";
 }
 
 void RobotShootController::setNewBulletParams(Bullet &bullet, int bulletIndex) {
@@ -29,9 +30,13 @@ void RobotShootController::setNewBulletParams(Bullet &bullet, int bulletIndex) {
   sf::Vector2<float> bulletScale = bullet.sprite.getScale();
   float x = bulletPosition.x + bullet.speed;
   float y = bulletPosition.y;
+  float expectedScale = constants::bulletScale;
   if (
-      ((bullet.isReversed && bulletScale.x > -0.20) || (!bullet.isReversed && bulletScale.x < 0.20)) &&
-      bulletScale.y < 0.20 &&
+      (
+          (bullet.isReversed && bulletScale.x > -expectedScale) ||
+          (!bullet.isReversed && bulletScale.x < expectedScale)
+      ) &&
+      bulletScale.y < expectedScale &&
       bullet.textureClock.getElapsedTime().asMilliseconds() > 2
       ) {
     bullet.sprite.setScale(
@@ -47,7 +52,12 @@ void RobotShootController::setNewBulletParams(Bullet &bullet, int bulletIndex) {
     bullet.sprite.setTexture(robotTextures.bulletsTextures[bullet.textureCounter]);
     bullet.textureClock.restart();
   }
-  if (x > 1400 || x < 0) {
+  if (
+      bulletCollisions.isCollisionWithGroundElement(bullet) ||
+      bulletCollisions.isCollisionWithAirElement(bullet) ||
+      x > 1400 ||
+      x < 0
+      ) {
     allBullets.erase(allBullets.begin() + bulletIndex);
   } else {
     bullet.setPosition(x, y);

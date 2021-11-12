@@ -20,7 +20,9 @@ add_executable(R_S
         src/robot/movement/robot_movement.cpp
         src/robot/shoot_controller/robot_shoot_controller.cpp
         src/models/bullet/bullet.cpp
-        src/robot/textures/robot_textures.cpp)
+        src/robot/textures/robot_textures.cpp
+        src/object_collisions/bullet/bullet_collisions.cpp
+        src/object_collisions/map_elements/map_elements_collisions.cpp)
 
 include_directories(C:/SFML/include)
 

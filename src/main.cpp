@@ -16,13 +16,18 @@ int main() {
   GroundElementsGenerator groundElementsGenerator;
   AirElementsGenerator airElementsGenerator;
   MapGenerator mapGenerator(backgroundGenerator, groundElementsGenerator, airElementsGenerator);
+  MapElementsCollisions mapElementsCollisions(
+      airElementsGenerator.airElements,
+      groundElementsGenerator.groundElements
+  );
   //Robot
   Robot robot;
   RobotTextures robotTextures;
   RobotAnimations robotAnimations(robotTextures);
-  RobotCollisions robotCollisions(airElementsGenerator.airElements, groundElementsGenerator.groundElements, robot);
+  RobotCollisions robotCollisions(mapElementsCollisions, robot);
+  BulletCollisions bulletCollisions(mapElementsCollisions);
   RobotMovement robotMovement(robot, robotAnimations, robotCollisions);
-  RobotShootController robotShootController(robot, robotTextures);
+  RobotShootController robotShootController(robot, robotTextures, bulletCollisions);
   RobotMovementController robotMovementController(robot, robotMovement, robotShootController);
   RobotController robotController(robot, robotAnimations, robotMovementController, robotShootController);
 

@@ -2,10 +2,13 @@
 #define R_S_BULLET_H
 
 #include <SFML/Graphics.hpp>
+#include "../../constants.h"
 
 class Bullet {
 public:
   sf::Sprite sprite;
+  float width = 172 * constants::bulletScale;
+  float height = 139 * constants::bulletScale;
   float speed = 0.06f;
   bool isReversed = false;
   int textureCounter = 0;

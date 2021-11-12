@@ -28,8 +28,8 @@ public:
 
   MapElementType type;
   sf::Sprite sprite;
-  int width = 0;
-  int height = 0;
+  float width = 0;
+  float height = 0;
 
   sf::Vector2<float> getSpritePosition();
 };

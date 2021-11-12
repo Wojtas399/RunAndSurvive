@@ -5,19 +5,22 @@
 #include "../../models/bullet/bullet.h"
 #include "../../models/robot/robot.h"
 #include "../textures/robot_textures.h"
+#include "../../object_collisions/bullet/bullet_collisions.h"
 #include <iostream>
 
 class RobotShootController {
   Robot &robot;
   RobotTextures &robotTextures;
+  BulletCollisions &bulletCollisions;
 
   void setNewBulletParams(Bullet &bullet, int bulletIndex);
 
 public:
   RobotShootController(
       Robot &robot,
-      RobotTextures &robotTextures
-      ): robot(robot), robotTextures(robotTextures) {}
+      RobotTextures &robotTextures,
+      BulletCollisions &bulletCollisions
+      ): robot(robot), robotTextures(robotTextures), bulletCollisions(bulletCollisions) {}
 
   std::vector<Bullet> allBullets;
 
