@@ -120,6 +120,7 @@ void RobotMovementController::neitherKeyLeftNorKeyRight() {
 void RobotMovementController::keySpace() {
   if (!isShoot) {
     isShoot = true;
+    shootController.shoot();
   }
 }
 

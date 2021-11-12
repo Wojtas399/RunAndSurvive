@@ -4,11 +4,13 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "../movement/robot_movement.h"
+#include "../shoot_controller/robot_shoot_controller.h"
 
 class RobotMovementController {
 private:
   Robot &robot;
   RobotMovement &robotMovement;
+  RobotShootController &shootController;
   float velocityX = 0;
   float velocityY = 0;
   float accelerationY = 0.000005;
@@ -41,8 +43,9 @@ private:
 public:
   RobotMovementController(
       Robot &robot,
-      RobotMovement &robotMovement
-  ) : robot(robot), robotMovement(robotMovement) {}
+      RobotMovement &robotMovement,
+      RobotShootController &robotShootController
+  ) : robot(robot), robotMovement(robotMovement), shootController(robotShootController) {}
 
   void keyController();
 

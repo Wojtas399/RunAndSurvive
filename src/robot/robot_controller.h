@@ -13,14 +13,20 @@ private:
   Robot &robot;
   RobotAnimations &animations;
   RobotMovementController &movementController;
+  RobotShootController &shootController;
   float scale = constants::robotScale;
 
 public:
   RobotController(
       Robot &robot,
       RobotAnimations &robotAnimations,
-      RobotMovementController &robotMovementController
-  ) : robot(robot), animations(robotAnimations), movementController(robotMovementController) {}
+      RobotMovementController &robotMovementController,
+      RobotShootController &robotShootController
+  ) :
+      robot(robot),
+      animations(robotAnimations),
+      movementController(robotMovementController),
+      shootController(robotShootController) {}
 
   void loadTextures();
 

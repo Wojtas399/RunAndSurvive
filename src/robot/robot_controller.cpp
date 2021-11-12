@@ -8,10 +8,12 @@ void RobotController::loadTextures() {
 
 void RobotController::move() {
   movementController.move();
+  shootController.move();
 }
 
 void RobotController::draw(sf::RenderWindow &window) const {
   window.draw(robot.sprite);
+  shootController.draw(window);
 }
 
 void RobotController::eventController() {
