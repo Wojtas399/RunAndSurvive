@@ -5,7 +5,7 @@ void RobotAnimations::loadTextures() {
 }
 
 void RobotAnimations::runAnim(sf::Sprite &character, bool isFastRun) {
-  float timeElapsed = isFastRun ? 0.07f : 0.1f;
+  float timeElapsed = isFastRun ? 0.065f : 0.08f;
   if (clock.getElapsedTime().asSeconds() > timeElapsed) {
     character.setTexture(textures.runTextures[runTextureCounter]);
     runTextureCounter++;

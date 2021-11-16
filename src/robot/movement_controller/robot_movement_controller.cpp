@@ -5,7 +5,7 @@ void RobotMovementController::keyController() {
       sf::Keyboard::isKeyPressed(sf::Keyboard::Up) &&
       robot.moveType != RobotMoveType::jump &&
       robot.moveType != RobotMoveType::fallDown &&
-      !robotMovement.isAirElementCollision(26, 26, 27, 12)
+      robot.moveType != RobotMoveType::slide
       ) {
     keyUp();
   } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
@@ -16,10 +16,7 @@ void RobotMovementController::keyController() {
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
     keyRight();
-  } else if (
-      sf::Keyboard::isKeyPressed(sf::Keyboard::Left) &&
-      !robotMovement.isAirElementCollision(26, 26, 27, 8)
-      ) {
+  } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
     keyLeft();
   } else {
     neitherKeyLeftNorKeyRight();
@@ -60,8 +57,8 @@ void RobotMovementController::move() {
 }
 
 void RobotMovementController::keyUp() {
-  velocityY = -0.08;
-  accelerationY = 0.000005;
+  velocityY = constants::robotVelocityY;
+  accelerationY = 0.0001;
   isShoot = false;
   robot.moveType = RobotMoveType::jump;
 }
@@ -93,13 +90,13 @@ void RobotMovementController::neitherKeyUpNorKeyDown() {
 }
 
 void RobotMovementController::keyLeft() {
-  velocityX = -0.06;
+  velocityX = constants::robotLeftVelocityX;
   isFastRun = true;
   setReversedRobotParams();
 }
 
 void RobotMovementController::keyRight() {
-  velocityX = 0.015;
+  velocityX = constants::robotRightVelocityX;
   isFastRun = true;
   if (
       robot.moveType == RobotMoveType::slide &&

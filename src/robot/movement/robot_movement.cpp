@@ -8,7 +8,7 @@ void RobotMovement::run(float &velocityX, float &velocityY, bool &isFastRun, boo
     setFallDownMovement(velocityY);
   } else {
     if (isFastRun) {
-      velocityX = robot.isReversed ? -0.06 : 0.015;
+      velocityX = robot.isReversed ? constants::robotLeftVelocityX : constants::robotRightVelocityX;
     }
     setNewRobotPosition(robot.getPosition().x + velocityX, robot.getPosition().y);
     if (isShoot) {
@@ -144,10 +144,10 @@ void RobotMovement::jumpCollision(
   } else if (y < maxYPosition) {
     velocityY += gravity;
     if (robot.isReversed) {
-      velocityX = -0.06;
+      velocityX = constants::robotLeftVelocityX;
     }
   } else if (robot.isReversed) {
-    velocityX = -0.06;
+    velocityX = constants::robotLeftVelocityX;
   }
 }
 

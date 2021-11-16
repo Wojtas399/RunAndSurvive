@@ -13,7 +13,7 @@ private:
   RobotShootController &shootController;
   float velocityX = 0;
   float velocityY = 0;
-  float accelerationY = 0.000005;
+  float accelerationY = 0.0001;
   float gravity = 0.00006;
   float maxYPosition = 352;
   bool isFastRun = false;

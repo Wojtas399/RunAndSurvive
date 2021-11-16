@@ -34,18 +34,25 @@ int main() {
   mapGenerator.load();
   robotController.loadTextures();
 
+  bool isGameStarted = false;
+
   while (window.isOpen()) {
     sf::Event event{};
     while (window.pollEvent(event)) {
       if (event.type == sf::Event::Closed || robot.getPosition().x + robot.spriteWidth < 0) {
         window.close();
       }
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        isGameStarted = true;
+      }
       robotController.eventController();
     }
 
-    //movement
-    mapGenerator.move();
-    robotController.move();
+    if (isGameStarted) {
+      //movement
+      mapGenerator.move();
+      robotController.move();
+    }
 
     //drawing
     window.clear();
