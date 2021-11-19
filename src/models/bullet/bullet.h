@@ -6,17 +6,23 @@
 
 class Bullet {
 public:
-  sf::Sprite sprite;
+  sf::Sprite bulletSprite;
+  sf::Sprite muzzleSprite;
   float width = 172 * constants::bulletScale;
   float height = 139 * constants::bulletScale;
   float speed = 0.06f;
   bool isReversed = false;
-  int textureCounter = 0;
+  int bulletCounter = 0;
+  int muzzleCounter = -1;
   sf::Clock textureClock;
 
-  sf::Vector2<float> getPosition();
+  sf::Vector2<float> getBulletPosition();
 
-  void setPosition(float x, float y);
+  sf::Vector2<float> getMuzzlePosition();
+
+  void setBulletPosition(float x, float y);
+
+  void setMuzzlePosition(float x, float y);
 };
 
 #endif //R_S_BULLET_H

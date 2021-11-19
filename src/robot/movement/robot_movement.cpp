@@ -30,7 +30,9 @@ void RobotMovement::jump(
 ) {
   float x = robot.getPosition().x;
   float y = robot.getPosition().y;
-  x += velocityX;
+  if (!isCollisionForward()) {
+    x += velocityX;
+  }
   y += velocityY;
   velocityY += accelerationY;
   jumpCollision(

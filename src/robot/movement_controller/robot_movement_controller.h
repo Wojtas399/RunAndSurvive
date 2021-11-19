@@ -21,20 +21,27 @@ private:
   bool fallDownAfterSlide = false;
   bool blockedSlide = false;
   bool isShoot = false;
+  sf::Clock shootClock;
 
-  void keyUp();
+  void verticalMovement(bool isKeyUpPressed, bool isKeyDownPressed);
 
-  void keyDown();
+  void horizontalMovement(bool isKeyLeftPressed, bool isKeyRightPressed);
 
-  void neitherKeyUpNorKeyDown();
+  void shootMovement(bool isSpacePressed);
 
-  void keyLeft();
+  void doMatchingMovement();
 
-  void keyRight();
+  void moveUp();
 
-  void neitherKeyLeftNorKeyRight();
+  void moveDown();
 
-  void keySpace();
+  void neitherMoveUpNorMoveDown();
+
+  void moveLeft();
+
+  void moveRight();
+
+  void neitherMoveLeftNorMoveRight();
 
   void setReversedRobotParams();
 
@@ -47,9 +54,13 @@ public:
       RobotShootController &robotShootController
   ) : robot(robot), robotMovement(robotMovement), shootController(robotShootController) {}
 
-  void keyController();
-
-  void move();
+  void move(
+      bool isKeyUpPressed,
+      bool isKeyDownPressed,
+      bool isKeyLeftPressed,
+      bool isKeyRightPressed,
+      bool isSpacePressed
+  );
 };
 
 #endif //R_S_ROBOT_MOVEMENT_CONTROLLER_H

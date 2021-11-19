@@ -7,6 +7,7 @@ void RobotTextures::load() {
   loadSlideTextures();
   loadShootTextures();
   loadBulletsTextures();
+  loadMuzzleTextures();
 }
 
 void RobotTextures::loadRunTextures() {
@@ -130,8 +131,7 @@ void RobotTextures::loadShootTextures() {
       !shoot5Texture.loadFromFile("assets/robot/run_shoot_5.png") ||
       !shoot6Texture.loadFromFile("assets/robot/run_shoot_6.png") ||
       !shoot7Texture.loadFromFile("assets/robot/run_shoot_7.png") ||
-      !shoot8Texture.loadFromFile("assets/robot/run_shoot_8.png") ||
-      !shoot9Texture.loadFromFile("assets/robot/run_shoot_9.png")
+      !shoot8Texture.loadFromFile("assets/robot/run_shoot_8.png")
       ) {
     std::cout << "Cannot load one of the shoot textures";
   }
@@ -143,8 +143,7 @@ void RobotTextures::loadShootTextures() {
       shoot5Texture,
       shoot6Texture,
       shoot7Texture,
-      shoot8Texture,
-      shoot9Texture
+      shoot8Texture
   });
 }
 
@@ -164,5 +163,24 @@ void RobotTextures::loadBulletsTextures() {
       bullet3Texture,
       bullet4Texture,
       bullet5Texture
+  });
+}
+
+void RobotTextures::loadMuzzleTextures() {
+  if (
+      !muzzle1Texture.loadFromFile("assets/robot/bullets/muzzle_1.png") ||
+      !muzzle2Texture.loadFromFile("assets/robot/bullets/muzzle_2.png") ||
+      !muzzle3Texture.loadFromFile("assets/robot/bullets/muzzle_3.png") ||
+      !muzzle4Texture.loadFromFile("assets/robot/bullets/muzzle_4.png") ||
+      !muzzle5Texture.loadFromFile("assets/robot/bullets/muzzle_5.png")
+      ) {
+    std::cout << "Cannot load one of the muzzle textures";
+  }
+  muzzlesTextures.insert(muzzlesTextures.end(), {
+      muzzle1Texture,
+      muzzle2Texture,
+      muzzle3Texture,
+      muzzle4Texture,
+      muzzle5Texture
   });
 }

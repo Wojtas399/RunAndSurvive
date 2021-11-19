@@ -2,8 +2,8 @@
 
 bool BulletCollisions::isCollisionWithGroundElement(Bullet &bullet) {
   return mapElementsCollisions.isCollisionWithGroundElement(
-      bullet.getPosition().x,
-      bullet.getPosition().y,
+      bullet.getBulletPosition().x,
+      bullet.getBulletPosition().y,
       bullet.width,
       bullet.height,
       bullet.isReversed,
@@ -15,14 +15,14 @@ bool BulletCollisions::isCollisionWithGroundElement(Bullet &bullet) {
 
 bool BulletCollisions::isCollisionWithAirElement(Bullet &bullet) {
   return mapElementsCollisions.isCollisionWithAirElement(
-      bullet.getPosition().x,
-      bullet.getPosition().y,
+      bullet.getBulletPosition().x,
+      bullet.getBulletPosition().y,
       bullet.width,
       bullet.height,
       bullet.isReversed,
       6,
       6,
-      6,
-      6
+      0,
+      0
   );
 }

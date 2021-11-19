@@ -15,6 +15,14 @@ class RobotShootController {
 
   void setNewBulletParams(Bullet &bullet, int bulletIndex);
 
+  void muzzleAnim(Bullet &bullet, int &bulletIndex, bool &isDeleted);
+
+  static void startMuzzleAnim(Bullet &bullet);
+
+  static void setBulletOrientation(Bullet &bullet, sf::Vector2<float> scale);
+
+  void setNextBulletTexture(Bullet &bullet);
+
 public:
   RobotShootController(
       Robot &robot,

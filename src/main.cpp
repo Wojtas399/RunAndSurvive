@@ -45,7 +45,7 @@ int main() {
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
         isGameStarted = true;
       }
-      robotController.eventController();
+      robotController.keyController();
     }
 
     if (isGameStarted) {

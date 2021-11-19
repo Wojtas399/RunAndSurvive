@@ -9,7 +9,7 @@ namespace constants {
   static const float mapSpeed = 0.04;
   static const float robotVelocityY = -0.18;
   static const float robotLeftVelocityX = -0.08;
-  static const float robotRightVelocityX = 0.017;
+  static const float robotRightVelocityX = 0.018;
 }
 
 #endif //R_S_CONSTANTS_H
