@@ -1,35 +1,59 @@
 #include "robot_movement_controller.h"
 
-void RobotMovementController::keyController() {
+void RobotMovementController::move(
+    bool isKeyUpPressed,
+    bool isKeyDownPressed,
+    bool isKeyLeftPressed,
+    bool isKeyRightPressed,
+    bool isSpacePressed
+) {
+  verticalMovement(isKeyUpPressed, isKeyDownPressed);
+  horizontalMovement(isKeyLeftPressed, isKeyRightPressed);
+  shootMovement(isSpacePressed);
+  doMatchingMovement();
+}
+
+void RobotMovementController::verticalMovement(bool isKeyUpPressed, bool isKeyDownPressed) {
   if (
-      sf::Keyboard::isKeyPressed(sf::Keyboard::Up) &&
+      isKeyUpPressed &&
       robot.moveType != RobotMoveType::jump &&
       robot.moveType != RobotMoveType::fallDown &&
-      !robotMovement.isAirElementCollision(26, 26, 27, 12)
+      robot.moveType != RobotMoveType::slide
       ) {
-    keyUp();
-  } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-    keyDown();
+    moveUp();
+  } else if (isKeyDownPressed) {
+    moveDown();
   } else {
-    neitherKeyUpNorKeyDown();
-  }
-
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-    keyRight();
-  } else if (
-      sf::Keyboard::isKeyPressed(sf::Keyboard::Left) &&
-      !robotMovement.isAirElementCollision(26, 26, 27, 8)
-      ) {
-    keyLeft();
-  } else {
-    neitherKeyLeftNorKeyRight();
+    neitherMoveUpNorMoveDown();
   }
 }
 
-void RobotMovementController::move() {
+void RobotMovementController::horizontalMovement(bool isKeyLeftPressed, bool isKeyRightPressed) {
+  if (isKeyLeftPressed) {
+    moveLeft();
+  } else if (isKeyRightPressed) {
+    moveRight();
+  } else {
+    neitherMoveLeftNorMoveRight();
+  }
+}
+
+void RobotMovementController::shootMovement(bool isSpacePressed) {
+  if (
+      isSpacePressed &&
+      shootClock.getElapsedTime().asMilliseconds() >= 250 &&
+      robot.moveType == RobotMoveType::run
+      ) {
+    isShoot = true;
+    shootController.shoot();
+    shootClock.restart();
+  }
+}
+
+void RobotMovementController::doMatchingMovement() {
   switch (robot.moveType) {
     case RobotMoveType::run: {
-      robotMovement.run(velocityX, velocityY, isFastRun);
+      robotMovement.run(velocityX, velocityY, isFastRun, isShoot);
       break;
     }
     case RobotMoveType::jump:
@@ -49,24 +73,24 @@ void RobotMovementController::move() {
       break;
     }
     case RobotMoveType::slide: {
-      robotMovement.slide(blockedSlide, velocityY, fallDownAfterSlide);
+      robotMovement.slide(blockedSlide, velocityY, fallDownAfterSlide, isShoot);
       break;
     }
   }
 }
 
-void RobotMovementController::keyUp() {
-  velocityY = -0.08;
-  accelerationY = 0.000005;
+void RobotMovementController::moveUp() {
+  velocityY = constants::robotVelocityY;
+  accelerationY = 0.0001;
   robot.moveType = RobotMoveType::jump;
 }
 
-void RobotMovementController::keyDown() {
+void RobotMovementController::moveDown() {
   if (
       !fallDownAfterSlide &&
       (robot.moveType == RobotMoveType::jump || robot.moveType == RobotMoveType::fallDown)
       ) {
-    accelerationY = 0.00009;
+    accelerationY = 0.0003;
   } else if (
       (robot.moveType == RobotMoveType::run || robot.moveType == RobotMoveType::idle) &&
       !robot.isReversed
@@ -75,7 +99,7 @@ void RobotMovementController::keyDown() {
   }
 }
 
-void RobotMovementController::neitherKeyUpNorKeyDown() {
+void RobotMovementController::neitherMoveUpNorMoveDown() {
   if (robot.moveType == RobotMoveType::slide) {
     if (robotMovement.isAirElementCollision(26, 26, 17, 12)) {
       blockedSlide = true;
@@ -86,14 +110,14 @@ void RobotMovementController::neitherKeyUpNorKeyDown() {
   fallDownAfterSlide = false;
 }
 
-void RobotMovementController::keyLeft() {
-  velocityX = -0.06;
+void RobotMovementController::moveLeft() {
+  velocityX = constants::robotLeftVelocityX;
   isFastRun = true;
   setReversedRobotParams();
 }
 
-void RobotMovementController::keyRight() {
-  velocityX = 0.015;
+void RobotMovementController::moveRight() {
+  velocityX = constants::robotRightVelocityX;
   isFastRun = true;
   if (
       robot.moveType == RobotMoveType::slide &&
@@ -105,7 +129,7 @@ void RobotMovementController::keyRight() {
   }
 }
 
-void RobotMovementController::neitherKeyLeftNorKeyRight() {
+void RobotMovementController::neitherMoveLeftNorMoveRight() {
   velocityX = 0;
   isFastRun = false;
   setNormalRobotParams();

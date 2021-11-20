@@ -6,59 +6,59 @@
 
 class RobotMovement {
 private:
-    Robot &robot;
-    RobotAnimations &robotAnimations;
-    RobotCollisions &robotCollisions;
+  Robot &robot;
+  RobotAnimations &robotAnimations;
+  RobotCollisions &robotCollisions;
 
-    void jumpCollision(
-            float &x,
-            float &y,
-            float &velocityX,
-            float &velocityY,
-            bool &jumpAfterTopCollision,
-            float &maxYPosition,
-            float &gravity
-    );
+  void jumpCollision(
+      float &x,
+      float &y,
+      float &velocityX,
+      float &velocityY,
+      bool &jumpAfterTopCollision,
+      float &maxYPosition,
+      float &gravity
+  );
 
-    void setNewRobotPosition(float x, float y);
+  void setNewRobotPosition(float x, float y);
 
-    void stopMovementVertically(float &y, float &velocityY, float &maxYPosition);
+  void stopMovementVertically(float &y, float &velocityY, float &maxYPosition);
 
-    void setFallDownMovement(float &velocityY);
+  void setFallDownMovement(float &velocityY);
 
-    bool isNormalGroundCollision();
+  bool isNormalGroundCollision();
 
-    bool isNormalAirCollision();
+  bool isNormalAirCollision();
 
-    bool isCollisionForward();
+  bool isCollisionForward();
 
-    bool isFreeSpaceUnder();
+  bool isFreeSpaceUnder();
 
 public:
-    RobotMovement(
-            Robot &robot,
-            RobotAnimations &robotAnimations,
-            RobotCollisions &robotCollisions
-    ) : robot(robot), robotAnimations(robotAnimations), robotCollisions(robotCollisions) {}
+  RobotMovement(
+      Robot &robot,
+      RobotAnimations &robotAnimations,
+      RobotCollisions &robotCollisions
+  ) : robot(robot), robotAnimations(robotAnimations), robotCollisions(robotCollisions) {}
 
-    void run(float &velocityX, float &velocityY, bool &isFastRun);
+  void run(float &velocityX, float &velocityY, bool &isFastRun, bool &isShoot);
 
-    void jump(
-            float &velocityX,
-            float &velocityY,
-            float &accelerationY,
-            float &maxYPosition,
-            float &gravity,
-            bool &jumpAfterTopCollision
-    );
+  void jump(
+      float &velocityX,
+      float &velocityY,
+      float &accelerationY,
+      float &maxYPosition,
+      float &gravity,
+      bool &jumpAfterTopCollision
+  );
 
-    void idle();
+  void idle();
 
-    void slide(bool &blockedSlide, float &velocityY, bool &fallDownAfterSlide);
+  void slide(bool &blockedSlide, float &velocityY, bool &fallDownAfterSlide, bool &isShoot);
 
-    bool isGroundElementCollision(float leftReduction, float rightReduction, float heightReduction);
+  bool isGroundElementCollision(float leftReduction, float rightReduction, float heightReduction);
 
-    bool isAirElementCollision(float leftReduction, float rightReduction, float topReduction, float bottomReduction);
+  bool isAirElementCollision(float leftReduction, float rightReduction, float topReduction, float bottomReduction);
 };
 
 #endif //R_S_ROBOT_MOVEMENT_H

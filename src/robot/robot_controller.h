@@ -13,14 +13,25 @@ private:
   Robot &robot;
   RobotAnimations &animations;
   RobotMovementController &movementController;
+  RobotShootController &shootController;
   float scale = constants::robotScale;
+  bool isKeyUpPressed = false;
+  bool isKeyDownPressed = false;
+  bool isKeyLeftPressed = false;
+  bool isKeyRightPressed = false;
+  bool isSpacePressed = false;
 
 public:
   RobotController(
       Robot &robot,
       RobotAnimations &robotAnimations,
-      RobotMovementController &robotMovementController
-  ) : robot(robot), animations(robotAnimations), movementController(robotMovementController) {}
+      RobotMovementController &robotMovementController,
+      RobotShootController &robotShootController
+  ) :
+      robot(robot),
+      animations(robotAnimations),
+      movementController(robotMovementController),
+      shootController(robotShootController) {}
 
   void loadTextures();
 
@@ -28,7 +39,7 @@ public:
 
   void draw(sf::RenderWindow &window) const;
 
-  void eventController();
+  void keyController();
 };
 
 #endif //R_S_ROBOT_CONTROLLER_H

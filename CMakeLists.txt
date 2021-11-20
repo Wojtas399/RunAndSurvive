@@ -1,8 +1,9 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.14)
 project(R_S)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+set(SOURCE_FILES src/main.cpp)
 add_executable(R_S
         src/main.cpp
         src/map/generators/background/background_generator.cpp
@@ -17,18 +18,14 @@ add_executable(R_S
         src/robot/animations/robot_animations.cpp
         src/robot/movement_controller/robot_movement_controller.cpp
         src/object_collisions/robot/robot_collisions.cpp
-        src/robot/movement/robot_movement.cpp)
+        src/robot/movement/robot_movement.cpp
+        src/robot/shoot_controller/robot_shoot_controller.cpp
+        src/models/bullet/bullet.cpp
+        src/robot/textures/robot_textures.cpp
+        src/object_collisions/bullet/bullet_collisions.cpp
+        src/object_collisions/map_elements/map_elements_collisions.cpp)
+include_directories(/usr/local/include)
 
-include_directories(C:/SFML/include)
-
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake-modules")
-find_package(SFML REQUIRED system window graphics)
-if (SFML_FOUND)
-    include_directories(${SFML_INCLUDE_DIR})
-    target_link_libraries(R_S ${SFML_LIBRARIES})
-endif ()
-
-if (WIN32)
-    file(GLOB BINARY_DEP_DLLS "${SFML_INCLUDE_DIR}/../bin/*.dll")
-    file(COPY ${BINARY_DEP_DLLS} DESTINATION ${CMAKE_BINARY_DIR})
-endif ()
+find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)
+include_directories(${SFML_INCLUDE_DIRS})
+target_link_libraries(R_S sfml-system sfml-window sfml-graphics sfml-audio sfml-network)

@@ -1,15 +1,21 @@
 #include "robot_movement.h"
 
-void RobotMovement::run(float &velocityX, float &velocityY, bool &isFastRun) {
+void RobotMovement::run(float &velocityX, float &velocityY, bool &isFastRun, bool &isShoot) {
   if (isNormalGroundCollision() || isNormalAirCollision()) {
     robot.moveType = RobotMoveType::idle;
+    isShoot = false;
   } else if (isFreeSpaceUnder()) {
     setFallDownMovement(velocityY);
   } else {
-    setNewRobotPosition(robot.getPosition().x + velocityX, robot.getPosition().y);
-    robotAnimations.runAnim(robot.sprite, velocityX != 0);
     if (isFastRun) {
-      velocityX = robot.isReversed ? -0.06 : 0.015;
+      velocityX = robot.isReversed ? constants::robotLeftVelocityX : constants::robotRightVelocityX;
+    }
+    setNewRobotPosition(robot.getPosition().x + velocityX, robot.getPosition().y);
+    if (isShoot) {
+      robotAnimations.shootAnim(robot.sprite, isShoot);
+    } else {
+      robotAnimations.resetShootAnimCounter();
+      robotAnimations.runAnim(robot.sprite, velocityX != 0);
     }
   }
 }
@@ -24,7 +30,9 @@ void RobotMovement::jump(
 ) {
   float x = robot.getPosition().x;
   float y = robot.getPosition().y;
-  x += velocityX;
+  if (!isCollisionForward()) {
+    x += velocityX;
+  }
   y += velocityY;
   velocityY += accelerationY;
   jumpCollision(
@@ -67,7 +75,7 @@ void RobotMovement::idle() {
   }
 }
 
-void RobotMovement::slide(bool &blockedSlide, float &velocityY, bool &fallDownAfterSlide) {
+void RobotMovement::slide(bool &blockedSlide, float &velocityY, bool &fallDownAfterSlide, bool &isShoot) {
   if (blockedSlide) {
     if (!isAirElementCollision(22, 22, 17, 12)) {
       robot.moveType = RobotMoveType::run;
@@ -76,6 +84,7 @@ void RobotMovement::slide(bool &blockedSlide, float &velocityY, bool &fallDownAf
   } else {
     if (isNormalGroundCollision() || isAirElementCollision(24, 24, 19, 8)) {
       robot.moveType = RobotMoveType::idle;
+      isShoot = false;
     } else if (isFreeSpaceUnder()) {
       setFallDownMovement(velocityY);
       fallDownAfterSlide = true;
@@ -137,10 +146,10 @@ void RobotMovement::jumpCollision(
   } else if (y < maxYPosition) {
     velocityY += gravity;
     if (robot.isReversed) {
-      velocityX = -0.06;
+      velocityX = constants::robotLeftVelocityX;
     }
   } else if (robot.isReversed) {
-    velocityX = -0.06;
+    velocityX = constants::robotLeftVelocityX;
   }
 }
 

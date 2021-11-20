@@ -4,32 +4,44 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "../movement/robot_movement.h"
+#include "../shoot_controller/robot_shoot_controller.h"
 
 class RobotMovementController {
 private:
   Robot &robot;
   RobotMovement &robotMovement;
+  RobotShootController &shootController;
   float velocityX = 0;
   float velocityY = 0;
-  float accelerationY = 0.000005;
+  float accelerationY = 0.0001;
   float gravity = 0.00006;
   float maxYPosition = 352;
   bool isFastRun = false;
   bool jumpAfterTopCollision = false;
   bool fallDownAfterSlide = false;
   bool blockedSlide = false;
+  bool isShoot = false;
+  sf::Clock shootClock;
 
-  void keyUp();
+  void verticalMovement(bool isKeyUpPressed, bool isKeyDownPressed);
 
-  void keyDown();
+  void horizontalMovement(bool isKeyLeftPressed, bool isKeyRightPressed);
 
-  void neitherKeyUpNorKeyDown();
+  void shootMovement(bool isSpacePressed);
 
-  void keyLeft();
+  void doMatchingMovement();
 
-  void keyRight();
+  void moveUp();
 
-  void neitherKeyLeftNorKeyRight();
+  void moveDown();
+
+  void neitherMoveUpNorMoveDown();
+
+  void moveLeft();
+
+  void moveRight();
+
+  void neitherMoveLeftNorMoveRight();
 
   void setReversedRobotParams();
 
@@ -38,12 +50,17 @@ private:
 public:
   RobotMovementController(
       Robot &robot,
-      RobotMovement &robotMovement
-  ) : robot(robot), robotMovement(robotMovement) {}
+      RobotMovement &robotMovement,
+      RobotShootController &robotShootController
+  ) : robot(robot), robotMovement(robotMovement), shootController(robotShootController) {}
 
-  void keyController();
-
-  void move();
+  void move(
+      bool isKeyUpPressed,
+      bool isKeyDownPressed,
+      bool isKeyLeftPressed,
+      bool isKeyRightPressed,
+      bool isSpacePressed
+  );
 };
 
 #endif //R_S_ROBOT_MOVEMENT_CONTROLLER_H

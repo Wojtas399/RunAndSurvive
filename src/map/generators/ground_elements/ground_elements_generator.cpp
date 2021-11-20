@@ -57,7 +57,7 @@ void GroundElementsGenerator::setNewElementPosition(int index) {
   MapElement &element = groundElements[index];
   sf::Vector2<float> position = element.getSpritePosition();
   if (position.x <= -400) {
-    groundElements.erase(groundElements.begin());
+    groundElements.erase(groundElements.begin() + index);
   } else {
     element.sprite.setPosition(position.x - constants::mapSpeed, position.y);
   }

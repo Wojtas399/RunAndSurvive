@@ -3,21 +3,19 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "../../models/map/map_element.h"
 #include "../../models/robot/robot.h"
+#include "../map_elements/map_elements_collisions.h"
 
 class RobotCollisions {
 private:
-  std::vector<MapElement> &airElements;
-  std::vector<MapElement> &groundElements;
+  MapElementsCollisions &mapElementsCollisions;
   Robot &robot;
 
 public:
   RobotCollisions(
-      std::vector<MapElement> &airElements,
-      std::vector<MapElement> &groundElements,
+      MapElementsCollisions &mapElementsCollisions,
       Robot &robot
-  ) : airElements(airElements), groundElements(groundElements), robot(robot) {};
+  ) : mapElementsCollisions(mapElementsCollisions), robot(robot) {};
 
   bool isCollisionWithGroundElement(float leftReduction, float rightReduction, float heightReduction);
 

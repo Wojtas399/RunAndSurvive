@@ -16,16 +16,25 @@ int main() {
   GroundElementsGenerator groundElementsGenerator;
   AirElementsGenerator airElementsGenerator;
   MapGenerator mapGenerator(backgroundGenerator, groundElementsGenerator, airElementsGenerator);
+  MapElementsCollisions mapElementsCollisions(
+      airElementsGenerator.airElements,
+      groundElementsGenerator.groundElements
+  );
   //Robot
   Robot robot;
-  RobotAnimations robotAnimations;
-  RobotCollisions robotCollisions(airElementsGenerator.airElements, groundElementsGenerator.groundElements, robot);
+  RobotTextures robotTextures;
+  RobotAnimations robotAnimations(robotTextures);
+  RobotCollisions robotCollisions(mapElementsCollisions, robot);
+  BulletCollisions bulletCollisions(mapElementsCollisions);
   RobotMovement robotMovement(robot, robotAnimations, robotCollisions);
-  RobotMovementController robotMovementController(robot, robotMovement);
-  RobotController robotController(robot, robotAnimations, robotMovementController);
+  RobotShootController robotShootController(robot, robotTextures, bulletCollisions);
+  RobotMovementController robotMovementController(robot, robotMovement, robotShootController);
+  RobotController robotController(robot, robotAnimations, robotMovementController, robotShootController);
 
   mapGenerator.load();
   robotController.loadTextures();
+
+  bool isGameStarted = false;
 
   while (window.isOpen()) {
     sf::Event event{};
@@ -33,12 +42,17 @@ int main() {
       if (event.type == sf::Event::Closed || robot.getPosition().x + robot.spriteWidth < 0) {
         window.close();
       }
-      robotController.eventController();
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        isGameStarted = true;
+      }
+      robotController.keyController();
     }
 
-    //movement
-    mapGenerator.move();
-    robotController.move();
+    if (isGameStarted) {
+      //movement
+      mapGenerator.move();
+      robotController.move();
+    }
 
     //drawing
     window.clear();
