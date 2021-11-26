@@ -2,6 +2,7 @@
 #define R_S_ZOMBIE_H
 
 #include <SFML/Graphics.hpp>
+#include "../../constants.h"
 
 enum ZombieType {
   man1,
@@ -13,8 +14,15 @@ class Zombie {
 public:
   ZombieType type;
   sf::Sprite sprite;
+  sf::Clock runClock;
+  sf::Clock standUpClock;
+  bool isReversed = true;
+  bool isAfterFallingDown = false;
   int runTextureCounter = 0;
-  sf::Clock textureClock;
+  int descentTextureCounter = 0;
+  float width = 234 * constants::zombieScale;
+  float height = 384 * constants::zombieScale;
+  float velocityY = 0;
 
   explicit Zombie(ZombieType zombieType) {
     type = zombieType;
@@ -26,7 +34,9 @@ public:
 
   void setTexture(sf::Texture &texture);
 
-  void setScale(float scale);
+  void setScale(float scaleX, float scaleY);
+
+  void setHorizontalOrientation(bool reversed);
 };
 
 

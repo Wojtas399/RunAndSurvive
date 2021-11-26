@@ -12,6 +12,12 @@ void Zombie::setTexture(sf::Texture &texture) {
   sprite.setTexture(texture);
 }
 
-void Zombie::setScale(float scale) {
-  sprite.setScale(scale, scale);
+void Zombie::setScale(float scaleX, float scaleY) {
+  sprite.setScale(scaleX, scaleY);
+}
+
+void Zombie::setHorizontalOrientation(bool reversed) {
+  isReversed = reversed;
+  setScale(reversed ? -constants::zombieScale : constants::zombieScale, constants::zombieScale);
+  setPosition(getPosition().x + (reversed ? width : -width), getPosition().y);
 }

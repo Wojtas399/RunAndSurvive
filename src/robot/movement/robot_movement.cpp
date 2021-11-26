@@ -80,6 +80,8 @@ void RobotMovement::slide(bool &blockedSlide, float &velocityY, bool &fallDownAf
     if (!isAirElementCollision(22, 22, 17, 12)) {
       robot.moveType = RobotMoveType::run;
       blockedSlide = false;
+    } else {
+      robotAnimations.slideAnim(robot.sprite);
     }
   } else {
     if (isNormalGroundCollision() || isAirElementCollision(24, 24, 19, 8)) {

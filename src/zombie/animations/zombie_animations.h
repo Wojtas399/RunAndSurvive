@@ -9,12 +9,18 @@ private:
   ZombieTextures &textures;
 
   void setNewRunTexture(Zombie &zombie);
+
+  void setNewFallTexture(Zombie &zombie);
 public:
   explicit ZombieAnimations(ZombieTextures &textures) : textures(textures) {}
 
   void loadTextures();
 
   void runAnim(Zombie &zombie);
+
+  void fallAnim(Zombie &zombie);
+
+  void standUpAnim(Zombie &zombie);
 };
 
 

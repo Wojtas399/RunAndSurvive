@@ -35,12 +35,13 @@ int main() {
   //Zombie
   ZombieTextures zombieTextures;
   ZombieAnimations zombieAnimations(zombieTextures);
-  ZombieController zombieController(zombieAnimations);
+  ZombieCollisions zombieCollisions(mapElementsCollisions);
+  ZombieMovementController zombieMovementController(zombieAnimations, zombieCollisions);
+  ZombieController zombieController(zombieMovementController);
 
   mapGenerator.load();
   robotController.loadTextures();
   zombieController.loadTextures();
-  zombieController.addZombie();
 
   bool isGameStarted = false;
 
@@ -58,7 +59,7 @@ int main() {
 
     if (isGameStarted) {
       //movement
-//      mapGenerator.move();
+      mapGenerator.move();
       robotController.move();
       zombieController.move();
     }

@@ -4,24 +4,29 @@
 
 #include "textures/zombie_textures.h"
 #include "../models/zombie/zombie.h"
-#include "animations/zombie_animations.h"
+#include "../constants.h"
+#include "movement/zombie_movement_controller.h"
 
 class ZombieController {
-private:ZombieAnimations &animations;
+private:
+  ZombieMovementController &movementController;
   std::vector<Zombie> zombies;
+  sf::Clock clock;
+
+  void addZombie();
+
+  static ZombieType getZombieType(int typeIndex);
 
 public:
   explicit ZombieController(
-      ZombieAnimations &zombieAnimations
-  ) : animations(zombieAnimations) {}
+      ZombieMovementController &zombieMovementController
+  ) : movementController(zombieMovementController) {}
 
   void loadTextures();
 
   void move();
 
   void draw(sf::RenderWindow &window);
-
-  void addZombie();
 };
 
 

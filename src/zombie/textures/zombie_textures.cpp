@@ -8,14 +8,17 @@ void ZombieTextures::loadTextures() {
 
 void ZombieTextures::loadZ1Textures() {
   loadZ1RunTextures();
+  loadZ1FallTextures();
 }
 
 void ZombieTextures::loadZ2Textures() {
   loadZ2RunTextures();
+  loadZ2FallTextures();
 }
 
 void ZombieTextures::loadZ3Textures() {
   loadZ3RunTextures();
+  loadZ3FallTextures();
 }
 
 void ZombieTextures::loadZ1RunTextures() {
@@ -37,6 +40,22 @@ void ZombieTextures::loadZ1RunTextures() {
       z1Run4Texture,
       z1Run5Texture,
       z1Run6Texture,
+  });
+}
+
+void ZombieTextures::loadZ1FallTextures() {
+  if (
+      !z1Fall1Texture.loadFromFile("assets/zombie/zombie1/fall_1.png") ||
+      !z1Fall2Texture.loadFromFile("assets/zombie/zombie1/fall_2.png") ||
+      !z1Fall3Texture.loadFromFile("assets/zombie/zombie1/fall_3.png")
+      ) {
+    std::cout << "Cannot load one of the zombie 1 fall textures\n";
+  }
+
+  zombie1FallTextures.insert(zombie1FallTextures.end(), {
+      z1Fall1Texture,
+      z1Fall2Texture,
+      z1Fall3Texture,
   });
 }
 
@@ -62,6 +81,22 @@ void ZombieTextures::loadZ2RunTextures() {
   });
 }
 
+void ZombieTextures::loadZ2FallTextures() {
+  if (
+      !z2Fall1Texture.loadFromFile("assets/zombie/zombie2/fall_1.png") ||
+      !z2Fall2Texture.loadFromFile("assets/zombie/zombie2/fall_2.png") ||
+      !z2Fall3Texture.loadFromFile("assets/zombie/zombie2/fall_3.png")
+      ) {
+    std::cout << "Cannot load one of the zombie 2 fall textures\n";
+  }
+
+  zombie2FallTextures.insert(zombie2FallTextures.end(), {
+      z2Fall1Texture,
+      z2Fall2Texture,
+      z2Fall3Texture,
+  });
+}
+
 void ZombieTextures::loadZ3RunTextures() {
   if (
       !z3Run1Texture.loadFromFile("assets/zombie/zombie3/walk_1.png") ||
@@ -81,5 +116,21 @@ void ZombieTextures::loadZ3RunTextures() {
       z3Run4Texture,
       z3Run5Texture,
       z3Run6Texture,
+  });
+}
+
+void ZombieTextures::loadZ3FallTextures() {
+  if (
+      !z3Fall1Texture.loadFromFile("assets/zombie/zombie3/fall_1.png") ||
+      !z3Fall2Texture.loadFromFile("assets/zombie/zombie3/fall_2.png") ||
+      !z3Fall3Texture.loadFromFile("assets/zombie/zombie3/fall_3.png")
+      ) {
+    std::cout << "Cannot load one of the zombie 3 fall textures\n";
+  }
+
+  zombie3FallTextures.insert(zombie3FallTextures.end(), {
+      z3Fall1Texture,
+      z3Fall2Texture,
+      z3Fall3Texture,
   });
 }

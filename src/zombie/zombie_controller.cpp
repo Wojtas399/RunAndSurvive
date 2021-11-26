@@ -1,12 +1,14 @@
 #include "zombie_controller.h"
 
 void ZombieController::loadTextures() {
-  animations.loadTextures();
+  movementController.loadAnimationsTextures();
 }
 
 void ZombieController::move() {
-  for (Zombie &zombie: zombies) {
-    animations.runAnim(zombie);
+  movementController.move(zombies);
+  if (clock.getElapsedTime().asMilliseconds() > 2000) {
+    addZombie();
+    clock.restart();
   }
 }
 
@@ -17,8 +19,22 @@ void ZombieController::draw(sf::RenderWindow &window) {
 }
 
 void ZombieController::addZombie() {
-  Zombie newZombie(ZombieType::woman);
-  newZombie.setScale(0.20);
-  newZombie.setPosition(700, 442);
+  int index = rand() % 3;
+  Zombie newZombie(getZombieType(index));
+  newZombie.setHorizontalOrientation(true);
+  newZombie.setPosition(1600, 50);
   zombies.push_back(newZombie);
+}
+
+ZombieType ZombieController::getZombieType(int typeIndex) {
+  switch (typeIndex) {
+    case 0:
+      return ZombieType::man1;
+    case 1:
+      return ZombieType::man2;
+    case 2:
+      return ZombieType::woman;
+    default:
+      return ZombieType::man1;
+  }
 }
