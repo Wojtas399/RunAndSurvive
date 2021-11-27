@@ -10,7 +10,6 @@
 class ZombieController {
 private:
   ZombieMovementController &movementController;
-  std::vector<Zombie> zombies;
   sf::Clock clock;
 
   void addZombie();
@@ -18,6 +17,8 @@ private:
   static ZombieType getZombieType(int typeIndex);
 
 public:
+  std::vector<Zombie> zombies;
+
   explicit ZombieController(
       ZombieMovementController &zombieMovementController
   ) : movementController(zombieMovementController) {}

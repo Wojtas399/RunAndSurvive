@@ -13,7 +13,6 @@ private:
   Robot &robot;
   RobotAnimations &animations;
   RobotMovementController &movementController;
-  RobotShootController &shootController;
   float scale = constants::robotScale;
   bool isKeyUpPressed = false;
   bool isKeyDownPressed = false;
@@ -22,6 +21,8 @@ private:
   bool isSpacePressed = false;
 
 public:
+  RobotShootController &shootController;
+
   RobotController(
       Robot &robot,
       RobotAnimations &robotAnimations,

@@ -4,6 +4,7 @@
 
 #include "../animations/zombie_animations.h"
 #include "../../object_collisions/zombie/zombie_collisions.h"
+#include "../../object_collisions/robot/robot_collisions.h"
 
 class ZombieMovementController {
 private:

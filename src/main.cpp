@@ -8,6 +8,7 @@
 #include "robot/robot_controller.h"
 #include "zombie/textures/zombie_textures.h"
 #include "zombie/zombie_controller.h"
+#include "global_controller/global_controller.h"
 
 int main() {
   srand(time(NULL));
@@ -39,9 +40,8 @@ int main() {
   ZombieMovementController zombieMovementController(zombieAnimations, zombieCollisions);
   ZombieController zombieController(zombieMovementController);
 
-  mapGenerator.load();
-  robotController.loadTextures();
-  zombieController.loadTextures();
+  GlobalController globalController(mapGenerator, robotController, zombieController, bulletCollisions);
+  globalController.loadTextures();
 
   bool isGameStarted = false;
 
@@ -58,17 +58,11 @@ int main() {
     }
 
     if (isGameStarted) {
-      //movement
-      mapGenerator.move();
-      robotController.move();
-      zombieController.move();
+      globalController.moveElements();
     }
 
-    //drawing
     window.clear();
-    mapGenerator.draw(window);
-    robotController.draw(window);
-    zombieController.draw(window);
+    globalController.draw(window);
     window.display();
   }
 
