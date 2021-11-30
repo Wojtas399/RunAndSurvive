@@ -12,7 +12,11 @@ private:
   ZombieCollisions &collisions;
   const float accelerationY = 0.0001;
 
-  void setNewZombiePosition(Zombie &zombie);
+  void movementController(Zombie &zombie);
+
+  void manageMovementType(Zombie &zombie);
+
+  void basicMove(Zombie &zombie, float x, float y);
 
   bool isNormalCollision(Zombie &zombie);
 

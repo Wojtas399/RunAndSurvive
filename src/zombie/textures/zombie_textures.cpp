@@ -9,16 +9,19 @@ void ZombieTextures::loadTextures() {
 void ZombieTextures::loadZ1Textures() {
   loadZ1RunTextures();
   loadZ1FallTextures();
+  loadZ1DeadTextures();
 }
 
 void ZombieTextures::loadZ2Textures() {
   loadZ2RunTextures();
   loadZ2FallTextures();
+  loadZ2DeadTextures();
 }
 
 void ZombieTextures::loadZ3Textures() {
   loadZ3RunTextures();
   loadZ3FallTextures();
+  loadZ3DeadTextures();
 }
 
 void ZombieTextures::loadZ1RunTextures() {
@@ -56,6 +59,32 @@ void ZombieTextures::loadZ1FallTextures() {
       z1Fall1Texture,
       z1Fall2Texture,
       z1Fall3Texture,
+  });
+}
+
+void ZombieTextures::loadZ1DeadTextures() {
+  if (
+      !z1Dead1Texture.loadFromFile("assets/zombie/zombie1/dead_1.png") ||
+      !z1Dead2Texture.loadFromFile("assets/zombie/zombie1/dead_2.png") ||
+      !z1Dead3Texture.loadFromFile("assets/zombie/zombie1/dead_3.png") ||
+      !z1Dead4Texture.loadFromFile("assets/zombie/zombie1/dead_4.png") ||
+      !z1Dead5Texture.loadFromFile("assets/zombie/zombie1/dead_5.png") ||
+      !z1Dead6Texture.loadFromFile("assets/zombie/zombie1/dead_6.png") ||
+      !z1Dead7Texture.loadFromFile("assets/zombie/zombie1/dead_7.png") ||
+      !z1Dead8Texture.loadFromFile("assets/zombie/zombie1/dead_8.png")
+      ) {
+    std::cout << "Cannot load one of the zombie 1 dead textures\n";
+  }
+
+  zombie1DeadTextures.insert(zombie1DeadTextures.end(), {
+    z1Dead1Texture,
+    z1Dead2Texture,
+    z1Dead3Texture,
+    z1Dead4Texture,
+    z1Dead5Texture,
+    z1Dead6Texture,
+    z1Dead7Texture,
+    z1Dead8Texture,
   });
 }
 
@@ -97,6 +126,32 @@ void ZombieTextures::loadZ2FallTextures() {
   });
 }
 
+void ZombieTextures::loadZ2DeadTextures() {
+  if (
+      !z2Dead1Texture.loadFromFile("assets/zombie/zombie2/dead_1.png") ||
+      !z2Dead2Texture.loadFromFile("assets/zombie/zombie2/dead_2.png") ||
+      !z2Dead3Texture.loadFromFile("assets/zombie/zombie2/dead_3.png") ||
+      !z2Dead4Texture.loadFromFile("assets/zombie/zombie2/dead_4.png") ||
+      !z2Dead5Texture.loadFromFile("assets/zombie/zombie2/dead_5.png") ||
+      !z2Dead6Texture.loadFromFile("assets/zombie/zombie2/dead_6.png") ||
+      !z2Dead7Texture.loadFromFile("assets/zombie/zombie2/dead_7.png") ||
+      !z2Dead8Texture.loadFromFile("assets/zombie/zombie2/dead_8.png")
+      ) {
+    std::cout << "Cannot load one of the zombie 2 dead textures\n";
+  }
+
+  zombie2DeadTextures.insert(zombie2DeadTextures.end(), {
+      z2Dead1Texture,
+      z2Dead2Texture,
+      z2Dead3Texture,
+      z2Dead4Texture,
+      z2Dead5Texture,
+      z2Dead6Texture,
+      z2Dead7Texture,
+      z2Dead8Texture,
+  });
+}
+
 void ZombieTextures::loadZ3RunTextures() {
   if (
       !z3Run1Texture.loadFromFile("assets/zombie/zombie3/walk_1.png") ||
@@ -132,5 +187,31 @@ void ZombieTextures::loadZ3FallTextures() {
       z3Fall1Texture,
       z3Fall2Texture,
       z3Fall3Texture,
+  });
+}
+
+void ZombieTextures::loadZ3DeadTextures() {
+  if (
+      !z3Dead1Texture.loadFromFile("assets/zombie/zombie3/dead_1.png") ||
+      !z3Dead2Texture.loadFromFile("assets/zombie/zombie3/dead_2.png") ||
+      !z3Dead3Texture.loadFromFile("assets/zombie/zombie3/dead_3.png") ||
+      !z3Dead4Texture.loadFromFile("assets/zombie/zombie3/dead_4.png") ||
+      !z3Dead5Texture.loadFromFile("assets/zombie/zombie3/dead_5.png") ||
+      !z3Dead6Texture.loadFromFile("assets/zombie/zombie3/dead_6.png") ||
+      !z3Dead7Texture.loadFromFile("assets/zombie/zombie3/dead_7.png") ||
+      !z3Dead8Texture.loadFromFile("assets/zombie/zombie3/dead_8.png")
+      ) {
+    std::cout << "Cannot load one of the zombie 3 dead textures\n";
+  }
+
+  zombie3DeadTextures.insert(zombie3DeadTextures.end(), {
+      z3Dead1Texture,
+      z3Dead2Texture,
+      z3Dead3Texture,
+      z3Dead4Texture,
+      z3Dead5Texture,
+      z3Dead6Texture,
+      z3Dead7Texture,
+      z3Dead8Texture,
   });
 }

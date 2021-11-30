@@ -11,6 +11,10 @@ private:
   void setNewRunTexture(Zombie &zombie);
 
   void setNewFallTexture(Zombie &zombie);
+
+  void setNewDeadTexture(Zombie &zombie);
+
+  void fadeOutAnim(Zombie &zombie);
 public:
   explicit ZombieAnimations(ZombieTextures &textures) : textures(textures) {}
 
@@ -21,6 +25,8 @@ public:
   void fallAnim(Zombie &zombie);
 
   void standUpAnim(Zombie &zombie);
+
+  void deadAnim(Zombie &zombie);
 };
 
 

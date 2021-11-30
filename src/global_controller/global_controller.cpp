@@ -12,10 +12,10 @@ void GlobalController::moveElements() {
   zombieController.move();
   std::vector<Bullet> &bullets = robotController.shootController.allBullets;
   std::vector<Zombie> &zombies = zombieController.zombies;
-  for (int zombieIndex = 0; zombieIndex < zombies.size(); zombieIndex++) {
+  for (auto & zombie : zombies) {
     for (int bulletIndex = 0; bulletIndex < bullets.size(); bulletIndex++) {
-      if (bulletCollisions.isCollisionWithZombie(bullets[bulletIndex], zombies[zombieIndex])) {
-        zombies.erase(zombies.begin() + zombieIndex);
+      if (bulletCollisions.isCollisionWithZombie(bullets[bulletIndex], zombie)) {
+        zombie.setNewMoveType(ZombieMoveType::zombieDead);
         bullets.erase(bullets.begin() + bulletIndex);
       }
     }
