@@ -5,13 +5,13 @@ void ZombieAnimations::loadTextures() {
 }
 
 void ZombieAnimations::runAnim(Zombie &zombie) {
-  if (zombie.runClock.getElapsedTime().asMilliseconds() > 125) {
+  if (zombie.clock.getElapsedTime().asMilliseconds() > 125) {
     setNewRunTexture(zombie);
     zombie.runTextureCounter++;
     if (zombie.runTextureCounter >= 6) {
       zombie.runTextureCounter = 0;
     }
-    zombie.runClock.restart();
+    zombie.clock.restart();
   }
 }
 
@@ -28,20 +28,10 @@ void ZombieAnimations::standUpAnim(Zombie &zombie) {
 }
 
 void ZombieAnimations::deadAnim(Zombie &zombie) {
-  if (zombie.deadClock.getElapsedTime().asMilliseconds() > 80 && zombie.deadTextureCounter < 8) {
-    setNewDeadTexture(zombie);
+  if (zombie.clock.getElapsedTime().asMilliseconds() > 100 && zombie.deadTextureCounter < 8) {
+    fadeOutAnim(zombie);
     zombie.deadTextureCounter++;
-    zombie.deadClock.restart();
-  } else if (
-      zombie.deadClock.getElapsedTime().asMilliseconds() > 80 &&
-      zombie.deadTextureCounter >= 8 &&
-      zombie.deadTextureCounter < 18
-      ) {
-    zombie.deadTextureCounter++;
-    if (zombie.deadTextureCounter >= 12) {
-      fadeOutAnim(zombie);
-    }
-    zombie.deadClock.restart();
+    zombie.clock.restart();
   }
 }
 
@@ -73,21 +63,7 @@ void ZombieAnimations::setNewFallTexture(Zombie &zombie) {
   }
 }
 
-void ZombieAnimations::setNewDeadTexture(Zombie &zombie) {
-  switch (zombie.type) {
-    case man1:
-      zombie.setTexture(textures.zombie1DeadTextures[zombie.deadTextureCounter]);
-      break;
-    case man2:
-      zombie.setTexture(textures.zombie2DeadTextures[zombie.deadTextureCounter]);
-      break;
-    case woman:
-      zombie.setTexture(textures.zombie3DeadTextures[zombie.deadTextureCounter]);
-      break;
-  }
-}
-
 void ZombieAnimations::fadeOutAnim(Zombie &zombie) {
-  sf::Uint8 alpha = 255 - ((zombie.deadTextureCounter % 12) * 42);
+  sf::Uint8 alpha = 255 - ((zombie.deadTextureCounter % 8) * 31);
   zombie.sprite.setColor(sf::Color(255, 255, 255, alpha));
 }

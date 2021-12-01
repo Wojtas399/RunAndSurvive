@@ -12,11 +12,15 @@ void GlobalController::moveElements() {
   zombieController.move();
   std::vector<Bullet> &bullets = robotController.shootController.allBullets;
   std::vector<Zombie> &zombies = zombieController.zombies;
-  for (auto & zombie : zombies) {
-    for (int bulletIndex = 0; bulletIndex < bullets.size(); bulletIndex++) {
-      if (bulletCollisions.isCollisionWithZombie(bullets[bulletIndex], zombie)) {
+  for (Zombie &zombie: zombies) {
+    for (Bullet &bullet: bullets) {
+      if (
+          zombie.moveType != ZombieMoveType::zombieDead &&
+          bulletCollisions.isCollisionWithZombie(bullet, zombie)
+          ) {
         zombie.setNewMoveType(ZombieMoveType::zombieDead);
-        bullets.erase(bullets.begin() + bulletIndex);
+        bullet.isExplosion = true;
+        setBulletExplosionPosition(bullet, zombie);
       }
     }
   }
@@ -24,6 +28,14 @@ void GlobalController::moveElements() {
 
 void GlobalController::draw(sf::RenderWindow &window) {
   mapGenerator.draw(window);
-  robotController.draw(window);
   zombieController.draw(window);
+  robotController.draw(window);
+}
+
+void GlobalController::setBulletExplosionPosition(Bullet &bullet, Zombie &zombie) {
+  sf::Vector2<float> zombiePosition = zombie.getPosition();
+  bullet.setMuzzlePosition(
+      zombiePosition.x + (zombie.isReversed ? -25.0f : 22.0f),
+      zombiePosition.y
+  );
 }

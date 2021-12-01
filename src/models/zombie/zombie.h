@@ -17,10 +17,8 @@ public:
   ZombieType type;
   ZombieMoveType moveType = ZombieMoveType::zombieFallDown;
   sf::Sprite sprite;
-  sf::Sprite deadSprite;
-  sf::Clock runClock;
+  sf::Clock clock;
   sf::Clock standUpClock;
-  sf::Clock deadClock;
   bool isReversed = true;
   int runTextureCounter = 0;
   int fallDownTextureCounter = 0;

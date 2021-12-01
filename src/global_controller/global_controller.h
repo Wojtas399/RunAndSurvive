@@ -14,6 +14,8 @@ private:
   RobotController &robotController;
   ZombieController &zombieController;
   BulletCollisions &bulletCollisions;
+
+  void setBulletExplosionPosition(Bullet &bullet, Zombie &zombie);
 public:
   GlobalController(
       MapGenerator &mapGenerator,

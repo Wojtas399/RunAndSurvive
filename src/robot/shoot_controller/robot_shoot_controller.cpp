@@ -8,7 +8,7 @@ void RobotShootController::draw(sf::RenderWindow &window) {
 
 void RobotShootController::move() {
   for (int i = 0; i < allBullets.size(); i++) {
-    setNewBulletParams(allBullets[i], i);
+    movementController(allBullets[i], i);
   }
 }
 
@@ -25,22 +25,28 @@ void RobotShootController::shoot() {
   std::cout << "Bullets amount on the map: " << allBullets.size() << "\n";
 }
 
-void RobotShootController::setNewBulletParams(Bullet &bullet, int bulletIndex) {
+void RobotShootController::movementController(Bullet &bullet, int bulletIndex) {
   sf::Vector2<float> bulletPosition = bullet.getBulletPosition();
-  sf::Vector2<float> muzzlePosition = bullet.getMuzzlePosition();
-  sf::Vector2<float> bulletScale = bullet.bulletSprite.getScale();
-  float x = bulletPosition.x;
-  float y = bulletPosition.y;
-  float expectedScale = constants::bulletScale;
-  bool isDeleted = false;
-  if (bullet.muzzleCounter > -1) {
-    muzzleAnim(bullet, bulletIndex, isDeleted);
-  } else if (
-      (
-          bulletCollisions.isCollisionWithGroundElement(bullet) ||
-          bulletCollisions.isCollisionWithAirElement(bullet)
-      ) && bullet.muzzleCounter == -1
+  if (isCollisionWithMapElement(bullet)) {
+    bullet.isExplosion = true;
+  }
+  if (
+      bulletPosition.x > 1400 ||
+      bulletPosition.x < 0 ||
+      bullet.muzzleCounter >= 5
       ) {
+    allBullets.erase(allBullets.begin() + bulletIndex);
+  } else {
+    setNewBulletParams(bullet, bulletIndex);
+  }
+}
+
+void RobotShootController::setNewBulletParams(Bullet &bullet, int bulletIndex) {
+  sf::Vector2<float> bulletScale = bullet.bulletSprite.getScale();
+  float expectedScale = constants::bulletScale;
+  if (bullet.isExplosion && bullet.muzzleCounter > -1) {
+    muzzleAnim(bullet, bulletIndex);
+  } else if (bullet.isExplosion && bullet.muzzleCounter == -1) {
     startMuzzleAnim(bullet);
   } else if (
       (
@@ -54,35 +60,31 @@ void RobotShootController::setNewBulletParams(Bullet &bullet, int bulletIndex) {
   } else if (bullet.textureClock.getElapsedTime().asMilliseconds() > 25) {
     setNextBulletTexture(bullet);
   }
-  if (
-      x > 1400 ||
-      x < 0
-      ) {
-    allBullets.erase(allBullets.begin() + bulletIndex);
-    isDeleted = true;
-  }
-  if (!isDeleted) {
-    if (bullet.muzzleCounter == -1) {
-      bullet.setBulletPosition(x + bullet.speed, y);
-    } else {
-      bullet.setMuzzlePosition(
-          bullet.muzzleCounter == 0
-          ? x + (bullet.isReversed ? -26.0f : 10.0f)
-          : muzzlePosition.x - constants::mapSpeed,
-          y
-      );
-    }
+  setNewBulletPosition(bullet);
+}
+
+void RobotShootController::setNewBulletPosition(Bullet &bullet) {
+  sf::Vector2<float> bulletPosition = bullet.getBulletPosition();
+  sf::Vector2<float> muzzlePosition = bullet.getMuzzlePosition();
+  float x = bulletPosition.x;
+  float y = bulletPosition.y;
+  if (bullet.muzzleCounter == -1) {
+    bullet.setBulletPosition(x + bullet.speed, y);
+  } else {
+    bullet.setMuzzlePosition(
+        bullet.muzzleCounter == 0 && isCollisionWithMapElement(bullet)
+        ? x + (bullet.isReversed ? -26.0f : 10.0f)
+        : muzzlePosition.x - constants::mapSpeed,
+        y
+    );
   }
 }
 
-void RobotShootController::muzzleAnim(Bullet &bullet, int &bulletIndex, bool &isDeleted) {
-  if (bullet.muzzleCounter < 5 && bullet.textureClock.getElapsedTime().asMilliseconds() > 30) {
+void RobotShootController::muzzleAnim(Bullet &bullet, int &bulletIndex) {
+  if (bullet.muzzleCounter < 5 && bullet.textureClock.getElapsedTime().asMilliseconds() > 40) {
     bullet.muzzleSprite.setTexture(robotTextures.muzzlesTextures[bullet.muzzleCounter]);
     bullet.textureClock.restart();
     bullet.muzzleCounter++;
-  } else if (bullet.muzzleCounter == 5) {
-    allBullets.erase(allBullets.begin() + bulletIndex);
-    isDeleted = true;
   }
 }
 
@@ -95,8 +97,8 @@ void RobotShootController::startMuzzleAnim(Bullet &bullet) {
 
 void RobotShootController::setBulletOrientation(Bullet &bullet, sf::Vector2<float> scale) {
   bullet.bulletSprite.setScale(
-      bullet.isReversed ? scale.x - 0.01f : scale.x + 0.01f,
-      scale.y + 0.01f
+      bullet.isReversed ? scale.x - 0.02f : scale.x + 0.02f,
+      scale.y + 0.02f
   );
   bullet.textureClock.restart();
 }
@@ -108,4 +110,16 @@ void RobotShootController::setNextBulletTexture(Bullet &bullet) {
   }
   bullet.bulletSprite.setTexture(robotTextures.bulletsTextures[bullet.bulletCounter]);
   bullet.textureClock.restart();
+}
+
+bool RobotShootController::isCollisionWithMapElement(Bullet &bullet) {
+  return bulletCollisions.isCollisionWithGroundElement(bullet) ||
+         bulletCollisions.isCollisionWithAirElement(bullet);
+}
+
+float RobotShootController::getBulletHorizontalTranslation(Bullet &bullet) {
+  if (isCollisionWithMapElement(bullet)) {
+    return bullet.isReversed ? -26.0f : 10.0f;
+  }
+  return 0;
 }

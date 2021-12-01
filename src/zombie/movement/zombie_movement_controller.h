@@ -21,6 +21,14 @@ private:
   bool isNormalCollision(Zombie &zombie);
 
   bool isFreeSpaceUnder(Zombie &zombie);
+
+  void run(Zombie &zombie);
+
+  void fallDown(Zombie &zombie);
+
+  void standUp(Zombie &zombie);
+
+  void dead(Zombie &zombie);
 public:
   ZombieMovementController(
       ZombieAnimations &zombieAnimations,

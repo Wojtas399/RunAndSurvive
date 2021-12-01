@@ -12,8 +12,6 @@ private:
 
   void setNewFallTexture(Zombie &zombie);
 
-  void setNewDeadTexture(Zombie &zombie);
-
   void fadeOutAnim(Zombie &zombie);
 public:
   explicit ZombieAnimations(ZombieTextures &textures) : textures(textures) {}

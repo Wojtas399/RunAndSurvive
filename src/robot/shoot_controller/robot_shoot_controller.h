@@ -13,15 +13,23 @@ class RobotShootController {
   RobotTextures &robotTextures;
   BulletCollisions &bulletCollisions;
 
+  void movementController(Bullet &bullet, int bulletIndex);
+
   void setNewBulletParams(Bullet &bullet, int bulletIndex);
 
-  void muzzleAnim(Bullet &bullet, int &bulletIndex, bool &isDeleted);
+  void setNewBulletPosition(Bullet &bullet);
+
+  void muzzleAnim(Bullet &bullet, int &bulletIndex);
 
   static void startMuzzleAnim(Bullet &bullet);
 
   static void setBulletOrientation(Bullet &bullet, sf::Vector2<float> scale);
 
   void setNextBulletTexture(Bullet &bullet);
+
+  bool isCollisionWithMapElement(Bullet &bullet);
+
+  float getBulletHorizontalTranslation(Bullet &bullet);
 
 public:
   RobotShootController(
