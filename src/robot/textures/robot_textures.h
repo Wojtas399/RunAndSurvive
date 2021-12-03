@@ -48,10 +48,14 @@ private:
   sf::Texture shoot2Texture;
   sf::Texture shoot3Texture;
   sf::Texture shoot4Texture;
-  sf::Texture shoot5Texture;
-  sf::Texture shoot6Texture;
-  sf::Texture shoot7Texture;
-  sf::Texture shoot8Texture;
+  sf::Texture runShoot1Texture;
+  sf::Texture runShoot2Texture;
+  sf::Texture runShoot3Texture;
+  sf::Texture runShoot4Texture;
+  sf::Texture runShoot5Texture;
+  sf::Texture runShoot6Texture;
+  sf::Texture runShoot7Texture;
+  sf::Texture runShoot8Texture;
   sf::Texture bullet1Texture;
   sf::Texture bullet2Texture;
   sf::Texture bullet3Texture;
@@ -73,6 +77,8 @@ private:
 
   void loadShootTextures();
 
+  void loadRunShootTextures();
+
   void loadBulletsTextures();
 
   void loadMuzzleTextures();
@@ -83,6 +89,7 @@ public:
   std::vector<sf::Texture> idleTextures;
   std::vector<sf::Texture> slideTextures;
   std::vector<sf::Texture> shootTextures;
+  std::vector<sf::Texture> runShootTextures;
   std::vector<sf::Texture> bulletsTextures;
   std::vector<sf::Texture> muzzlesTextures;
 

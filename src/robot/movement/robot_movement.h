@@ -41,7 +41,7 @@ public:
       RobotCollisions &robotCollisions
   ) : robot(robot), robotAnimations(robotAnimations), robotCollisions(robotCollisions) {}
 
-  void run(float &velocityX, float &velocityY, bool &isFastRun, bool &isShoot);
+  void run(float &velocityX, float &velocityY, bool &isFastRun);
 
   void jump(
       float &velocityX,
@@ -54,7 +54,7 @@ public:
 
   void idle();
 
-  void slide(bool &blockedSlide, float &velocityY, bool &fallDownAfterSlide, bool &isShoot);
+  void slide(bool &blockedSlide, float &velocityY, bool &fallDownAfterSlide);
 
   bool isGroundElementCollision(float leftReduction, float rightReduction, float heightReduction);
 

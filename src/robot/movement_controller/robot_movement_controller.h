@@ -20,7 +20,6 @@ private:
   bool jumpAfterTopCollision = false;
   bool fallDownAfterSlide = false;
   bool blockedSlide = false;
-  bool isShoot = false;
   sf::Clock shootClock;
 
   void verticalMovement(bool isKeyUpPressed, bool isKeyDownPressed);

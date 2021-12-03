@@ -116,10 +116,3 @@ bool RobotShootController::isCollisionWithMapElement(Bullet &bullet) {
   return bulletCollisions.isCollisionWithGroundElement(bullet) ||
          bulletCollisions.isCollisionWithAirElement(bullet);
 }
-
-float RobotShootController::getBulletHorizontalTranslation(Bullet &bullet) {
-  if (isCollisionWithMapElement(bullet)) {
-    return bullet.isReversed ? -26.0f : 10.0f;
-  }
-  return 0;
-}

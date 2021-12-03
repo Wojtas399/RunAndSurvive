@@ -4,12 +4,15 @@
 #include <SFML/Graphics.hpp>
 #include "../../constants.h"
 
-enum RobotMoveType {run, jump, idle, fallDown, slide};
+enum RobotMoveType {
+  run, jump, idle, fallDown, slide,
+};
 
 class Robot {
 public:
   sf::Sprite sprite;
   RobotMoveType moveType = RobotMoveType::run;
+  bool isShoot = false;
   bool isReversed = false;
   float spriteWidth = 567 * constants::robotScale;
   float spriteHeight = 556 * constants::robotScale;

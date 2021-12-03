@@ -29,8 +29,6 @@ class RobotShootController {
 
   bool isCollisionWithMapElement(Bullet &bullet);
 
-  float getBulletHorizontalTranslation(Bullet &bullet);
-
 public:
   RobotShootController(
       Robot &robot,
