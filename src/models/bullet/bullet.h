@@ -14,6 +14,7 @@ public:
   bool isReversed = false;
   int bulletCounter = 0;
   int muzzleCounter = -1;
+  bool isExplosion = false;
   sf::Clock textureClock;
 
   sf::Vector2<float> getBulletPosition();

@@ -23,7 +23,14 @@ add_executable(R_S
         src/models/bullet/bullet.cpp
         src/robot/textures/robot_textures.cpp
         src/object_collisions/bullet/bullet_collisions.cpp
-        src/object_collisions/map_elements/map_elements_collisions.cpp)
+        src/object_collisions/map_elements/map_elements_collisions.cpp
+        src/zombie/zombie_controller.cpp
+        src/zombie/zombie_controller.h src/models/zombie/zombie.cpp
+        src/zombie/textures/zombie_textures.cpp
+        src/zombie/animations/zombie_animations.cpp
+        src/zombie/movement/zombie_movement_controller.cpp
+        src/object_collisions/zombie/zombie_collisions.cpp
+        src/global_controller/global_controller.cpp)
 include_directories(/usr/local/include)
 
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)

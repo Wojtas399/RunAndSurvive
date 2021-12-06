@@ -65,18 +65,24 @@ void RobotAnimations::slideAnim(sf::Sprite &robotSprite) {
   }
 }
 
-void RobotAnimations::shootAnim(sf::Sprite &robotSprite, bool &isShoot) {
+void RobotAnimations::shootAnim(sf::Sprite &robotSprite) {
   if (clock.getElapsedTime().asSeconds() > 0.09f) {
     robotSprite.setTexture(textures.shootTextures[shootTextureCounter]);
     shootTextureCounter++;
     if (shootTextureCounter >= textures.shootTextures.size()) {
       shootTextureCounter = 0;
-      isShoot = false;
     }
     clock.restart();
   }
 }
 
-void RobotAnimations::resetShootAnimCounter() {
-  shootTextureCounter = 0;
+void RobotAnimations::runShootAnim(sf::Sprite &robotSprite) {
+  if (clock.getElapsedTime().asSeconds() > 0.09f) {
+    robotSprite.setTexture(textures.runShootTextures[runShootTextureCounter]);
+    runShootTextureCounter++;
+    if (runShootTextureCounter >= textures.runShootTextures.size()) {
+      runShootTextureCounter = 0;
+    }
+    clock.restart();
+  }
 }

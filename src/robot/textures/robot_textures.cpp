@@ -6,6 +6,7 @@ void RobotTextures::load() {
   loadIdleTextures();
   loadSlideTextures();
   loadShootTextures();
+  loadRunShootTextures();
   loadBulletsTextures();
   loadMuzzleTextures();
 }
@@ -124,14 +125,10 @@ void RobotTextures::loadSlideTextures() {
 
 void RobotTextures::loadShootTextures() {
   if (
-      !shoot1Texture.loadFromFile("assets/robot/run_shoot_1.png") ||
-      !shoot2Texture.loadFromFile("assets/robot/run_shoot_2.png") ||
-      !shoot3Texture.loadFromFile("assets/robot/run_shoot_3.png") ||
-      !shoot4Texture.loadFromFile("assets/robot/run_shoot_4.png") ||
-      !shoot5Texture.loadFromFile("assets/robot/run_shoot_5.png") ||
-      !shoot6Texture.loadFromFile("assets/robot/run_shoot_6.png") ||
-      !shoot7Texture.loadFromFile("assets/robot/run_shoot_7.png") ||
-      !shoot8Texture.loadFromFile("assets/robot/run_shoot_8.png")
+      !shoot1Texture.loadFromFile("assets/robot/shoot_1.png") ||
+      !shoot2Texture.loadFromFile("assets/robot/shoot_2.png") ||
+      !shoot3Texture.loadFromFile("assets/robot/shoot_3.png") ||
+      !shoot4Texture.loadFromFile("assets/robot/shoot_4.png")
       ) {
     std::cout << "Cannot load one of the shoot textures";
   }
@@ -140,10 +137,31 @@ void RobotTextures::loadShootTextures() {
       shoot2Texture,
       shoot3Texture,
       shoot4Texture,
-      shoot5Texture,
-      shoot6Texture,
-      shoot7Texture,
-      shoot8Texture
+  });
+}
+
+void RobotTextures::loadRunShootTextures() {
+  if (
+      !runShoot1Texture.loadFromFile("assets/robot/run_shoot_1.png") ||
+      !runShoot2Texture.loadFromFile("assets/robot/run_shoot_2.png") ||
+      !runShoot3Texture.loadFromFile("assets/robot/run_shoot_3.png") ||
+      !runShoot4Texture.loadFromFile("assets/robot/run_shoot_4.png") ||
+      !runShoot5Texture.loadFromFile("assets/robot/run_shoot_5.png") ||
+      !runShoot6Texture.loadFromFile("assets/robot/run_shoot_6.png") ||
+      !runShoot7Texture.loadFromFile("assets/robot/run_shoot_7.png") ||
+      !runShoot8Texture.loadFromFile("assets/robot/run_shoot_8.png")
+      ) {
+    std::cout << "Cannot load one of the run shoot textures";
+  }
+  runShootTextures.insert(runShootTextures.end(), {
+      runShoot1Texture,
+      runShoot2Texture,
+      runShoot3Texture,
+      runShoot4Texture,
+      runShoot5Texture,
+      runShoot6Texture,
+      runShoot7Texture,
+      runShoot8Texture,
   });
 }
 

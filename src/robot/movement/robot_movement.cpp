@@ -1,9 +1,8 @@
 #include "robot_movement.h"
 
-void RobotMovement::run(float &velocityX, float &velocityY, bool &isFastRun, bool &isShoot) {
+void RobotMovement::run(float &velocityX, float &velocityY, bool &isFastRun) {
   if (isNormalGroundCollision() || isNormalAirCollision()) {
     robot.moveType = RobotMoveType::idle;
-    isShoot = false;
   } else if (isFreeSpaceUnder()) {
     setFallDownMovement(velocityY);
   } else {
@@ -11,10 +10,9 @@ void RobotMovement::run(float &velocityX, float &velocityY, bool &isFastRun, boo
       velocityX = robot.isReversed ? constants::robotLeftVelocityX : constants::robotRightVelocityX;
     }
     setNewRobotPosition(robot.getPosition().x + velocityX, robot.getPosition().y);
-    if (isShoot) {
-      robotAnimations.shootAnim(robot.sprite, isShoot);
+    if (robot.isShoot) {
+      robotAnimations.runShootAnim(robot.sprite);
     } else {
-      robotAnimations.resetShootAnimCounter();
       robotAnimations.runAnim(robot.sprite, velocityX != 0);
     }
   }
@@ -66,7 +64,11 @@ void RobotMovement::idle() {
   if (isCollisionForward()) {
     sf::Vector2<float> robotPosition = robot.getPosition();
     setNewRobotPosition(robotPosition.x - constants::mapSpeed, robotPosition.y);
-    robotAnimations.idleAnim(robot.sprite);
+    if (robot.isShoot) {
+      robotAnimations.shootAnim(robot.sprite);
+    } else {
+      robotAnimations.idleAnim(robot.sprite);
+    }
     if (robot.isReversed) {
       robot.moveType = RobotMoveType::run;
     }
@@ -75,16 +77,17 @@ void RobotMovement::idle() {
   }
 }
 
-void RobotMovement::slide(bool &blockedSlide, float &velocityY, bool &fallDownAfterSlide, bool &isShoot) {
+void RobotMovement::slide(bool &blockedSlide, float &velocityY, bool &fallDownAfterSlide) {
   if (blockedSlide) {
     if (!isAirElementCollision(22, 22, 17, 12)) {
       robot.moveType = RobotMoveType::run;
       blockedSlide = false;
+    } else {
+      robotAnimations.slideAnim(robot.sprite);
     }
   } else {
     if (isNormalGroundCollision() || isAirElementCollision(24, 24, 19, 8)) {
       robot.moveType = RobotMoveType::idle;
-      isShoot = false;
     } else if (isFreeSpaceUnder()) {
       setFallDownMovement(velocityY);
       fallDownAfterSlide = true;

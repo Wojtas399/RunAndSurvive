@@ -6,6 +6,9 @@
 #include "map/generators/map/map_generator.h"
 #include "object_collisions/robot/robot_collisions.h"
 #include "robot/robot_controller.h"
+#include "zombie/textures/zombie_textures.h"
+#include "zombie/zombie_controller.h"
+#include "global_controller/global_controller.h"
 
 int main() {
   srand(time(NULL));
@@ -30,9 +33,15 @@ int main() {
   RobotShootController robotShootController(robot, robotTextures, bulletCollisions);
   RobotMovementController robotMovementController(robot, robotMovement, robotShootController);
   RobotController robotController(robot, robotAnimations, robotMovementController, robotShootController);
+  //Zombie
+  ZombieTextures zombieTextures;
+  ZombieAnimations zombieAnimations(zombieTextures);
+  ZombieCollisions zombieCollisions(mapElementsCollisions);
+  ZombieMovementController zombieMovementController(zombieAnimations, zombieCollisions);
+  ZombieController zombieController(zombieMovementController);
 
-  mapGenerator.load();
-  robotController.loadTextures();
+  GlobalController globalController(mapGenerator, robotController, zombieController, bulletCollisions);
+  globalController.loadTextures();
 
   bool isGameStarted = false;
 
@@ -49,15 +58,11 @@ int main() {
     }
 
     if (isGameStarted) {
-      //movement
-      mapGenerator.move();
-      robotController.move();
+      globalController.moveElements();
     }
 
-    //drawing
     window.clear();
-    mapGenerator.draw(window);
-    robotController.draw(window);
+    globalController.draw(window);
     window.display();
   }
 

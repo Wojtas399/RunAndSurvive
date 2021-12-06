@@ -41,19 +41,24 @@ void RobotMovementController::horizontalMovement(bool isKeyLeftPressed, bool isK
 void RobotMovementController::shootMovement(bool isSpacePressed) {
   if (
       isSpacePressed &&
-      shootClock.getElapsedTime().asMilliseconds() >= 250 &&
-      robot.moveType == RobotMoveType::run
+      shootClock.getElapsedTime().asMilliseconds() >= 350 &&
+      (
+          robot.moveType == RobotMoveType::run ||
+          robot.moveType == RobotMoveType::idle
+      )
       ) {
-    isShoot = true;
+    robot.isShoot = true;
     shootController.shoot();
     shootClock.restart();
+  } else if (!isSpacePressed) {
+    robot.isShoot = false;
   }
 }
 
 void RobotMovementController::doMatchingMovement() {
   switch (robot.moveType) {
     case RobotMoveType::run: {
-      robotMovement.run(velocityX, velocityY, isFastRun, isShoot);
+      robotMovement.run(velocityX, velocityY, isFastRun);
       break;
     }
     case RobotMoveType::jump:
@@ -73,7 +78,7 @@ void RobotMovementController::doMatchingMovement() {
       break;
     }
     case RobotMoveType::slide: {
-      robotMovement.slide(blockedSlide, velocityY, fallDownAfterSlide, isShoot);
+      robotMovement.slide(blockedSlide, velocityY, fallDownAfterSlide);
       break;
     }
   }
