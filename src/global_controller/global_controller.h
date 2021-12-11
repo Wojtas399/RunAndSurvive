@@ -7,25 +7,33 @@
 #include "../map/generators/map/map_generator.h"
 #include "../robot/robot_controller.h"
 #include "../zombie/zombie_controller.h"
+#include "../object_collisions/robot_zombie/robot_zombie_collisions.h"
 
 class GlobalController {
 private:
+  Robot &robot;
   MapGenerator &mapGenerator;
   RobotController &robotController;
   ZombieController &zombieController;
   BulletCollisions &bulletCollisions;
+  RobotZombieCollisions &robotZombieCollisions;
 
   void setBulletExplosionPosition(Bullet &bullet, Zombie &zombie);
+
 public:
   GlobalController(
+      Robot &robot,
       MapGenerator &mapGenerator,
       RobotController &robotController,
       ZombieController &zombieController,
-      BulletCollisions &bulletCollisions
-  ) : mapGenerator(mapGenerator),
+      BulletCollisions &bulletCollisions,
+      RobotZombieCollisions &robotZombieCollisions
+  ) : robot(robot),
+      mapGenerator(mapGenerator),
       robotController(robotController),
       zombieController(zombieController),
-      bulletCollisions(bulletCollisions) {}
+      bulletCollisions(bulletCollisions),
+      robotZombieCollisions(robotZombieCollisions) {}
 
   void loadTextures();
 

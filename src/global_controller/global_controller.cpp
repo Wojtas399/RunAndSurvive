@@ -13,6 +13,13 @@ void GlobalController::moveElements() {
   std::vector<Bullet> &bullets = robotController.shootController.allBullets;
   std::vector<Zombie> &zombies = zombieController.zombies;
   for (Zombie &zombie: zombies) {
+    if (
+        zombie.moveType != ZombieMoveType::zombieDead &&
+        zombie.attackBreakClock.getElapsedTime().asMilliseconds() > 1000 &&
+        robotZombieCollisions.isRobotCollisionWithZombie(robot, zombie)
+        ) {
+      zombie.setNewMoveType(ZombieMoveType::zombieAttack);
+    }
     for (Bullet &bullet: bullets) {
       if (
           zombie.moveType != ZombieMoveType::zombieDead &&

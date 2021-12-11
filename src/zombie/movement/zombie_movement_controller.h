@@ -28,6 +28,8 @@ private:
 
   void standUp(Zombie &zombie);
 
+  void attack(Zombie &zombie);
+
   void dead(Zombie &zombie);
 public:
   ZombieMovementController(

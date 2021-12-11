@@ -24,9 +24,11 @@ void ZombieMovementController::movementController(Zombie &zombie) {
     } else if (zombie.velocityY > 0) {
       zombie.velocityY = 0;
       zombie.setNewMoveType(ZombieMoveType::zombieStandUp);
-    } else if (zombie.fallDownTextureCounter >= 2) {
+    } else if (zombie.fallDownTextureCounter >= 2 || zombie.attackTextureCounter >= 6) {
       zombie.setNewMoveType(ZombieMoveType::zombieRun);
       zombie.fallDownTextureCounter = 0;
+      zombie.attackTextureCounter = 0;
+      zombie.attackBreakClock.restart();
     }
   }
   manageMovementType(zombie);
@@ -42,6 +44,9 @@ void ZombieMovementController::manageMovementType(Zombie &zombie) {
       break;
     case zombieStandUp:
       standUp(zombie);
+      break;
+    case zombieAttack:
+      attack(zombie);
       break;
     case zombieDead:
       dead(zombie);
@@ -71,6 +76,12 @@ void ZombieMovementController::standUp(Zombie &zombie) {
   sf::Vector2<float> position = zombie.getPosition();
   zombie.setPosition(position.x - constants::mapSpeed, position.y);
   animations.standUpAnim(zombie);
+}
+
+void ZombieMovementController::attack(Zombie &zombie) {
+  sf::Vector2<float> position = zombie.getPosition();
+  zombie.setPosition(position.x - constants::mapSpeed, position.y);
+  animations.attackAnim(zombie);
 }
 
 void ZombieMovementController::dead(Zombie &zombie) {

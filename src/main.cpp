@@ -40,7 +40,15 @@ int main() {
   ZombieMovementController zombieMovementController(zombieAnimations, zombieCollisions);
   ZombieController zombieController(zombieMovementController);
 
-  GlobalController globalController(mapGenerator, robotController, zombieController, bulletCollisions);
+  RobotZombieCollisions robotZombieCollisions;
+  GlobalController globalController(
+      robot,
+      mapGenerator,
+      robotController,
+      zombieController,
+      bulletCollisions,
+      robotZombieCollisions
+  );
   globalController.loadTextures();
 
   bool isGameStarted = false;
