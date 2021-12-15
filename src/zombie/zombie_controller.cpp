@@ -6,7 +6,7 @@ void ZombieController::loadTextures() {
 
 void ZombieController::move() {
   movementController.move(zombies);
-  if (clock.getElapsedTime().asMilliseconds() > 2000) {
+  if (clock.getElapsedTime().asMilliseconds() > 4000) {
     addZombie();
     clock.restart();
   }
@@ -20,9 +20,14 @@ void ZombieController::draw(sf::RenderWindow &window) {
 
 void ZombieController::addZombie() {
   int index = rand() % 3;
+  float speed =  static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/0.4));
   Zombie newZombie(getZombieType(index));
   newZombie.setHorizontalOrientation(true);
   newZombie.setPosition(1600, 50);
+  newZombie.velocityXLeft = -2.5f - speed;
+  newZombie.velocityXRight = -0.5f + speed;
+  newZombie.velocityX = newZombie.velocityXLeft;
+  newZombie.setNewMoveType(ZombieMoveType::zombieFallDown);
   zombies.push_back(newZombie);
 }
 

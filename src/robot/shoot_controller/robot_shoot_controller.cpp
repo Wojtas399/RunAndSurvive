@@ -16,12 +16,14 @@ void RobotShootController::shoot() {
   sf::Vector2<float> robotPosition = robot.getPosition();
   Bullet newBullet;
   newBullet.isReversed = robot.isReversed;
-  newBullet.speed = robot.isReversed ? -0.12f : 0.06f;
+  newBullet.speed = robot.isReversed ? constants::bulletLeftVelocityX : constants::bulletRightVelocityX;
   newBullet.bulletSprite.setTexture(robotTextures.bulletsTextures[0]);
   newBullet.bulletSprite.setOrigin(0, 60);
   newBullet.bulletSprite.setScale(0.0, 0.0);
   newBullet.setBulletPosition(robot.isReversed ? robotPosition.x - 64 : robotPosition.x + 64, robotPosition.y + 44);
-  allBullets.push_back(newBullet);
+  if (!isCollisionWithMapElement(newBullet)) {
+    allBullets.push_back(newBullet);
+  }
   std::cout << "Bullets amount on the map: " << allBullets.size() << "\n";
 }
 

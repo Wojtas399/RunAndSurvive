@@ -5,7 +5,7 @@ void ZombieAnimations::loadTextures() {
 }
 
 void ZombieAnimations::runAnim(Zombie &zombie) {
-  if (zombie.clock.getElapsedTime().asMilliseconds() > 125) {
+  if (zombie.clock.getElapsedTime().asMilliseconds() > 100) {
     setNewRunTexture(zombie);
     zombie.runTextureCounter++;
     if (zombie.runTextureCounter >= 6) {

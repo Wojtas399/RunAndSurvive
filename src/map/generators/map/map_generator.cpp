@@ -34,7 +34,7 @@ void MapGenerator::setSprites() {
 
 void MapGenerator::setNewPosition(sf::Sprite &sprite) {
   sf::Vector2<float> position = sprite.getPosition();
-  if (position.x < -1408) {
+  if (position.x < -1400) {
     sprite.setPosition(static_cast<float>(1408), position.y);
   } else {
     sprite.setPosition(static_cast<float>(position.x - constants::mapSpeed), position.y);

@@ -8,38 +8,28 @@ class RobotMovement {
 private:
   Robot &robot;
   RobotAnimations &robotAnimations;
-  RobotCollisions &robotCollisions;
+  RobotCollisions &collisions;
 
-  void jumpCollision(
-      float &x,
-      float &y,
-      float &velocityX,
-      float &velocityY,
-      bool &jumpAfterTopCollision,
-      float &maxYPosition,
-      float &gravity
-  );
+  bool isCollisionForward(float x, float y, float translationX);
 
-  void setNewRobotPosition(float x, float y);
+  bool isCollisionBottom(float x, float y, float translationY);
 
-  void stopMovementVertically(float &y, float &velocityY, float &maxYPosition);
+  bool isGroundCollisionForward(float x, float y, float translationX);
 
-  void setFallDownMovement(float &velocityY);
+  bool isGroundCollisionBottom(float x, float y, float translationY);
 
-  bool isNormalGroundCollision();
+  bool isAirCollisionForward(float x, float y, float translationX);
 
-  bool isNormalAirCollision();
+  void horizontalPositionCorrection(float &x, float y, float translationX);
 
-  bool isCollisionForward();
-
-  bool isFreeSpaceUnder();
+  void verticalPositionCorrection(float x, float y, float &translationY);
 
 public:
   RobotMovement(
       Robot &robot,
       RobotAnimations &robotAnimations,
       RobotCollisions &robotCollisions
-  ) : robot(robot), robotAnimations(robotAnimations), robotCollisions(robotCollisions) {}
+  ) : robot(robot), robotAnimations(robotAnimations), collisions(robotCollisions) {}
 
   void run(float &velocityX, float &velocityY, bool &isFastRun);
 
@@ -56,9 +46,7 @@ public:
 
   void slide(bool &blockedSlide, float &velocityY, bool &fallDownAfterSlide);
 
-  bool isGroundElementCollision(float leftReduction, float rightReduction, float heightReduction);
-
-  bool isAirElementCollision(float leftReduction, float rightReduction, float topReduction, float bottomReduction);
+  bool isAirCollisionVertically(float x, float y, float translationY);
 };
 
 #endif //R_S_ROBOT_MOVEMENT_H

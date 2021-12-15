@@ -18,6 +18,7 @@ void GlobalController::moveElements() {
         zombie.attackBreakClock.getElapsedTime().asMilliseconds() > 1000 &&
         robotZombieCollisions.isRobotCollisionWithZombie(robot, zombie)
         ) {
+      setZombieOrientation(zombie);
       zombie.setNewMoveType(ZombieMoveType::zombieAttack);
     }
     for (Bullet &bullet: bullets) {
@@ -45,4 +46,14 @@ void GlobalController::setBulletExplosionPosition(Bullet &bullet, Zombie &zombie
       zombiePosition.x + (zombie.isReversed ? -25.0f : 22.0f),
       zombiePosition.y
   );
+}
+
+void GlobalController::setZombieOrientation(Zombie &zombie) {
+  float robotPositionX = robot.getPosition().x;
+  float zombiePositionX = zombie.getPosition().x;
+  if (!zombie.isReversed && !robot.isReversed && zombiePositionX > robotPositionX) {
+    zombie.setHorizontalOrientation(true);
+  } else if (zombie.isReversed && robot.isReversed && zombiePositionX < robotPositionX) {
+    zombie.setHorizontalOrientation(false);
+  }
 }

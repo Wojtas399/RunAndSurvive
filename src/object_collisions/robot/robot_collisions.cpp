@@ -1,37 +1,28 @@
 #include "robot_collisions.h"
 
-bool RobotCollisions::isCollisionWithGroundElement(
-    float leftReduction,
-    float rightReduction,
-    float heightReduction
-) {
+bool RobotCollisions::isCollisionWithGroundElement(float x, float y) {
   return mapElementsCollisions.isCollisionWithGroundElement(
-      robot.getPosition().x,
-      robot.getPosition().y,
+      x,
+      y,
       robot.spriteWidth,
       robot.spriteHeight,
       robot.isReversed,
-      leftReduction,
-      rightReduction,
-      heightReduction
+      24,
+      24,
+      8
   );
 }
 
-bool RobotCollisions::isCollisionWithAirElement(
-    float leftReduction,
-    float rightReduction,
-    float topReduction,
-    float bottomReduction
-) {
+bool RobotCollisions::isCollisionWithAirElement(float x, float y) {
   return mapElementsCollisions.isCollisionWithAirElement(
-      robot.getPosition().x,
-      robot.getPosition().y,
+      x,
+      y,
       robot.spriteWidth,
       robot.spriteHeight,
       robot.isReversed,
-      leftReduction,
-      rightReduction,
-      topReduction,
-      bottomReduction
+      24,
+      24,
+      10,
+      8
   );
 }

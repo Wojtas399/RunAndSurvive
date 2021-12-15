@@ -17,7 +17,6 @@ void RobotMovementController::verticalMovement(bool isKeyUpPressed, bool isKeyDo
   if (
       isKeyUpPressed &&
       robot.moveType != RobotMoveType::jump &&
-      robot.moveType != RobotMoveType::fallDown &&
       robot.moveType != RobotMoveType::slide
       ) {
     moveUp();
@@ -61,8 +60,7 @@ void RobotMovementController::doMatchingMovement() {
       robotMovement.run(velocityX, velocityY, isFastRun);
       break;
     }
-    case RobotMoveType::jump:
-    case RobotMoveType::fallDown: {
+    case RobotMoveType::jump: {
       robotMovement.jump(
           velocityX,
           velocityY,
@@ -86,15 +84,12 @@ void RobotMovementController::doMatchingMovement() {
 
 void RobotMovementController::moveUp() {
   velocityY = constants::robotVelocityY;
-  accelerationY = 0.0001;
+  accelerationY = constants::robotAccelerationY;
   robot.moveType = RobotMoveType::jump;
 }
 
 void RobotMovementController::moveDown() {
-  if (
-      !fallDownAfterSlide &&
-      (robot.moveType == RobotMoveType::jump || robot.moveType == RobotMoveType::fallDown)
-      ) {
+  if (!fallDownAfterSlide && robot.moveType == RobotMoveType::jump) {
     accelerationY = 0.0003;
   } else if (
       (robot.moveType == RobotMoveType::run || robot.moveType == RobotMoveType::idle) &&
@@ -105,8 +100,9 @@ void RobotMovementController::moveDown() {
 }
 
 void RobotMovementController::neitherMoveUpNorMoveDown() {
+  sf::Vector2<float> position = robot.getPosition();
   if (robot.moveType == RobotMoveType::slide) {
-    if (robotMovement.isAirElementCollision(26, 26, 17, 12)) {
+    if (robotMovement.isAirCollisionVertically(position.x, position.y, -5)) {
       blockedSlide = true;
     } else {
       robot.moveType = RobotMoveType::run;
@@ -122,11 +118,12 @@ void RobotMovementController::moveLeft() {
 }
 
 void RobotMovementController::moveRight() {
+  sf::Vector2<float> position = robot.getPosition();
   velocityX = constants::robotRightVelocityX;
   isFastRun = true;
   if (
       robot.moveType == RobotMoveType::slide &&
-      !robotMovement.isAirElementCollision(24, 24, 17, 8)
+      !robotMovement.isAirCollisionVertically(position.x, position.y, -5)
       ) {
     robot.moveType = RobotMoveType::run;
   } else {

@@ -14,6 +14,7 @@ int main() {
   srand(time(NULL));
 
   sf::RenderWindow window(sf::VideoMode(constants::windowWidth, constants::windowHeight), "Run & Survive");
+  sf::Clock mainClock;
   //Map
   BackgroundGenerator backgroundGenerator;
   GroundElementsGenerator groundElementsGenerator;
@@ -54,24 +55,27 @@ int main() {
   bool isGameStarted = false;
 
   while (window.isOpen()) {
-    sf::Event event{};
-    while (window.pollEvent(event)) {
-      if (event.type == sf::Event::Closed || robot.getPosition().x + robot.spriteWidth < 0) {
-        window.close();
+    if (mainClock.getElapsedTime().asMilliseconds() > 10) {
+      sf::Event event{};
+      while (window.pollEvent(event)) {
+        if (event.type == sf::Event::Closed || robot.getPosition().x + robot.spriteWidth < 0) {
+          window.close();
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+          isGameStarted = true;
+        }
+        robotController.keyController();
       }
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-        isGameStarted = true;
+
+      if (isGameStarted) {
+        globalController.moveElements();
       }
-      robotController.keyController();
-    }
 
-    if (isGameStarted) {
-      globalController.moveElements();
+      window.clear();
+      globalController.draw(window);
+      window.display();
+      mainClock.restart();
     }
-
-    window.clear();
-    globalController.draw(window);
-    window.display();
   }
 
   return 0;

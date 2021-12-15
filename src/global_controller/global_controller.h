@@ -20,6 +20,8 @@ private:
 
   void setBulletExplosionPosition(Bullet &bullet, Zombie &zombie);
 
+  void setZombieOrientation(Zombie &zombie);
+
 public:
   GlobalController(
       Robot &robot,

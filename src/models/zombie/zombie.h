@@ -28,6 +28,9 @@ public:
   float width = 300 * constants::zombieScale;
   float height = 384 * constants::zombieScale;
   float velocityY = 0;
+  float velocityX = 0;
+  float velocityXLeft = 0;
+  float velocityXRight = 0;
 
   explicit Zombie(ZombieType zombieType) {
     type = zombieType;

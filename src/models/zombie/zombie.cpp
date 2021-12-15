@@ -20,6 +20,7 @@ void Zombie::setHorizontalOrientation(bool reversed) {
   isReversed = reversed;
   setScale(reversed ? -constants::zombieScale : constants::zombieScale, constants::zombieScale);
   setPosition(getPosition().x + (reversed ? width : -width), getPosition().y);
+  velocityX = isReversed ? velocityXLeft : velocityXRight;
 }
 
 void Zombie::setNewMoveType(ZombieMoveType zombieMoveType) {

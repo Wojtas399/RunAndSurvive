@@ -5,7 +5,7 @@
 #include "../../constants.h"
 
 enum RobotMoveType {
-  run, jump, idle, fallDown, slide,
+  run, jump, idle, slide,
 };
 
 class Robot {
@@ -18,6 +18,8 @@ public:
   float spriteHeight = 556 * constants::robotScale;
 
   sf::Vector2<float> getPosition();
+
+  void setPosition(float x, float y);
 };
 
 #endif //R_S_ROBOT_H

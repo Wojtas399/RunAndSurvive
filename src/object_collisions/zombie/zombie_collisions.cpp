@@ -1,39 +1,28 @@
 #include "zombie_collisions.h"
 
-bool ZombieCollisions::isCollisionWithGroundElement(
-    Zombie &zombie,
-    float leftReduction,
-    float rightReduction,
-    float heightReduction
-) {
+bool ZombieCollisions::isCollisionWithGroundElement(float x, float y, const Zombie& zombie) {
   return mapElementsCollisions.isCollisionWithGroundElement(
-      zombie.getPosition().x,
-      zombie.getPosition().y,
+      x,
+      y,
       zombie.width,
       zombie.height,
       zombie.isReversed,
-      leftReduction,
-      rightReduction,
-      heightReduction
+      14,
+      14,
+      5
   );
 }
 
-bool ZombieCollisions::isCollisionWithAirElement(
-    Zombie &zombie,
-    float leftReduction,
-    float rightReduction,
-    float topReduction,
-    float bottomReduction
-) {
+bool ZombieCollisions::isCollisionWithAirElement(float x, float y, const Zombie& zombie) {
   return mapElementsCollisions.isCollisionWithAirElement(
-      zombie.getPosition().x,
-      zombie.getPosition().y,
+      x,
+      y,
       zombie.width,
       zombie.height,
       zombie.isReversed,
-      leftReduction,
-      rightReduction,
-      topReduction,
-      bottomReduction
+      14,
+      14,
+      8,
+      5
   );
 }
