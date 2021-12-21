@@ -13,20 +13,9 @@ public:
       MapElementsCollisions &mapElementsCollisions
   ) : mapElementsCollisions(mapElementsCollisions) {}
 
-  bool isCollisionWithGroundElement(
-      Zombie &zombie,
-      float leftReduction,
-      float rightReduction,
-      float heightReduction
-  );
+  bool isCollisionWithGroundElement(float x, float y, const Zombie& zombie);
 
-  bool isCollisionWithAirElement(
-      Zombie &zombie,
-      float leftReduction,
-      float rightReduction,
-      float topReduction,
-      float bottomReduction
-  );
+  bool isCollisionWithAirElement(float x, float y, const Zombie& zombie);
 };
 
 

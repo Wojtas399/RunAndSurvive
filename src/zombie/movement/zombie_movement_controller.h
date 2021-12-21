@@ -10,17 +10,8 @@ class ZombieMovementController {
 private:
   ZombieAnimations &animations;
   ZombieCollisions &collisions;
-  const float accelerationY = 0.0001;
-
-  void movementController(Zombie &zombie);
 
   void manageMovementType(Zombie &zombie);
-
-  void basicMove(Zombie &zombie, float x, float y);
-
-  bool isNormalCollision(Zombie &zombie);
-
-  bool isFreeSpaceUnder(Zombie &zombie);
 
   void run(Zombie &zombie);
 
@@ -28,7 +19,15 @@ private:
 
   void standUp(Zombie &zombie);
 
+  void attack(Zombie &zombie);
+
   void dead(Zombie &zombie);
+
+  bool isCollisionForward(Zombie &zombie, float transformationX);
+
+  bool isFreeSpaceUnder(float x, float y, float transformationY, Zombie& zombie);
+
+  void verticalCorrection(float x, float y, float &transformationY, Zombie &zombie);
 public:
   ZombieMovementController(
       ZombieAnimations &zombieAnimations,

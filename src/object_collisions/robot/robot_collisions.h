@@ -17,9 +17,9 @@ public:
       Robot &robot
   ) : mapElementsCollisions(mapElementsCollisions), robot(robot) {};
 
-  bool isCollisionWithGroundElement(float leftReduction, float rightReduction, float heightReduction);
+  bool isCollisionWithGroundElement(float x, float y);
 
-  bool isCollisionWithAirElement(float leftReduction, float rightReduction, float topReduction, float bottomReduction);
+  bool isCollisionWithAirElement(float x, float y, float topReduction);
 };
 
 #endif //R_S_ROBOT_COLLISIONS_H

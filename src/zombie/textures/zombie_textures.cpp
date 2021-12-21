@@ -8,17 +8,20 @@ void ZombieTextures::loadTextures() {
 
 void ZombieTextures::loadZ1Textures() {
   loadZ1RunTextures();
-  loadZ1FallTextures();
+  loadZ1JumpTextures();
+  loadZ1AttackTextures();
 }
 
 void ZombieTextures::loadZ2Textures() {
   loadZ2RunTextures();
-  loadZ2FallTextures();
+  loadZ2JumpTextures();
+  loadZ2AttackTextures();
 }
 
 void ZombieTextures::loadZ3Textures() {
   loadZ3RunTextures();
-  loadZ3FallTextures();
+  loadZ3JumpTextures();
+  loadZ3AttackTextures();
 }
 
 void ZombieTextures::loadZ1RunTextures() {
@@ -43,19 +46,41 @@ void ZombieTextures::loadZ1RunTextures() {
   });
 }
 
-void ZombieTextures::loadZ1FallTextures() {
+void ZombieTextures::loadZ1JumpTextures() {
   if (
-      !z1Fall1Texture.loadFromFile("assets/zombie/zombie1/fall_1.png") ||
-      !z1Fall2Texture.loadFromFile("assets/zombie/zombie1/fall_2.png") ||
-      !z1Fall3Texture.loadFromFile("assets/zombie/zombie1/fall_3.png")
+      !z1Jump1Texture.loadFromFile("assets/zombie/zombie1/jump_1.png") ||
+      !z1Jump2Texture.loadFromFile("assets/zombie/zombie1/jump_2.png") ||
+      !z1Jump3Texture.loadFromFile("assets/zombie/zombie1/jump_3.png")
       ) {
-    std::cout << "Cannot load one of the zombie 1 fall textures\n";
+    std::cout << "Cannot load one of the zombie 1 jump textures\n";
   }
 
-  zombie1FallTextures.insert(zombie1FallTextures.end(), {
-      z1Fall1Texture,
-      z1Fall2Texture,
-      z1Fall3Texture,
+  zombie1JumpTextures.insert(zombie1JumpTextures.end(), {
+      z1Jump1Texture,
+      z1Jump2Texture,
+      z1Jump3Texture,
+  });
+}
+
+void ZombieTextures::loadZ1AttackTextures() {
+  if (
+      !z1Attack1Texture.loadFromFile("assets/zombie/zombie1/attack_1.png") ||
+      !z1Attack2Texture.loadFromFile("assets/zombie/zombie1/attack_2.png") ||
+      !z1Attack3Texture.loadFromFile("assets/zombie/zombie1/attack_3.png") ||
+      !z1Attack4Texture.loadFromFile("assets/zombie/zombie1/attack_4.png") ||
+      !z1Attack5Texture.loadFromFile("assets/zombie/zombie1/attack_5.png") ||
+      !z1Attack6Texture.loadFromFile("assets/zombie/zombie1/attack_6.png")
+      ) {
+    std::cout << "Cannot load one of the zombie 1 attack textures\n";
+  }
+
+  zombie1AttackTextures.insert(zombie1AttackTextures.end(), {
+      z1Attack1Texture,
+      z1Attack2Texture,
+      z1Attack3Texture,
+      z1Attack4Texture,
+      z1Attack5Texture,
+      z1Attack6Texture
   });
 }
 
@@ -81,19 +106,41 @@ void ZombieTextures::loadZ2RunTextures() {
   });
 }
 
-void ZombieTextures::loadZ2FallTextures() {
+void ZombieTextures::loadZ2JumpTextures() {
   if (
-      !z2Fall1Texture.loadFromFile("assets/zombie/zombie2/fall_1.png") ||
-      !z2Fall2Texture.loadFromFile("assets/zombie/zombie2/fall_2.png") ||
-      !z2Fall3Texture.loadFromFile("assets/zombie/zombie2/fall_3.png")
+      !z2Jump1Texture.loadFromFile("assets/zombie/zombie2/jump_1.png") ||
+      !z2Jump2Texture.loadFromFile("assets/zombie/zombie2/jump_2.png") ||
+      !z2Jump3Texture.loadFromFile("assets/zombie/zombie2/jump_3.png")
       ) {
-    std::cout << "Cannot load one of the zombie 2 fall textures\n";
+    std::cout << "Cannot load one of the zombie 2 jump textures\n";
   }
 
-  zombie2FallTextures.insert(zombie2FallTextures.end(), {
-      z2Fall1Texture,
-      z2Fall2Texture,
-      z2Fall3Texture,
+  zombie2JumpTextures.insert(zombie2JumpTextures.end(), {
+      z2Jump1Texture,
+      z2Jump2Texture,
+      z2Jump3Texture,
+  });
+}
+
+void ZombieTextures::loadZ2AttackTextures() {
+  if (
+      !z2Attack1Texture.loadFromFile("assets/zombie/zombie2/attack_1.png") ||
+      !z2Attack2Texture.loadFromFile("assets/zombie/zombie2/attack_2.png") ||
+      !z2Attack3Texture.loadFromFile("assets/zombie/zombie2/attack_3.png") ||
+      !z2Attack4Texture.loadFromFile("assets/zombie/zombie2/attack_4.png") ||
+      !z2Attack5Texture.loadFromFile("assets/zombie/zombie2/attack_5.png") ||
+      !z2Attack6Texture.loadFromFile("assets/zombie/zombie2/attack_6.png")
+      ) {
+    std::cout << "Cannot load one of the zombie 2 attack textures\n";
+  }
+
+  zombie2AttackTextures.insert(zombie2AttackTextures.end(), {
+      z2Attack1Texture,
+      z2Attack2Texture,
+      z2Attack3Texture,
+      z2Attack4Texture,
+      z2Attack5Texture,
+      z2Attack6Texture
   });
 }
 
@@ -119,18 +166,40 @@ void ZombieTextures::loadZ3RunTextures() {
   });
 }
 
-void ZombieTextures::loadZ3FallTextures() {
+void ZombieTextures::loadZ3JumpTextures() {
   if (
-      !z3Fall1Texture.loadFromFile("assets/zombie/zombie3/fall_1.png") ||
-      !z3Fall2Texture.loadFromFile("assets/zombie/zombie3/fall_2.png") ||
-      !z3Fall3Texture.loadFromFile("assets/zombie/zombie3/fall_3.png")
+      !z3Jump1Texture.loadFromFile("assets/zombie/zombie3/jump_1.png") ||
+      !z3Jump2Texture.loadFromFile("assets/zombie/zombie3/jump_2.png") ||
+      !z3Jump3Texture.loadFromFile("assets/zombie/zombie3/jump_3.png")
       ) {
-    std::cout << "Cannot load one of the zombie 3 fall textures\n";
+    std::cout << "Cannot load one of the zombie 3 jump textures\n";
   }
 
-  zombie3FallTextures.insert(zombie3FallTextures.end(), {
-      z3Fall1Texture,
-      z3Fall2Texture,
-      z3Fall3Texture,
+  zombie3JumpTextures.insert(zombie3JumpTextures.end(), {
+      z3Jump1Texture,
+      z3Jump2Texture,
+      z3Jump3Texture,
+  });
+}
+
+void ZombieTextures::loadZ3AttackTextures() {
+  if (
+      !z3Attack1Texture.loadFromFile("assets/zombie/zombie3/attack_1.png") ||
+      !z3Attack2Texture.loadFromFile("assets/zombie/zombie3/attack_2.png") ||
+      !z3Attack3Texture.loadFromFile("assets/zombie/zombie3/attack_3.png") ||
+      !z3Attack4Texture.loadFromFile("assets/zombie/zombie3/attack_4.png") ||
+      !z3Attack5Texture.loadFromFile("assets/zombie/zombie3/attack_5.png") ||
+      !z3Attack6Texture.loadFromFile("assets/zombie/zombie3/attack_6.png")
+      ) {
+    std::cout << "Cannot load one of the zombie 3 attack textures\n";
+  }
+
+  zombie3AttackTextures.insert(zombie3AttackTextures.end(), {
+      z3Attack1Texture,
+      z3Attack2Texture,
+      z3Attack3Texture,
+      z3Attack4Texture,
+      z3Attack5Texture,
+      z3Attack6Texture
   });
 }

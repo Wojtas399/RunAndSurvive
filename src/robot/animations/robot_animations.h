@@ -29,7 +29,7 @@ public:
 
   void shootAnim(sf::Sprite &robotSprite);
 
-  void runShootAnim(sf::Sprite &robotSprite);
+  void runShootAnim(sf::Sprite &robotSprite, bool isFastRun);
 };
 
 #endif //R_S_ROBOT_ANIMATIONS_H

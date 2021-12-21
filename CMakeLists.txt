@@ -30,7 +30,8 @@ add_executable(R_S
         src/zombie/animations/zombie_animations.cpp
         src/zombie/movement/zombie_movement_controller.cpp
         src/object_collisions/zombie/zombie_collisions.cpp
-        src/global_controller/global_controller.cpp)
+        src/global_controller/global_controller.cpp
+        src/object_collisions/robot_zombie/robot_zombie_collisions.cpp)
 include_directories(/usr/local/include)
 
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)

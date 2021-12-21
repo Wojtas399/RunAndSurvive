@@ -13,6 +13,18 @@ void GlobalController::moveElements() {
   std::vector<Bullet> &bullets = robotController.shootController.allBullets;
   std::vector<Zombie> &zombies = zombieController.zombies;
   for (Zombie &zombie: zombies) {
+    if (zombie.moveType == ZombieMoveType::zombieAttack) {
+      setZombieOrientation(zombie);
+    }
+    if (
+        zombie.moveType != ZombieMoveType::zombieDead &&
+        zombie.moveType != ZombieMoveType::zombieFallDown &&
+        zombie.attackBreakClock.getElapsedTime().asMilliseconds() > 1000 &&
+        robotZombieCollisions.isRobotCollisionWithZombie(robot, zombie)
+        ) {
+      setZombieOrientation(zombie);
+      zombie.setNewMoveType(ZombieMoveType::zombieAttack);
+    }
     for (Bullet &bullet: bullets) {
       if (
           zombie.moveType != ZombieMoveType::zombieDead &&
@@ -35,7 +47,17 @@ void GlobalController::draw(sf::RenderWindow &window) {
 void GlobalController::setBulletExplosionPosition(Bullet &bullet, Zombie &zombie) {
   sf::Vector2<float> zombiePosition = zombie.getPosition();
   bullet.setMuzzlePosition(
-      zombiePosition.x + (zombie.isReversed ? -25.0f : 22.0f),
+      zombiePosition.x + (zombie.isReversed ? -28.0f : 22.0f),
       zombiePosition.y
   );
+}
+
+void GlobalController::setZombieOrientation(Zombie &zombie) {
+  float robotPositionX = robot.getPosition().x + (robot.isReversed ? -24.0f : 24.0f);
+  float zombiePositionX = zombie.getPosition().x;
+  if (zombiePositionX > robotPositionX && !zombie.isReversed) {
+    zombie.setHorizontalOrientation(true);
+  } else if (zombiePositionX < robotPositionX && zombie.isReversed) {
+    zombie.setHorizontalOrientation(false);
+  }
 }

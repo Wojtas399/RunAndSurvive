@@ -22,8 +22,8 @@ bool BulletCollisions::isCollisionWithAirElement(Bullet &bullet) {
       bullet.isReversed,
       6,
       6,
-      0,
-      0
+      -1,
+      8
   );
 }
 
