@@ -13,7 +13,7 @@ bool RobotCollisions::isCollisionWithGroundElement(float x, float y) {
   );
 }
 
-bool RobotCollisions::isCollisionWithAirElement(float x, float y) {
+bool RobotCollisions::isCollisionWithAirElement(float x, float y, float topReduction) {
   return mapElementsCollisions.isCollisionWithAirElement(
       x,
       y,
@@ -22,7 +22,7 @@ bool RobotCollisions::isCollisionWithAirElement(float x, float y) {
       robot.isReversed,
       24,
       24,
-      10,
+      topReduction,
       8
   );
 }

@@ -39,14 +39,17 @@ void ZombieMovementController::manageMovementType(Zombie &zombie) {
 
 void ZombieMovementController::run(Zombie &zombie) {
   sf::Vector2<float> position = zombie.getPosition();
-  if (isCollisionForward(zombie)) {
+  if (isCollisionForward(zombie, zombie.velocityX)) {
     zombie.setHorizontalOrientation(!zombie.isReversed);
   }
-  if (position.y < 442 && isFreeSpaceUnder(position.x, position.y, 10, zombie)) {
+  if (
+      position.y < 442 &&
+      isFreeSpaceUnder(position.x + (zombie.isReversed ? -11.0f : 11.0f), position.y, 10, zombie)
+      ) {
     zombie.setNewMoveType(ZombieMoveType::zombieFallDown);
   }
   position = zombie.getPosition();
-  basicMove(zombie, position.x, position.y);
+  zombie.setPosition(position.x + zombie.velocityX, position.y);
   animations.runAnim(zombie);
 }
 
@@ -56,7 +59,10 @@ void ZombieMovementController::fallDown(Zombie &zombie) {
   float velocityY = zombie.velocityY;
   bool stopVerticalMovement = false;
 
-  if (velocityY > 0 && !isFreeSpaceUnder(position.x, y, zombie.velocityY, zombie)) {
+  if (
+      velocityY > 0 &&
+      !isFreeSpaceUnder(position.x + (zombie.isReversed ? -11.0f : 11.0f), y, zombie.velocityY, zombie)
+      ) {
     verticalCorrection(position.x, y, velocityY, zombie);
     zombie.setNewMoveType(ZombieMoveType::zombieRun);
     stopVerticalMovement = true;
@@ -71,7 +77,7 @@ void ZombieMovementController::fallDown(Zombie &zombie) {
     zombie.setNewMoveType(ZombieMoveType::zombieRun);
   }
 
-  basicMove(zombie, position.x, y);
+  zombie.setPosition(position.x + zombie.velocityX, y);
   animations.fallAnim(zombie);
 }
 
@@ -85,8 +91,9 @@ void ZombieMovementController::attack(Zombie &zombie) {
   sf::Vector2<float> position = zombie.getPosition();
   zombie.setPosition(position.x - constants::mapSpeed, position.y);
   animations.attackAnim(zombie);
-  if (zombie.attackTextureCounter >= 6 ) {
+  if (zombie.attackTextureCounter >= 6) {
     zombie.setNewMoveType(ZombieMoveType::zombieRun);
+    zombie.attackTextureCounter = 0;
   }
 }
 
@@ -96,24 +103,22 @@ void ZombieMovementController::dead(Zombie &zombie) {
   animations.deadAnim(zombie);
 }
 
-void ZombieMovementController::basicMove(Zombie &zombie, float x, float y) {
-  zombie.setPosition(x + zombie.velocityX, y);
-}
-
-bool ZombieMovementController::isCollisionForward(Zombie &zombie) {
+bool ZombieMovementController::isCollisionForward(Zombie &zombie, float transformationX) {
   sf::Vector2<float> position = zombie.getPosition();
-  return collisions.isCollisionWithGroundElement(position.x + zombie.velocityX, position.y - 4, zombie) ||
-         collisions.isCollisionWithAirElement(position.x + zombie.velocityX, position.y - 4, zombie);
+  return collisions.isCollisionWithGroundElement(position.x + transformationX, position.y - 4, zombie) ||
+         collisions.isCollisionWithAirElement(position.x + transformationX, position.y - 4, zombie);
 }
 
-bool ZombieMovementController::isFreeSpaceUnder(float x, float y, float transformationY, Zombie& zombie) {
-  float xHelper = zombie.isReversed ? -11 : 11;
-  return !collisions.isCollisionWithGroundElement(x + xHelper, y + transformationY, zombie) &&
-         !collisions.isCollisionWithAirElement(x + xHelper, y + transformationY, zombie);
+bool ZombieMovementController::isFreeSpaceUnder(float x, float y, float transformationY, Zombie &zombie) {
+  return !collisions.isCollisionWithGroundElement(x, y + transformationY, zombie) &&
+         !collisions.isCollisionWithAirElement(x, y + transformationY, zombie);
 }
 
-void ZombieMovementController::verticalCorrection(float x, float y, float &transformationY, Zombie& zombie) {
-  while (!isFreeSpaceUnder(x, y, transformationY, zombie)) {
+void ZombieMovementController::verticalCorrection(float x, float y, float &transformationY, Zombie &zombie) {
+  float helper = !isCollisionForward(zombie, zombie.isReversed ? -5 : 5)
+                 ? 0
+                 : zombie.isReversed ? 5.0f : -5.0f;
+  while (!isFreeSpaceUnder(x + helper, y, transformationY, zombie)) {
     transformationY -= 0.5;
   }
 }

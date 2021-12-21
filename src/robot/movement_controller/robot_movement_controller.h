@@ -9,6 +9,7 @@
 class RobotMovementController {
 private:
   Robot &robot;
+  RobotCollisions &collisions;
   RobotMovement &robotMovement;
   RobotShootController &shootController;
   float velocityX = 0;
@@ -18,8 +19,6 @@ private:
   float maxYPosition = 352;
   bool isFastRun = false;
   bool jumpAfterTopCollision = false;
-  bool fallDownAfterSlide = false;
-  bool blockedSlide = false;
   sf::Clock shootClock;
 
   void verticalMovement(bool isKeyUpPressed, bool isKeyDownPressed);
@@ -46,12 +45,19 @@ private:
 
   void setNormalRobotParams();
 
+  bool isCollisionForward(float topReduction);
+
+  bool isCollisionBottom();
+
+  bool isCollisionAtTheTop();
+
 public:
   RobotMovementController(
       Robot &robot,
+      RobotCollisions &robotCollisions,
       RobotMovement &robotMovement,
       RobotShootController &robotShootController
-  ) : robot(robot), robotMovement(robotMovement), shootController(robotShootController) {}
+  ) : robot(robot), collisions(robotCollisions), robotMovement(robotMovement), shootController(robotShootController) {}
 
   void move(
       bool isKeyUpPressed,

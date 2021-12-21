@@ -32,7 +32,7 @@ int main() {
   BulletCollisions bulletCollisions(mapElementsCollisions);
   RobotMovement robotMovement(robot, robotAnimations, robotCollisions);
   RobotShootController robotShootController(robot, robotTextures, bulletCollisions);
-  RobotMovementController robotMovementController(robot, robotMovement, robotShootController);
+  RobotMovementController robotMovementController(robot, robotCollisions, robotMovement, robotShootController);
   RobotController robotController(robot, robotAnimations, robotMovementController, robotShootController);
   //Zombie
   ZombieTextures zombieTextures;

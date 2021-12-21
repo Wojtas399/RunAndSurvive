@@ -20,6 +20,8 @@ private:
 
   bool isAirCollisionForward(float x, float y, float translationX);
 
+  bool isAirCollisionVertically(float x, float y, float translationY);
+
   void horizontalPositionCorrection(float &x, float y, float translationX);
 
   void verticalPositionCorrection(float x, float y, float &translationY);
@@ -42,11 +44,9 @@ public:
       bool &jumpAfterTopCollision
   );
 
-  void idle();
+  void idle(float &velocityY);
 
-  void slide(bool &blockedSlide, float &velocityY, bool &fallDownAfterSlide);
-
-  bool isAirCollisionVertically(float x, float y, float translationY);
+  void slide(float &velocityX);
 };
 
 #endif //R_S_ROBOT_MOVEMENT_H

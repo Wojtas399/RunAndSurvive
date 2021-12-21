@@ -76,8 +76,9 @@ void RobotAnimations::shootAnim(sf::Sprite &robotSprite) {
   }
 }
 
-void RobotAnimations::runShootAnim(sf::Sprite &robotSprite) {
-  if (clock.getElapsedTime().asSeconds() > 0.09f) {
+void RobotAnimations::runShootAnim(sf::Sprite &robotSprite, bool isFastRun) {
+  float timeElapsed = isFastRun ? 0.065f : 0.08f;
+  if (clock.getElapsedTime().asSeconds() > timeElapsed) {
     robotSprite.setTexture(textures.runShootTextures[runShootTextureCounter]);
     runShootTextureCounter++;
     if (runShootTextureCounter >= textures.runShootTextures.size()) {

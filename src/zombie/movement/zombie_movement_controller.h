@@ -13,8 +13,6 @@ private:
 
   void manageMovementType(Zombie &zombie);
 
-  void basicMove(Zombie &zombie, float x, float y);
-
   void run(Zombie &zombie);
 
   void fallDown(Zombie &zombie);
@@ -25,7 +23,7 @@ private:
 
   void dead(Zombie &zombie);
 
-  bool isCollisionForward(Zombie &zombie);
+  bool isCollisionForward(Zombie &zombie, float transformationX);
 
   bool isFreeSpaceUnder(float x, float y, float transformationY, Zombie& zombie);
 

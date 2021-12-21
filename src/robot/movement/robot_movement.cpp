@@ -14,7 +14,11 @@ void RobotMovement::run(float &velocityX, float &velocityY, bool &isFastRun) {
     velocityY = 0.045;
   }
   robot.setPosition(x, y);
-  robotAnimations.runAnim(robot.sprite, isFastRun);
+  if (robot.isShoot) {
+    robotAnimations.runShootAnim(robot.sprite, isFastRun);
+  } else {
+    robotAnimations.runAnim(robot.sprite, isFastRun);
+  }
 }
 
 void RobotMovement::jump(
@@ -68,19 +72,34 @@ void RobotMovement::jump(
   robotAnimations.jumpAnim(robot.sprite, velocityY, maxYPosition);
 }
 
-void RobotMovement::idle() {
+void RobotMovement::idle(float &velocityY) {
   sf::Vector2<float> position = robot.getPosition();
   float x = position.x;
   float y = position.y;
   x -= constants::mapSpeed;
-  if (robot.isReversed) {
+  if (
+      y < 432 &&
+      velocityY > 0 &&
+      isCollisionForward(x, y, robot.isReversed ? -5.0f : 5.0f)
+      ) {
+    verticalPositionCorrection(x, y, velocityY);
+    y = y + velocityY > 432 ? 432 : y + velocityY;
+  }
+  if (!isCollisionForward(x, y, robot.isReversed ? -4 : 4) || robot.isReversed) {
     robot.moveType = RobotMoveType::run;
   }
   robot.setPosition(x, y);
-  robotAnimations.idleAnim(robot.sprite);
+  if (robot.isShoot) {
+    robotAnimations.shootAnim(robot.sprite);
+  } else {
+    robotAnimations.idleAnim(robot.sprite);
+  }
 }
 
-void RobotMovement::slide(bool &blockedSlide, float &velocityY, bool &fallDownAfterSlide) {
+void RobotMovement::slide(float &velocityX) {
+  sf::Vector2<float> position = robot.getPosition();
+  float x = position.x +  (robot.isReversed ? velocityX + 0.5f : 0);
+  robot.setPosition(x, position.y);
   robotAnimations.slideAnim(robot.sprite);
 }
 
@@ -101,11 +120,11 @@ bool RobotMovement::isGroundCollisionBottom(float x, float y, float translationY
 }
 
 bool RobotMovement::isAirCollisionForward(float x, float y, float translationX) {
-  return collisions.isCollisionWithAirElement(x + translationX, y);
+  return collisions.isCollisionWithAirElement(x + translationX, y, 10);
 }
 
 bool RobotMovement::isAirCollisionVertically(float x, float y, float translationY) {
-  return collisions.isCollisionWithAirElement(x, y + translationY);
+  return collisions.isCollisionWithAirElement(x, y + translationY, 10);
 }
 
 void RobotMovement::horizontalPositionCorrection(float &x, float y, float translationX) {

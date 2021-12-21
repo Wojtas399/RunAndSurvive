@@ -19,7 +19,7 @@ public:
 
   bool isCollisionWithGroundElement(float x, float y);
 
-  bool isCollisionWithAirElement(float x, float y);
+  bool isCollisionWithAirElement(float x, float y, float topReduction);
 };
 
 #endif //R_S_ROBOT_COLLISIONS_H
