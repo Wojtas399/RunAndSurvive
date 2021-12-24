@@ -4,12 +4,37 @@ void GlobalController::loadTextures() {
   mapGenerator.load();
   robotController.loadTextures();
   zombieController.loadTextures();
+  pointsService.loadTextures();
+  pointsService.setPointSprites();
+}
+
+void GlobalController::resetClock() {
+  pointsClock.restart();
+}
+
+void GlobalController::step() {
+  moveElements();
+  if (pointsClock.getElapsedTime().asMilliseconds() >= 1000) {
+    pointsService.addPointForSecond();
+    pointsClock.restart();
+  }
+}
+
+void GlobalController::draw(sf::RenderWindow &window) {
+  mapGenerator.draw(window);
+  zombieController.draw(window);
+  robotController.draw(window);
+  pointsService.draw(window);
 }
 
 void GlobalController::moveElements() {
   mapGenerator.move();
   robotController.move();
   zombieController.move();
+  checkCollisions();
+}
+
+void GlobalController::checkCollisions() {
   std::vector<Bullet> &bullets = robotController.shootController.allBullets;
   std::vector<Zombie> &zombies = zombieController.zombies;
   for (Zombie &zombie: zombies) {
@@ -33,15 +58,10 @@ void GlobalController::moveElements() {
         zombie.setNewMoveType(ZombieMoveType::zombieDead);
         bullet.isExplosion = true;
         setBulletExplosionPosition(bullet, zombie);
+        pointsService.addPointsForZombie();
       }
     }
   }
-}
-
-void GlobalController::draw(sf::RenderWindow &window) {
-  mapGenerator.draw(window);
-  zombieController.draw(window);
-  robotController.draw(window);
 }
 
 void GlobalController::setBulletExplosionPosition(Bullet &bullet, Zombie &zombie) {

@@ -41,8 +41,10 @@ int main() {
   ZombieMovementController zombieMovementController(zombieAnimations, zombieCollisions);
   ZombieController zombieController(zombieMovementController);
 
+  PointsService pointsService;
   RobotZombieCollisions robotZombieCollisions;
   GlobalController globalController(
+      pointsService,
       robot,
       mapGenerator,
       robotController,
@@ -61,14 +63,15 @@ int main() {
         if (event.type == sf::Event::Closed || robot.getPosition().x + robot.spriteWidth < 0) {
           window.close();
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !isGameStarted) {
           isGameStarted = true;
+          globalController.resetClock();
         }
         robotController.keyController();
       }
 
       if (isGameStarted) {
-        globalController.moveElements();
+        globalController.step();
       }
 
       window.clear();

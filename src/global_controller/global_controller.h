@@ -8,15 +8,22 @@
 #include "../robot/robot_controller.h"
 #include "../zombie/zombie_controller.h"
 #include "../object_collisions/robot_zombie/robot_zombie_collisions.h"
+#include "../points_service/points_service.h"
 
 class GlobalController {
 private:
+  PointsService &pointsService;
   Robot &robot;
   MapGenerator &mapGenerator;
   RobotController &robotController;
   ZombieController &zombieController;
   BulletCollisions &bulletCollisions;
   RobotZombieCollisions &robotZombieCollisions;
+  sf::Clock pointsClock;
+
+  void moveElements();
+
+  void checkCollisions();
 
   void setBulletExplosionPosition(Bullet &bullet, Zombie &zombie);
 
@@ -24,13 +31,15 @@ private:
 
 public:
   GlobalController(
+      PointsService &pointsService,
       Robot &robot,
       MapGenerator &mapGenerator,
       RobotController &robotController,
       ZombieController &zombieController,
       BulletCollisions &bulletCollisions,
       RobotZombieCollisions &robotZombieCollisions
-  ) : robot(robot),
+  ) : pointsService(pointsService),
+      robot(robot),
       mapGenerator(mapGenerator),
       robotController(robotController),
       zombieController(zombieController),
@@ -39,7 +48,9 @@ public:
 
   void loadTextures();
 
-  void moveElements();
+  void resetClock();
+
+  void step();
 
   void draw(sf::RenderWindow &window);
 };
