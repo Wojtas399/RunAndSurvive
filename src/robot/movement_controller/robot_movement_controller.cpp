@@ -120,7 +120,9 @@ void RobotMovementController::moveLeft() {
 }
 
 void RobotMovementController::moveRight() {
-  velocityX = constants::robotRightVelocityX;
+  velocityX = robot.getPosition().x + (robot.spriteWidth - 20) > constants::windowWidth
+      ? 0
+      : constants::robotRightVelocityX;
   isFastRun = true;
   if (robot.moveType == RobotMoveType::slide && !isCollisionAtTheTop()) {
     robot.moveType = RobotMoveType::run;
