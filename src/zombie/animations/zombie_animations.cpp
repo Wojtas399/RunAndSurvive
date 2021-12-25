@@ -30,6 +30,9 @@ void ZombieAnimations::standUpAnim(Zombie &zombie) {
 void ZombieAnimations::attackAnim(Zombie &zombie) {
   if (zombie.clock.getElapsedTime().asMilliseconds() > 100 && zombie.attackTextureCounter < 6) {
     setNewAttackTexture(zombie);
+    if (zombie.attackTextureCounter == 3) {
+      lifeService.subtractLife();
+    }
     zombie.attackTextureCounter++;
     zombie.clock.restart();
   }

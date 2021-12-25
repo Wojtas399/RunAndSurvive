@@ -3,10 +3,12 @@
 
 #include "../textures/zombie_textures.h"
 #include "../../models/zombie/zombie.h"
+#include "../../life_service/life_service.h"
 
 class ZombieAnimations {
 private:
   ZombieTextures &textures;
+  LifeService &lifeService;
 
   void setNewRunTexture(Zombie &zombie);
 
@@ -15,8 +17,9 @@ private:
   void setNewAttackTexture(Zombie &zombie);
 
   void fadeOutAnim(Zombie &zombie);
+
 public:
-  explicit ZombieAnimations(ZombieTextures &textures) : textures(textures) {}
+  ZombieAnimations(ZombieTextures &textures, LifeService &lifeService) : textures(textures), lifeService(lifeService) {}
 
   void loadTextures();
 

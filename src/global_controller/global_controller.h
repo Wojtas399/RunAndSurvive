@@ -9,10 +9,12 @@
 #include "../zombie/zombie_controller.h"
 #include "../object_collisions/robot_zombie/robot_zombie_collisions.h"
 #include "../points_service/points_service.h"
+#include "../life_service/life_service.h"
 
 class GlobalController {
 private:
   PointsService &pointsService;
+  LifeService &lifeService;
   Robot &robot;
   MapGenerator &mapGenerator;
   RobotController &robotController;
@@ -32,6 +34,7 @@ private:
 public:
   GlobalController(
       PointsService &pointsService,
+      LifeService &lifeService,
       Robot &robot,
       MapGenerator &mapGenerator,
       RobotController &robotController,
@@ -39,6 +42,7 @@ public:
       BulletCollisions &bulletCollisions,
       RobotZombieCollisions &robotZombieCollisions
   ) : pointsService(pointsService),
+      lifeService(lifeService),
       robot(robot),
       mapGenerator(mapGenerator),
       robotController(robotController),

@@ -5,6 +5,7 @@ void GlobalController::loadTextures() {
   robotController.loadTextures();
   zombieController.loadTextures();
   pointsService.loadTextures();
+  lifeService.loadTexture();
   pointsService.setPointSprites();
 }
 
@@ -25,6 +26,7 @@ void GlobalController::draw(sf::RenderWindow &window) {
   zombieController.draw(window);
   robotController.draw(window);
   pointsService.draw(window);
+  lifeService.draw(window);
 }
 
 void GlobalController::moveElements() {
@@ -49,6 +51,7 @@ void GlobalController::checkCollisions() {
         ) {
       setZombieOrientation(zombie);
       zombie.setNewMoveType(ZombieMoveType::zombieAttack);
+      zombie.attackBreakClock.restart();
     }
     for (Bullet &bullet: bullets) {
       if (

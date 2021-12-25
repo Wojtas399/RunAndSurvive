@@ -37,13 +37,13 @@ void PointsService::draw(sf::RenderWindow &window) {
 
 void PointsService::setPointSprites() {
   std::string pointsStr = std::to_string(points);
-  float x = 0;
+  float x = -13;
   for (int i = 0; i < pointsStr.length(); i++) {
     int number = pointsStr[i] - '0';
     x += 30;
     sf::Sprite spr;
     spr.setTexture(pointTextures[number]);
-    spr.setPosition(x, 530);
+    spr.setPosition(x, 55);
     spr.setScale(1.5, 1.5);
     if (pointsStr.length() > pointSprites.size() && i == pointsStr.length() - 1) {
       pointSprites.push_back(spr);

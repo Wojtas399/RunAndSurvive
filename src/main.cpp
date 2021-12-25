@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include "iostream"
 #include "constants.h"
 #include "map/generators/background/background_generator.h"
 #include "map/generators/ground_elements/ground_elements_generator.h"
@@ -9,12 +10,17 @@
 #include "zombie/textures/zombie_textures.h"
 #include "zombie/zombie_controller.h"
 #include "global_controller/global_controller.h"
+#include "life_service/life_service.h"
 
 int main() {
   srand(time(NULL));
 
   sf::RenderWindow window(sf::VideoMode(constants::windowWidth, constants::windowHeight), "Run & Survive");
   sf::Clock mainClock;
+
+  //Global
+  PointsService pointsService;
+  LifeService lifeService;
   //Map
   BackgroundGenerator backgroundGenerator;
   GroundElementsGenerator groundElementsGenerator;
@@ -36,15 +42,15 @@ int main() {
   RobotController robotController(robot, robotAnimations, robotMovementController, robotShootController);
   //Zombie
   ZombieTextures zombieTextures;
-  ZombieAnimations zombieAnimations(zombieTextures);
+  ZombieAnimations zombieAnimations(zombieTextures, lifeService);
   ZombieCollisions zombieCollisions(mapElementsCollisions);
   ZombieMovementController zombieMovementController(zombieAnimations, zombieCollisions);
   ZombieController zombieController(zombieMovementController);
 
-  PointsService pointsService;
   RobotZombieCollisions robotZombieCollisions;
   GlobalController globalController(
       pointsService,
+      lifeService,
       robot,
       mapGenerator,
       robotController,
@@ -60,7 +66,7 @@ int main() {
     if (mainClock.getElapsedTime().asMilliseconds() > 10) {
       sf::Event event{};
       while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed || robot.getPosition().x + robot.spriteWidth < 0) {
+        if (event.type == sf::Event::Closed) {
           window.close();
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !isGameStarted) {
@@ -68,6 +74,10 @@ int main() {
           globalController.resetClock();
         }
         robotController.keyController();
+      }
+
+      if (robot.getPosition().x + robot.spriteWidth < 0 || lifeService.lifeAmount == 0) {
+        window.close();
       }
 
       if (isGameStarted) {
