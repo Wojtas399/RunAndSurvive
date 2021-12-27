@@ -33,7 +33,8 @@ add_executable(R_S
         src/global_controller/global_controller.cpp
         src/object_collisions/robot_zombie/robot_zombie_collisions.cpp
         src/points_service/points_service.cpp
-        src/life_service/life_service.cpp)
+        src/life_service/life_service.cpp
+        src/game_params/game_params.cpp)
 include_directories(/usr/local/include)
 
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)

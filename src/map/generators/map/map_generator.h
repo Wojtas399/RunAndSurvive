@@ -14,13 +14,14 @@ private:
   sf::Texture groundTexture;
   sf::Sprite groundSpr1;
   sf::Sprite groundSpr2;
+  GameParams &gameParams;
   BackgroundGenerator &backgroundGenerator;
   AirElementsGenerator &airElementsGenerator;
   GroundElementsGenerator &groundElementsGenerator;
 
   void setSprites();
 
-  static void setNewPosition(sf::Sprite &sprite);
+  void setNewPosition(sf::Sprite &sprite) const;
 
   void generateNewElementsConfiguration();
 
@@ -30,10 +31,12 @@ private:
 
 public:
   MapGenerator(
+      GameParams &gameParams,
       BackgroundGenerator &backgroundGenerator,
       GroundElementsGenerator &groundElementsGenerator,
       AirElementsGenerator &airElementsGenerator
-  ) : backgroundGenerator(backgroundGenerator),
+  ) : gameParams(gameParams),
+      backgroundGenerator(backgroundGenerator),
       groundElementsGenerator(groundElementsGenerator),
       airElementsGenerator(airElementsGenerator) {}
 

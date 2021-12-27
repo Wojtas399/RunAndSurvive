@@ -54,6 +54,6 @@ void AirElementsGenerator::setNewElementPosition(int index) {
   if (position.x + static_cast<float>(element.width) <= 0) {
     airElements.erase(airElements.begin() + index);
   } else {
-    element.sprite.setPosition(position.x - constants::mapSpeed, position.y);
+    element.sprite.setPosition(position.x - gameParams.mapSpeed, position.y);
   }
 }

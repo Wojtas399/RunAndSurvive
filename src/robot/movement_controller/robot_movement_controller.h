@@ -8,6 +8,7 @@
 
 class RobotMovementController {
 private:
+  GameParams &gameParams;
   Robot &robot;
   RobotCollisions &collisions;
   RobotMovement &robotMovement;
@@ -53,11 +54,16 @@ private:
 
 public:
   RobotMovementController(
+      GameParams &gameParams,
       Robot &robot,
       RobotCollisions &robotCollisions,
       RobotMovement &robotMovement,
       RobotShootController &robotShootController
-  ) : robot(robot), collisions(robotCollisions), robotMovement(robotMovement), shootController(robotShootController) {}
+  ) : gameParams(gameParams),
+      robot(robot),
+      collisions(robotCollisions),
+      robotMovement(robotMovement),
+      shootController(robotShootController) {}
 
   void move(
       bool isKeyUpPressed,

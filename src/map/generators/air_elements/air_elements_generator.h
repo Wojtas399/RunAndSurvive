@@ -7,9 +7,11 @@
 #include <random>
 #include "../../../constants.h"
 #include "../../map_elements_configurators/air_elements_configurator/air_elements_configurator.h"
+#include "../../../game_params/game_params.h"
 
 class AirElementsGenerator {
 private:
+  GameParams &gameParams;
   sf::Texture ground1Texture;
   sf::Texture ground2Texture;
   sf::Texture doubleLevelTexture;
@@ -25,6 +27,8 @@ private:
   void setNewElementPosition(int index);
 
 public:
+  explicit AirElementsGenerator(GameParams &gameParams) : gameParams(gameParams) {}
+
   std::vector<MapElement> airElements;
 
   void loadTexture();

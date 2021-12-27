@@ -32,12 +32,12 @@ void MapGenerator::setSprites() {
   groundSpr2.setPosition(1408, 514);
 }
 
-void MapGenerator::setNewPosition(sf::Sprite &sprite) {
+void MapGenerator::setNewPosition(sf::Sprite &sprite) const {
   sf::Vector2<float> position = sprite.getPosition();
   if (position.x < -1400) {
-    sprite.setPosition(static_cast<float>(1408), position.y);
+    sprite.setPosition(1408, position.y);
   } else {
-    sprite.setPosition(static_cast<float>(position.x - constants::mapSpeed), position.y);
+    sprite.setPosition(position.x - gameParams.mapSpeed, position.y);
   }
 }
 

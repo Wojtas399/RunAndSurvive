@@ -7,9 +7,11 @@
 #include <random>
 #include "../../../constants.h"
 #include "../../map_elements_configurators/ground_elements_configurator/ground_elements_configurator.h"
+#include "../../../game_params/game_params.h"
 
 class GroundElementsGenerator {
 private:
+  GameParams &gameParams;
   sf::Texture blockTexture;
   sf::Texture blockDoubleTexture;
   sf::Texture blockTripleTexture;
@@ -27,6 +29,8 @@ private:
   void setNewElementPosition(int index);
 
 public:
+  explicit GroundElementsGenerator(GameParams &gameParams) : gameParams(gameParams) {}
+
   std::vector<MapElement> groundElements;
 
   void loadTexture();

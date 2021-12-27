@@ -83,13 +83,13 @@ void ZombieMovementController::fallDown(Zombie &zombie) {
 
 void ZombieMovementController::standUp(Zombie &zombie) {
   sf::Vector2<float> position = zombie.getPosition();
-  zombie.setPosition(position.x - constants::mapSpeed, position.y);
+  zombie.setPosition(position.x - gameParams.mapSpeed, position.y);
   animations.standUpAnim(zombie);
 }
 
 void ZombieMovementController::attack(Zombie &zombie) {
   sf::Vector2<float> position = zombie.getPosition();
-  zombie.setPosition(position.x - constants::mapSpeed, position.y);
+  zombie.setPosition(position.x - gameParams.mapSpeed, position.y);
   animations.attackAnim(zombie);
   if (zombie.attackTextureCounter >= 6) {
     zombie.setNewMoveType(ZombieMoveType::zombieRun);
@@ -99,7 +99,7 @@ void ZombieMovementController::attack(Zombie &zombie) {
 
 void ZombieMovementController::dead(Zombie &zombie) {
   sf::Vector2<float> position = zombie.getPosition();
-  zombie.setPosition(position.x - constants::mapSpeed, position.y);
+  zombie.setPosition(position.x - gameParams.mapSpeed, position.y);
   animations.deadAnim(zombie);
 }
 

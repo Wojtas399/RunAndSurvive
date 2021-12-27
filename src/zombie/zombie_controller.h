@@ -9,6 +9,7 @@
 
 class ZombieController {
 private:
+  GameParams &gameParams;
   ZombieMovementController &movementController;
   sf::Clock clock;
 
@@ -19,9 +20,10 @@ private:
 public:
   std::vector<Zombie> zombies;
 
-  explicit ZombieController(
+  ZombieController(
+      GameParams &gameParams,
       ZombieMovementController &zombieMovementController
-  ) : movementController(zombieMovementController) {}
+  ) : gameParams(gameParams), movementController(zombieMovementController) {}
 
   void loadTextures();
 

@@ -4,9 +4,11 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "../../../constants.h"
+#include "../../../game_params/game_params.h"
 
 class BackgroundGenerator {
 private:
+  GameParams &gameParams;
   sf::Texture backgroundTexture;
   sf::Sprite backgroundSpr;
   sf::Sprite secondBackgroundSpr;
@@ -14,9 +16,11 @@ private:
 
   void setSprites();
 
-  static void setNewPosition(sf::Sprite &sprite) ;
+  void setNewPosition(sf::Sprite &sprite) const;
 
 public:
+  explicit BackgroundGenerator(GameParams &gameParams) : gameParams(gameParams) {}
+
   void loadTexture();
 
   void draw(sf::RenderWindow &window);

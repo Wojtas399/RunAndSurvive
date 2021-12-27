@@ -10,9 +10,11 @@
 #include "../object_collisions/robot_zombie/robot_zombie_collisions.h"
 #include "../points_service/points_service.h"
 #include "../life_service/life_service.h"
+#include "../game_params/game_params.h"
 
 class GlobalController {
 private:
+  GameParams &gameParams;
   PointsService &pointsService;
   LifeService &lifeService;
   Robot &robot;
@@ -21,6 +23,7 @@ private:
   ZombieController &zombieController;
   BulletCollisions &bulletCollisions;
   RobotZombieCollisions &robotZombieCollisions;
+  sf::Clock gameClock;
   sf::Clock pointsClock;
 
   void moveElements();
@@ -31,8 +34,11 @@ private:
 
   void setZombieOrientation(Zombie &zombie);
 
+  void updateGameParams();
+
 public:
   GlobalController(
+      GameParams &gameParams,
       PointsService &pointsService,
       LifeService &lifeService,
       Robot &robot,
@@ -41,7 +47,8 @@ public:
       ZombieController &zombieController,
       BulletCollisions &bulletCollisions,
       RobotZombieCollisions &robotZombieCollisions
-  ) : pointsService(pointsService),
+  ) : gameParams(gameParams),
+      pointsService(pointsService),
       lifeService(lifeService),
       robot(robot),
       mapGenerator(mapGenerator),

@@ -19,13 +19,14 @@ int main() {
   sf::Clock mainClock;
 
   //Global
+  GameParams gameParams;
   PointsService pointsService;
   LifeService lifeService;
   //Map
-  BackgroundGenerator backgroundGenerator;
-  GroundElementsGenerator groundElementsGenerator;
-  AirElementsGenerator airElementsGenerator;
-  MapGenerator mapGenerator(backgroundGenerator, groundElementsGenerator, airElementsGenerator);
+  BackgroundGenerator backgroundGenerator(gameParams);
+  GroundElementsGenerator groundElementsGenerator(gameParams);
+  AirElementsGenerator airElementsGenerator(gameParams);
+  MapGenerator mapGenerator(gameParams, backgroundGenerator, groundElementsGenerator, airElementsGenerator);
   MapElementsCollisions mapElementsCollisions(
       airElementsGenerator.airElements,
       groundElementsGenerator.groundElements
@@ -36,19 +37,20 @@ int main() {
   RobotAnimations robotAnimations(robotTextures);
   RobotCollisions robotCollisions(mapElementsCollisions, robot);
   BulletCollisions bulletCollisions(mapElementsCollisions);
-  RobotMovement robotMovement(robot, robotAnimations, robotCollisions);
-  RobotShootController robotShootController(robot, robotTextures, bulletCollisions);
-  RobotMovementController robotMovementController(robot, robotCollisions, robotMovement, robotShootController);
+  RobotMovement robotMovement(gameParams, robot, robotAnimations, robotCollisions);
+  RobotShootController robotShootController(gameParams, robot, robotTextures, bulletCollisions);
+  RobotMovementController robotMovementController(gameParams, robot, robotCollisions, robotMovement, robotShootController);
   RobotController robotController(robot, robotAnimations, robotMovementController, robotShootController);
   //Zombie
   ZombieTextures zombieTextures;
   ZombieAnimations zombieAnimations(zombieTextures, lifeService);
   ZombieCollisions zombieCollisions(mapElementsCollisions);
-  ZombieMovementController zombieMovementController(zombieAnimations, zombieCollisions);
-  ZombieController zombieController(zombieMovementController);
+  ZombieMovementController zombieMovementController(gameParams, zombieAnimations, zombieCollisions);
+  ZombieController zombieController(gameParams, zombieMovementController);
 
   RobotZombieCollisions robotZombieCollisions;
   GlobalController globalController(
+      gameParams,
       pointsService,
       lifeService,
       robot,

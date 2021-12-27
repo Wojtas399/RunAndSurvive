@@ -59,6 +59,6 @@ void GroundElementsGenerator::setNewElementPosition(int index) {
   if (position.x <= -400) {
     groundElements.erase(groundElements.begin() + index);
   } else {
-    element.sprite.setPosition(position.x - constants::mapSpeed, position.y);
+    element.sprite.setPosition(position.x - gameParams.mapSpeed, position.y);
   }
 }

@@ -15,6 +15,9 @@ void GlobalController::resetClock() {
 
 void GlobalController::step() {
   moveElements();
+  if (gameClock.getElapsedTime().asMilliseconds() >= 30000) {
+    updateGameParams();
+  }
   if (pointsClock.getElapsedTime().asMilliseconds() >= 1000) {
     pointsService.addPointForSecond();
     pointsClock.restart();
@@ -83,4 +86,12 @@ void GlobalController::setZombieOrientation(Zombie &zombie) {
   } else if (zombiePositionX < robotPositionX && zombie.isReversed) {
     zombie.setHorizontalOrientation(false);
   }
+}
+
+void GlobalController::updateGameParams() {
+  gameParams.mapSpeed += 0.1;
+  gameParams.robotLeftVelocityX -= 0.15;
+  gameParams.zombieDefaultLeftVelocityX -= 0.1;
+  std::cout << "CHANGED PARAMS!\n";
+  gameClock.restart();
 }

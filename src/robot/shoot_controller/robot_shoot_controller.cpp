@@ -76,7 +76,7 @@ void RobotShootController::setNewBulletPosition(Bullet &bullet) {
     bullet.setMuzzlePosition(
         bullet.muzzleCounter == 0 && isCollisionWithMapElement(bullet)
         ? x + (bullet.isReversed ? -26.0f : 10.0f)
-        : muzzlePosition.x - constants::mapSpeed,
+        : muzzlePosition.x - gameParams.mapSpeed,
         y
     );
   }

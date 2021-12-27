@@ -30,11 +30,11 @@ void BackgroundGenerator::setSprites() {
   thirdBackgroundSpr.setPosition(1940, 0);
 }
 
-void BackgroundGenerator::setNewPosition(sf::Sprite &sprite) {
+void BackgroundGenerator::setNewPosition(sf::Sprite &sprite) const {
   sf::Vector2<float> position = sprite.getPosition();
-  if (position.x < static_cast<float>(-constants::windowWidth)) {
-    sprite.setPosition(static_cast<float>(constants::windowWidth), position.y);
+  if (position.x < -constants::windowWidth) {
+    sprite.setPosition(constants::windowWidth, position.y);
   } else {
-    sprite.setPosition(static_cast<float>(position.x - constants::mapSpeed), position.y);
+    sprite.setPosition(position.x - gameParams.mapSpeed, position.y);
   }
 }

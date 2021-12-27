@@ -114,7 +114,7 @@ void RobotMovementController::neitherMoveUpNorMoveDown() {
 }
 
 void RobotMovementController::moveLeft() {
-  velocityX = constants::robotLeftVelocityX;
+  velocityX = gameParams.robotLeftVelocityX;
   isFastRun = true;
   setReversedRobotParams();
 }

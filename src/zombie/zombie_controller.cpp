@@ -24,8 +24,8 @@ void ZombieController::addZombie() {
   Zombie newZombie(getZombieType(index));
   newZombie.setHorizontalOrientation(true);
   newZombie.setPosition(1600, 50);
-  newZombie.velocityXLeft = -2.5f - speed;
-  newZombie.velocityXRight = -0.5f + speed;
+  newZombie.velocityXLeft = gameParams.zombieDefaultLeftVelocityX - speed;
+  newZombie.velocityXRight = gameParams.zombieDefaultRightVelocityX + speed;
   newZombie.velocityX = newZombie.velocityXLeft;
   newZombie.setNewMoveType(ZombieMoveType::zombieFallDown);
   zombies.push_back(newZombie);

@@ -5,9 +5,11 @@
 #include "../animations/zombie_animations.h"
 #include "../../object_collisions/zombie/zombie_collisions.h"
 #include "../../object_collisions/robot/robot_collisions.h"
+#include "../../game_params/game_params.h"
 
 class ZombieMovementController {
 private:
+  GameParams &gameParams;
   ZombieAnimations &animations;
   ZombieCollisions &collisions;
 
@@ -30,9 +32,10 @@ private:
   void verticalCorrection(float x, float y, float &transformationY, Zombie &zombie);
 public:
   ZombieMovementController(
+      GameParams &gameParams,
       ZombieAnimations &zombieAnimations,
       ZombieCollisions &zombieCollisions
-  ) : animations(zombieAnimations), collisions(zombieCollisions) {}
+  ) : gameParams(gameParams), animations(zombieAnimations), collisions(zombieCollisions) {}
 
   void loadAnimationsTextures();
 

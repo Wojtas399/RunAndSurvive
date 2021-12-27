@@ -49,7 +49,7 @@ void RobotMovement::jump(
   }
   if (isCollisionForward(x, y, velocityX)) {
     horizontalPositionCorrection(x, y, velocityX);
-    velocityX = -constants::mapSpeed;
+    velocityX = -gameParams.mapSpeed;
   }
 
   x += velocityX;
@@ -76,7 +76,7 @@ void RobotMovement::idle(float &velocityY) {
   sf::Vector2<float> position = robot.getPosition();
   float x = position.x;
   float y = position.y;
-  x -= constants::mapSpeed;
+  x -= gameParams.mapSpeed;
   if (
       y < 432 &&
       velocityY > 0 &&
