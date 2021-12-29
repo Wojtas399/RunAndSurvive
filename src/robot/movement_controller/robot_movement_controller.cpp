@@ -97,8 +97,8 @@ void RobotMovementController::moveDown() {
       robot.moveType = RobotMoveType::idle;
     }
   } else if (robot.moveType == RobotMoveType::jump) {
-    accelerationY = 0.7;
-  } else if (position.y < 432 && !isCollisionBottom()) {
+    accelerationY = 0.9;
+  } else if (position.y < 532 && !isCollisionBottom()) {
     velocityY = 0.045;
     robot.moveType = RobotMoveType::jump;
     maxYPosition = position.y;

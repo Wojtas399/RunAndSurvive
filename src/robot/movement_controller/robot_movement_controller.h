@@ -17,7 +17,7 @@ private:
   float velocityY = 0;
   float accelerationY = 0;
   float gravity = 0.00006;
-  float maxYPosition = 352;
+  float maxYPosition = 452;
   bool isFastRun = false;
   bool jumpAfterTopCollision = false;
   sf::Clock shootClock;

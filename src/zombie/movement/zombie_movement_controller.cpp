@@ -43,7 +43,7 @@ void ZombieMovementController::run(Zombie &zombie) {
     zombie.setHorizontalOrientation(!zombie.isReversed);
   }
   if (
-      position.y < 442 &&
+      position.y < 542 &&
       isFreeSpaceUnder(position.x + (zombie.isReversed ? -11.0f : 11.0f), position.y, 10, zombie)
       ) {
     zombie.setNewMoveType(ZombieMoveType::zombieFallDown);
@@ -71,8 +71,8 @@ void ZombieMovementController::fallDown(Zombie &zombie) {
   y += velocityY;
   zombie.velocityY = stopVerticalMovement ? 0 : velocityY + constants::zombieAccelerationY;
 
-  if (y >= 442) {
-    y = 442;
+  if (y >= 542) {
+    y = 542;
     zombie.velocityY = 0;
     zombie.setNewMoveType(ZombieMoveType::zombieRun);
   }

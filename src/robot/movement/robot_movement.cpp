@@ -9,7 +9,7 @@ void RobotMovement::run(float &velocityX, float &velocityY, bool &isFastRun) {
   } else {
     x += velocityX;
   }
-  if (!isCollisionBottom(x, y, 4) && y < 432) {
+  if (!isCollisionBottom(x, y, 4) && y < 532) {
     robot.moveType = RobotMoveType::jump;
     velocityY = 0.045;
   }
@@ -62,8 +62,8 @@ void RobotMovement::jump(
   if (y < maxYPosition) {
     y += gravity;
   }
-  if (y >= 432) {
-    y = 432;
+  if (y >= 532) {
+    y = 532;
     maxYPosition = y - 80;
     robot.moveType = RobotMoveType::run;
   }
@@ -78,12 +78,12 @@ void RobotMovement::idle(float &velocityY) {
   float y = position.y;
   x -= gameParams.mapSpeed;
   if (
-      y < 432 &&
+      y < 532 &&
       velocityY > 0 &&
       isCollisionForward(x, y, robot.isReversed ? -5.0f : 5.0f)
       ) {
     verticalPositionCorrection(x, y, velocityY);
-    y = y + velocityY > 432 ? 432 : y + velocityY;
+    y = y + velocityY > 532 ? 532 : y + velocityY;
   }
   if (!isCollisionForward(x, y, robot.isReversed ? -4 : 4) || robot.isReversed) {
     robot.moveType = RobotMoveType::run;

@@ -23,11 +23,11 @@ void BackgroundGenerator::setSprites() {
   backgroundSpr.setTexture(backgroundTexture);
   secondBackgroundSpr.setTexture(backgroundTexture);
   thirdBackgroundSpr.setTexture(backgroundTexture);
-  backgroundSpr.setScale(1.7, 1.7);
-  secondBackgroundSpr.setScale(1.7, 1.7);
-  thirdBackgroundSpr.setScale(1.7, 1.7);
-  secondBackgroundSpr.setPosition(970, 0);
-  thirdBackgroundSpr.setPosition(1940, 0);
+  backgroundSpr.setScale(2, 2);
+  secondBackgroundSpr.setScale(2, 2);
+  thirdBackgroundSpr.setScale(2, 2);
+  secondBackgroundSpr.setPosition(1149, 0);
+  thirdBackgroundSpr.setPosition(2299, 0);
 }
 
 void BackgroundGenerator::setNewPosition(sf::Sprite &sprite) const {

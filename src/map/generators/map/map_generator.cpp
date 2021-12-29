@@ -28,8 +28,8 @@ void MapGenerator::move() {
 void MapGenerator::setSprites() {
   groundSpr1.setTexture(groundTexture);
   groundSpr2.setTexture(groundTexture);
-  groundSpr1.setPosition(0, 514);
-  groundSpr2.setPosition(1408, 514);
+  groundSpr1.setPosition(0, 614);
+  groundSpr2.setPosition(1408, 614);
 }
 
 void MapGenerator::setNewPosition(sf::Sprite &sprite) const {
