@@ -3,6 +3,10 @@
 void RobotController::loadTextures() {
   animations.loadTextures();
   robot.sprite.setScale(scale, scale);
+  setInitialPosition();
+}
+
+void RobotController::setInitialPosition() {
   robot.sprite.setPosition(600, 532);
 }
 

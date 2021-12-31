@@ -17,12 +17,16 @@ private:
   sf::Texture number8Texture;
   sf::Texture number9Texture;
 
+  sf::Sprite createPointSprite(int textureCounter, float xPosition);
+
 public:
   std::vector<sf::Texture> pointTextures;
   int points = 0;
   std::vector<sf::Sprite> pointSprites;
 
   void loadTextures();
+
+  void resetPoints();
 
   void draw(sf::RenderWindow &window);
 

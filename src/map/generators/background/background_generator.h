@@ -26,6 +26,8 @@ public:
   void draw(sf::RenderWindow &window);
 
   void move();
+
+  void setInitialPosition();
 };
 
 #endif //R_S_BACKGROUND_H

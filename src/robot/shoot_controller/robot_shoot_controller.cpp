@@ -16,7 +16,7 @@ void RobotShootController::shoot() {
   sf::Vector2<float> robotPosition = robot.getPosition();
   Bullet newBullet;
   newBullet.isReversed = robot.isReversed;
-  newBullet.speed = robot.isReversed ? constants::bulletLeftVelocityX : constants::bulletRightVelocityX;
+  newBullet.speed = robot.isReversed ? gameParams.bulletLeftVelocityX : constants::bulletRightVelocityX;
   newBullet.bulletSprite.setTexture(robotTextures.bulletsTextures[0]);
   newBullet.bulletSprite.setOrigin(0, 60);
   newBullet.bulletSprite.setScale(0.0, 0.0);

@@ -32,6 +32,17 @@ void GlobalController::draw(sf::RenderWindow &window) {
   lifeService.draw(window);
 }
 
+void GlobalController::setInitialGameParams() {
+  pointsService.resetPoints();
+  lifeService.setInitialLifeAmount();
+  gameParams.setInitialValues();
+  mapGenerator.setInitialParams();
+  robotController.setInitialPosition();
+  zombieController.setInitialParams();
+  gameClock.restart();
+  pointsClock.restart();
+}
+
 void GlobalController::moveElements() {
   mapGenerator.move();
   robotController.move();
@@ -90,8 +101,14 @@ void GlobalController::setZombieOrientation(Zombie &zombie) {
 
 void GlobalController::updateGameParams() {
   gameParams.mapSpeed += 0.1;
+  gameParams.groundStartPosition -= 1;
+  gameParams.backgroundStartPosition -= 2;
   gameParams.robotLeftVelocityX -= 0.15;
+  gameParams.zombieGeneratingTime -= 10;
   gameParams.zombieDefaultLeftVelocityX -= 0.1;
+  gameParams.zombieDefaultRightVelocityX -= 0.1;
+  gameParams.zombieStartXPosition += 10;
+  gameParams.bulletLeftVelocityX -= 0.1;
   std::cout << "CHANGED PARAMS!\n";
   gameClock.restart();
 }

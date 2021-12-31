@@ -27,6 +27,8 @@ public:
 
   void loadTextures();
 
+  void setInitialParams();
+
   void move();
 
   void draw(sf::RenderWindow &window);

@@ -64,6 +64,8 @@ public:
   void step();
 
   void draw(sf::RenderWindow &window);
+
+  void setInitialGameParams();
 };
 
 

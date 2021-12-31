@@ -7,6 +7,12 @@ void LifeService::loadTexture() {
   loadSprites();
 }
 
+void LifeService::setInitialLifeAmount() {
+  lifeAmount = initialLifeAmount;
+  lifeSprites.clear();
+  loadSprites();
+}
+
 void LifeService::draw(sf::RenderWindow &window) {
   for (const sf::Sprite& spr : lifeSprites) {
     window.draw(spr);
@@ -18,7 +24,7 @@ void LifeService::loadSprites() {
   for (int i = 0; i < lifeAmount; i++) {
     sf::Sprite spr;
     spr.setTexture(lifeTexture);
-    spr.setPosition(x, 15);
+    spr.setPosition(x, 70);
     spr.setScale(0.06, 0.06);
     x += 40;
     lifeSprites.push_back(spr);

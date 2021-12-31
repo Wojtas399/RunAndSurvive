@@ -14,7 +14,7 @@ void RobotMovement::run(float &velocityX, float &velocityY, bool &isFastRun) {
     velocityY = 0.045;
   }
   robot.setPosition(x, y);
-  if (robot.isShoot) {
+  if (robot.isShoot && canShoot()) {
     robotAnimations.runShootAnim(robot.sprite, isFastRun);
   } else {
     robotAnimations.runAnim(robot.sprite, isFastRun);
@@ -76,11 +76,12 @@ void RobotMovement::idle(float &velocityY) {
   sf::Vector2<float> position = robot.getPosition();
   float x = position.x;
   float y = position.y;
+  float translationX = robot.isReversed ? -5.0f : 5.0f;
   x -= gameParams.mapSpeed;
   if (
       y < 532 &&
       velocityY > 0 &&
-      isCollisionForward(x, y, robot.isReversed ? -5.0f : 5.0f)
+      isCollisionForward(x, y, translationX)
       ) {
     verticalPositionCorrection(x, y, velocityY);
     y = y + velocityY > 532 ? 532 : y + velocityY;
@@ -89,7 +90,7 @@ void RobotMovement::idle(float &velocityY) {
     robot.moveType = RobotMoveType::run;
   }
   robot.setPosition(x, y);
-  if (robot.isShoot) {
+  if (robot.isShoot && canShoot()) {
     robotAnimations.shootAnim(robot.sprite);
   } else {
     robotAnimations.idleAnim(robot.sprite);
@@ -98,7 +99,7 @@ void RobotMovement::idle(float &velocityY) {
 
 void RobotMovement::slide(float &velocityX) {
   sf::Vector2<float> position = robot.getPosition();
-  float x = position.x +  (robot.isReversed ? velocityX + 0.5f : 0);
+  float x = position.x + (robot.isReversed ? velocityX + 0.5f : 0);
   robot.setPosition(x, position.y);
   robotAnimations.slideAnim(robot.sprite);
 }
@@ -141,4 +142,13 @@ void RobotMovement::verticalPositionCorrection(float x, float y, float &translat
   while (isCollisionBottom(x + helper, y, translationY)) {
     translationY -= 0.5;
   }
+}
+
+bool RobotMovement::canShoot() {
+  sf::Vector2<float> position = robot.getPosition();
+  float x = position.x;
+  float y = position.y;
+  float translationX = robot.isReversed ? -5.0f : 5.0f;
+  return !isGroundCollisionForward(x, y, translationX) &&
+         !collisions.isCollisionWithAirElement(x + translationX, y, 18);
 }

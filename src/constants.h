@@ -6,7 +6,6 @@ namespace constants {
   static const int windowWidth = 1400;
   static const float robotScale = 0.16;
   static const float bulletScale = 0.20;
-  static const float bulletLeftVelocityX = -8.5;
   static const float bulletRightVelocityX = 5;
   static const float zombieScale = 0.20;
   static const float robotVelocityY = -11;

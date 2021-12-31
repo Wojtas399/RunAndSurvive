@@ -28,6 +28,8 @@ private:
 
   void verticalPositionCorrection(float x, float y, float &translationY);
 
+  bool canShoot();
+
 public:
   RobotMovement(
       GameParams &gameParams,

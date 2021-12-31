@@ -62,8 +62,6 @@ int main() {
   );
   globalController.loadTextures();
 
-  bool isGameStarted = false;
-
   while (window.isOpen()) {
     if (mainClock.getElapsedTime().asMilliseconds() > 10) {
       sf::Event event{};
@@ -71,18 +69,20 @@ int main() {
         if (event.type == sf::Event::Closed) {
           window.close();
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !isGameStarted) {
-          isGameStarted = true;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !gameParams.isGameStarted) {
+          std::cout << "Game started!\n";
+          globalController.setInitialGameParams();
+          gameParams.isGameStarted = true;
           globalController.resetClock();
         }
         robotController.keyController();
       }
 
       if (robot.getPosition().x + robot.spriteWidth < 0 || lifeService.lifeAmount == 0) {
-        window.close();
+        gameParams.isGameStarted = false;
       }
 
-      if (isGameStarted) {
+      if (gameParams.isGameStarted) {
         globalController.step();
       }
 

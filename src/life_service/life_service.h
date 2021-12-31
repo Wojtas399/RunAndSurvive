@@ -7,14 +7,17 @@
 class LifeService {
 private:
   sf::Texture lifeTexture;
+  int initialLifeAmount = 5;
   std::vector<sf::Sprite> lifeSprites;
 
   void loadSprites();
 
 public:
-  int lifeAmount = 5;
+  int lifeAmount = initialLifeAmount;
 
   void loadTexture();
+
+  void setInitialLifeAmount();
 
   void draw(sf::RenderWindow &window);
 

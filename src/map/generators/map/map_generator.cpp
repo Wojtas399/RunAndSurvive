@@ -8,6 +8,12 @@ void MapGenerator::load() {
   setGenerators();
 }
 
+void MapGenerator::setInitialParams() {
+  backgroundGenerator.setInitialPosition();
+  airElementsGenerator.airElements.clear();
+  groundElementsGenerator.groundElements.clear();
+}
+
 void MapGenerator::draw(sf::RenderWindow &window) {
   backgroundGenerator.draw(window);
   window.draw(groundSpr1);
@@ -34,8 +40,9 @@ void MapGenerator::setSprites() {
 
 void MapGenerator::setNewPosition(sf::Sprite &sprite) const {
   sf::Vector2<float> position = sprite.getPosition();
-  if (position.x < -1400) {
-    sprite.setPosition(1408, position.y);
+  if (position.x < -1408) {
+    std::cout << "NEW GROUND POSITION\n";
+    sprite.setPosition(gameParams.groundStartPosition, position.y);
   } else {
     sprite.setPosition(position.x - gameParams.mapSpeed, position.y);
   }

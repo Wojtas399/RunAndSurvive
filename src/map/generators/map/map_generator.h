@@ -42,6 +42,8 @@ public:
 
   void load();
 
+  void setInitialParams();
+
   void draw(sf::RenderWindow &window);
 
   void move();
