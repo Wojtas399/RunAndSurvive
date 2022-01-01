@@ -11,12 +11,14 @@
 #include "../points_service/points_service.h"
 #include "../life_service/life_service.h"
 #include "../game_params/game_params.h"
+#include "../ui_service/ui_service.h"
 
 class GlobalController {
 private:
   GameParams &gameParams;
   PointsService &pointsService;
   LifeService &lifeService;
+  UIService &uiService;
   Robot &robot;
   MapGenerator &mapGenerator;
   RobotController &robotController;
@@ -41,6 +43,7 @@ public:
       GameParams &gameParams,
       PointsService &pointsService,
       LifeService &lifeService,
+      UIService &uiService,
       Robot &robot,
       MapGenerator &mapGenerator,
       RobotController &robotController,
@@ -50,6 +53,7 @@ public:
   ) : gameParams(gameParams),
       pointsService(pointsService),
       lifeService(lifeService),
+      uiService(uiService),
       robot(robot),
       mapGenerator(mapGenerator),
       robotController(robotController),

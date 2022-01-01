@@ -22,6 +22,7 @@ int main() {
   GameParams gameParams;
   PointsService pointsService;
   LifeService lifeService;
+  UIService uiService(gameParams);
   //Map
   BackgroundGenerator backgroundGenerator(gameParams);
   GroundElementsGenerator groundElementsGenerator(gameParams);
@@ -53,6 +54,7 @@ int main() {
       gameParams,
       pointsService,
       lifeService,
+      uiService,
       robot,
       mapGenerator,
       robotController,

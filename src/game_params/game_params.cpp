@@ -2,8 +2,6 @@
 
 void GameParams::setInitialValues() {
   mapSpeed = initialMapSpeed;
-  backgroundStartPosition = initialBackgroundStartPosition;
-  groundStartPosition = initialGroundStartPosition;
   robotLeftVelocityX = initialRobotLeftVelocityX;
   zombieGeneratingTime = initialZombieGeneratingTime;
   zombieDefaultLeftVelocityX = initialZombieDefaultLeftVelocityX;

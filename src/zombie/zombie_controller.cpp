@@ -28,7 +28,7 @@ void ZombieController::addZombie() {
   float speed =  static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/0.4));
   Zombie newZombie(getZombieType(index));
   newZombie.setHorizontalOrientation(true);
-  newZombie.setPosition(gameParams.zombieStartXPosition, 50);
+  newZombie.setPosition(gameParams.zombieStartXPosition, -200);
   newZombie.velocityXLeft = gameParams.zombieDefaultLeftVelocityX - speed;
   newZombie.velocityXRight = gameParams.zombieDefaultRightVelocityX + speed;
   newZombie.velocityX = newZombie.velocityXLeft;

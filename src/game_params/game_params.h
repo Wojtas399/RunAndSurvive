@@ -4,8 +4,6 @@
 class GameParams {
 private:
   float initialMapSpeed = 1.6;
-  float initialBackgroundStartPosition = 2294;
-  float initialGroundStartPosition = 1404;
   float initialRobotLeftVelocityX = -3.5;
   int initialZombieGeneratingTime = 4000;
   float initialZombieDefaultLeftVelocityX = -2.5;
@@ -16,8 +14,6 @@ private:
 public:
   bool isGameStarted = false;
   float mapSpeed = initialMapSpeed;
-  float backgroundStartPosition = initialBackgroundStartPosition;
-  float groundStartPosition = initialGroundStartPosition;
   float robotLeftVelocityX = initialRobotLeftVelocityX;
   int zombieGeneratingTime = initialZombieGeneratingTime;
   float zombieDefaultLeftVelocityX = initialZombieDefaultLeftVelocityX;
