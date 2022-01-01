@@ -24,7 +24,6 @@ void RobotShootController::shoot() {
   if (!isCollisionWithMapElement(newBullet)) {
     allBullets.push_back(newBullet);
   }
-  std::cout << "Bullets amount on the map: " << allBullets.size() << "\n";
 }
 
 void RobotShootController::movementController(Bullet &bullet, int bulletIndex) {

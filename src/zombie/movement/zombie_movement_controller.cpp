@@ -10,7 +10,6 @@ void ZombieMovementController::move(std::vector<Zombie> &zombies) {
     float newXPosition = position.x + zombies[i].velocityX;
     if (newXPosition < -100 || zombies[i].deadTextureCounter >= 8) {
       zombies.erase(zombies.begin() + i);
-      std::cout << "Zombies on the map: " << zombies.size() << "\n";
     } else {
       manageMovementType(zombies[i]);
     }

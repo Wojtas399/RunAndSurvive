@@ -53,8 +53,6 @@ void MapGenerator::generateNewElementsConfiguration() {
     int number = rand() % 8;
     groundElementsGenerator.generateNewElementsConfiguration(number);
     airElementsGenerator.generateNewElementsConfiguration(number);
-    std::cout << "Ground elements amount: " << groundElementsGenerator.groundElements.size() << "\n";
-    std::cout << "Air elements amount: " << airElementsGenerator.airElements.size() << "\n";
   }
 }
 

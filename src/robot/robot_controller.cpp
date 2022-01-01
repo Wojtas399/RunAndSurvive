@@ -7,7 +7,7 @@ void RobotController::loadTextures() {
 }
 
 void RobotController::setInitialPosition() {
-  robot.sprite.setPosition(600, 532);
+  robot.sprite.setPosition(645, 532);
 }
 
 void RobotController::move() {

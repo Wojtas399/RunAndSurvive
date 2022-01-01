@@ -72,7 +72,6 @@ int main() {
           window.close();
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !gameParams.isGameStarted) {
-          std::cout << "Game started!\n";
           globalController.setInitialGameParams();
           gameParams.isGameStarted = true;
           globalController.resetClock();
