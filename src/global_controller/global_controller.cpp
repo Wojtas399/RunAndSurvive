@@ -4,10 +4,7 @@ void GlobalController::loadTextures() {
   mapGenerator.load();
   robotController.loadTextures();
   zombieController.loadTextures();
-  pointsService.loadTextures();
-  lifeService.loadTexture();
-  pointsService.setPointSprites();
-  uiService.loadTextures();
+  uiController.loadTextures();
 }
 
 void GlobalController::resetClock() {
@@ -20,7 +17,7 @@ void GlobalController::step() {
     updateGameParams();
   }
   if (pointsClock.getElapsedTime().asMilliseconds() >= 1000) {
-    pointsService.addPointForSecond();
+    uiController.addPointForSecond();
     pointsClock.restart();
   }
 }
@@ -29,14 +26,11 @@ void GlobalController::draw(sf::RenderWindow &window) {
   mapGenerator.draw(window);
   zombieController.draw(window);
   robotController.draw(window);
-  pointsService.draw(window);
-  lifeService.draw(window);
-  uiService.draw(window);
+  uiController.draw(window);
 }
 
 void GlobalController::setInitialGameParams() {
-  pointsService.resetPoints();
-  lifeService.setInitialLifeAmount();
+  uiController.setInitialParams();
   gameParams.setInitialValues();
   mapGenerator.setInitialParams();
   robotController.setInitialPosition();
@@ -49,7 +43,7 @@ void GlobalController::moveElements() {
   mapGenerator.move();
   robotController.move();
   zombieController.move();
-  uiService.move();
+  uiController.move();
   checkCollisions();
 }
 
@@ -78,9 +72,8 @@ void GlobalController::checkCollisions() {
         zombie.setNewMoveType(ZombieMoveType::zombieDead);
         bullet.isExplosion = true;
         setBulletExplosionPosition(bullet, zombie);
-        pointsService.addPointsForZombie();
         float zombieXCenter = zombie.isReversed ? -60 : -3;
-        uiService.addZombiePoints(
+        uiController.addPointsForZombie(
             zombie.getPosition().x - gameParams.mapSpeed + zombieXCenter,
             zombie.getPosition().y
         );

@@ -32,11 +32,12 @@ add_executable(R_S
         src/object_collisions/zombie/zombie_collisions.cpp
         src/global_controller/global_controller.cpp
         src/object_collisions/robot_zombie/robot_zombie_collisions.cpp
-        src/points_service/points_service.cpp
-        src/life_service/life_service.cpp
+        src/ui/points_service/points_service.cpp
+        src/ui/life_service/life_service.cpp
         src/game_params/game_params.cpp
-        src/ui_service/ui_service.cpp
-        src/models/zombie_points/zombie_points.cpp)
+        src/ui/zobie_points_service/zombie_points_service.cpp
+        src/models/anim/anim.cpp
+        src/ui/ui_controller.cpp)
 include_directories(/usr/local/include)
 
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)

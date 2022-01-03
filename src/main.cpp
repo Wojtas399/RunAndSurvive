@@ -10,7 +10,9 @@
 #include "zombie/textures/zombie_textures.h"
 #include "zombie/zombie_controller.h"
 #include "global_controller/global_controller.h"
-#include "life_service/life_service.h"
+#include "ui/points_service/points_service.h"
+#include "ui/life_service/life_service.h"
+#include "ui/zobie_points_service/zombie_points_service.h"
 
 int main() {
   srand(time(NULL));
@@ -20,9 +22,10 @@ int main() {
 
   //Global
   GameParams gameParams;
-  PointsService pointsService;
   LifeService lifeService;
-  UIService uiService(gameParams);
+  PointsService pointsService;
+  ZombiePointsService zombiePointsService(gameParams);
+  UIController uiController(lifeService, pointsService, zombiePointsService);
   //Map
   BackgroundGenerator backgroundGenerator(gameParams);
   GroundElementsGenerator groundElementsGenerator(gameParams);
@@ -52,9 +55,7 @@ int main() {
   RobotZombieCollisions robotZombieCollisions;
   GlobalController globalController(
       gameParams,
-      pointsService,
-      lifeService,
-      uiService,
+      uiController,
       robot,
       mapGenerator,
       robotController,
@@ -79,7 +80,7 @@ int main() {
         robotController.keyController();
       }
 
-      if (robot.getPosition().x + robot.spriteWidth < 0 || lifeService.lifeAmount == 0) {
+      if (robot.getPosition().x + robot.spriteWidth < 0 || lifeService.livesAmount == 0) {
         gameParams.isGameStarted = false;
       }
 

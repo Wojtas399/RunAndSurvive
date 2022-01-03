@@ -3,21 +3,28 @@
 
 #include <SFML/Graphics.hpp>
 #include "iostream"
+#include "../../models/anim/anim.h"
 
 class LifeService {
 private:
-  sf::Texture lifeTexture;
-  int initialLifeAmount = 5;
-  std::vector<sf::Sprite> lifeSprites;
+  sf::Texture heartTexture;
+  int initialLivesAmount = 5;
+  std::vector<Anim> lives;
 
   void loadSprites();
 
+  void nextAnimStep(Anim &life);
+
+  void deleteLastLifeSprite();
+
 public:
-  int lifeAmount = initialLifeAmount;
+  int livesAmount = initialLivesAmount;
 
   void loadTexture();
 
-  void setInitialLifeAmount();
+  void setInitialLivesAmount();
+
+  void move();
 
   void draw(sf::RenderWindow &window);
 

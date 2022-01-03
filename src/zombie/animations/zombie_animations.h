@@ -3,7 +3,8 @@
 
 #include "../textures/zombie_textures.h"
 #include "../../models/zombie/zombie.h"
-#include "../../life_service/life_service.h"
+#include "../../ui/life_service/life_service.h"
+
 
 class ZombieAnimations {
 private:

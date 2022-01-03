@@ -17,6 +17,8 @@ private:
   sf::Texture number8Texture;
   sf::Texture number9Texture;
 
+  void loadSprites();
+
   sf::Sprite createPointSprite(int textureCounter, float xPosition);
 
 public:
@@ -29,8 +31,6 @@ public:
   void resetPoints();
 
   void draw(sf::RenderWindow &window);
-
-  void setPointSprites();
 
   void addPointForSecond();
 

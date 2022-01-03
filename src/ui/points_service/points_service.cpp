@@ -27,12 +27,13 @@ void PointsService::loadTextures() {
       number8Texture,
       number9Texture
   });
+  loadSprites();
 }
 
 void PointsService::resetPoints() {
   points = 0;
   pointSprites.clear();
-  pointSprites.push_back(createPointSprite(0, 17));
+  loadSprites();
 }
 
 void PointsService::draw(sf::RenderWindow &window) {
@@ -41,7 +42,17 @@ void PointsService::draw(sf::RenderWindow &window) {
   }
 }
 
-void PointsService::setPointSprites() {
+void PointsService::addPointForSecond() {
+  points++;
+  loadSprites();
+}
+
+void PointsService::addPointsForZombie() {
+  points += 3;
+  loadSprites();
+}
+
+void PointsService::loadSprites() {
   std::string pointsStr = std::to_string(points);
   float x = -13;
   for (int i = 0; i < pointsStr.length(); i++) {
@@ -53,16 +64,6 @@ void PointsService::setPointSprites() {
       pointSprites[i] = createPointSprite(number, x);
     }
   }
-}
-
-void PointsService::addPointForSecond() {
-  points++;
-  setPointSprites();
-}
-
-void PointsService::addPointsForZombie() {
-  points += 3;
-  setPointSprites();
 }
 
 sf::Sprite PointsService::createPointSprite(int textureCounter, float xPosition) {
