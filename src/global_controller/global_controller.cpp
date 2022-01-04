@@ -7,10 +7,6 @@ void GlobalController::loadTextures() {
   uiController.loadTextures();
 }
 
-void GlobalController::resetClock() {
-  pointsClock.restart();
-}
-
 void GlobalController::step() {
   moveElements();
   if (gameClock.getElapsedTime().asMilliseconds() >= 30000) {
@@ -30,6 +26,7 @@ void GlobalController::draw(sf::RenderWindow &window) {
 }
 
 void GlobalController::setInitialGameParams() {
+  pointsClock.restart();
   uiController.setInitialParams();
   gameParams.setInitialValues();
   mapGenerator.setInitialParams();
@@ -92,13 +89,11 @@ void GlobalController::setBulletExplosionPosition(Bullet &bullet, Zombie &zombie
 }
 
 void GlobalController::setZombieOrientation(Zombie &zombie) {
-  float robotPositionX = robot.getPosition().x - (robot.isReversed ? robot.spriteWidth : 0);
-  robotPositionX += robot.isReversed ? -24.0f : 24.0f;
-  float zombiePositionX = zombie.getPosition().x - (zombie.isReversed ? zombie.width : 0);
-  zombiePositionX += zombie.isReversed ? 50 : -50;
-  if (zombiePositionX > robotPositionX && !zombie.isReversed) {
+  float robotXCenter = robot.getPosition().x - (robot.isReversed ? 60.0f : 3.0f);
+  float zombieXCenter = zombie.getPosition().x - (zombie.isReversed ? 60.0f : 3.0f);
+  if (zombieXCenter > robotXCenter && !zombie.isReversed) {
     zombie.setHorizontalOrientation(true);
-  } else if (zombiePositionX < robotPositionX && zombie.isReversed) {
+  } else if (zombieXCenter < robotXCenter && zombie.isReversed) {
     zombie.setHorizontalOrientation(false);
   }
 }
@@ -106,7 +101,7 @@ void GlobalController::setZombieOrientation(Zombie &zombie) {
 void GlobalController::updateGameParams() {
   gameParams.mapSpeed += 0.1;
   gameParams.robotLeftVelocityX -= 0.15;
-  gameParams.zombieGeneratingTime -= 100;
+  gameParams.zombieGeneratingTime -= 200;
   gameParams.zombieDefaultLeftVelocityX -= 0.1;
   gameParams.zombieDefaultRightVelocityX -= 0.1;
   gameParams.zombieStartXPosition += 10;

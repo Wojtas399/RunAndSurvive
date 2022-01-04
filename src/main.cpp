@@ -75,7 +75,6 @@ int main() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !gameParams.isGameStarted) {
           globalController.setInitialGameParams();
           gameParams.isGameStarted = true;
-          globalController.resetClock();
         }
         robotController.keyController();
       }

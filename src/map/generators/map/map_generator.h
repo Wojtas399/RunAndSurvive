@@ -22,6 +22,8 @@ private:
 
   void setSprites();
 
+  void setElementsTranslation();
+
   void setNewPosition(sf::Sprite &sprite) const;
 
   void generateNewElementsConfiguration();

@@ -9,9 +9,11 @@ void MapGenerator::load() {
 }
 
 void MapGenerator::setInitialParams() {
+  elementsTranslationX = constants::windowWidth;
   backgroundGenerator.setInitialPosition();
   airElementsGenerator.airElements.clear();
   groundElementsGenerator.groundElements.clear();
+  setElementsTranslation();
 }
 
 void MapGenerator::draw(sf::RenderWindow &window) {
@@ -38,6 +40,11 @@ void MapGenerator::setSprites() {
   groundSpr2.setPosition(1408, 614);
 }
 
+void MapGenerator::setElementsTranslation() {
+  groundElementsGenerator.changeElementsTranslationX(elementsTranslationX);
+  airElementsGenerator.changeElementsTranslation(elementsTranslationX);
+}
+
 void MapGenerator::setNewPosition(sf::Sprite &sprite) const {
   sf::Vector2<float> position = sprite.getPosition();
   float x = position.x - gameParams.mapSpeed + (position.x <= -1408 ? 2 * 1408 : 0.0f);
@@ -55,8 +62,7 @@ void MapGenerator::generateNewElementsConfiguration() {
     airElementsGenerator.generateNewElementsConfiguration(number);
     if (elementsTranslationX == constants::windowWidth) {
       elementsTranslationX *= 2;
-      groundElementsGenerator.changeElementsTranslationX(elementsTranslationX);
-      airElementsGenerator.changeElementsTranslation(elementsTranslationX);
+      setElementsTranslation();
     }
   }
 }

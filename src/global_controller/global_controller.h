@@ -55,8 +55,6 @@ public:
 
   void loadTextures();
 
-  void resetClock();
-
   void step();
 
   void draw(sf::RenderWindow &window);
