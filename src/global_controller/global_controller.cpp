@@ -51,18 +51,19 @@ void GlobalController::checkCollisions() {
   std::vector<Bullet> &bullets = robotController.shootController.allBullets;
   std::vector<Zombie> &zombies = zombieController.zombies;
   for (Zombie &zombie: zombies) {
-    if (zombie.moveType == ZombieMoveType::zombieAttack) {
-      setZombieOrientation(zombie);
-    }
     if (
-        zombie.moveType != ZombieMoveType::zombieDead &&
-        zombie.moveType != ZombieMoveType::zombieFallDown &&
-        zombie.attackBreakClock.getElapsedTime().asMilliseconds() > 1000 &&
-        robotZombieCollisions.isRobotCollisionWithZombie(robot, zombie)
+        robotZombieCollisions.isRobotCollisionWithZombie(robot, zombie) &&
+        zombie.moveType != ZombieMoveType::zombieDead
         ) {
       setZombieOrientation(zombie);
-      zombie.setNewMoveType(ZombieMoveType::zombieAttack);
-      zombie.attackBreakClock.restart();
+      if (
+          zombie.attackBreakClock.getElapsedTime().asMilliseconds() > 1000 &&
+          zombie.moveType != ZombieMoveType::zombieDead &&
+          zombie.moveType != ZombieMoveType::zombieFallDown
+          ) {
+        zombie.setNewMoveType(ZombieMoveType::zombieAttack);
+        zombie.attackBreakClock.restart();
+      }
     }
     for (Bullet &bullet: bullets) {
       if (
@@ -91,8 +92,10 @@ void GlobalController::setBulletExplosionPosition(Bullet &bullet, Zombie &zombie
 }
 
 void GlobalController::setZombieOrientation(Zombie &zombie) {
-  float robotPositionX = robot.getPosition().x + (robot.isReversed ? -24.0f : 24.0f);
-  float zombiePositionX = zombie.getPosition().x;
+  float robotPositionX = robot.getPosition().x - (robot.isReversed ? robot.spriteWidth : 0);
+  robotPositionX += robot.isReversed ? -24.0f : 24.0f;
+  float zombiePositionX = zombie.getPosition().x - (zombie.isReversed ? zombie.width : 0);
+  zombiePositionX += zombie.isReversed ? 50 : -50;
   if (zombiePositionX > robotPositionX && !zombie.isReversed) {
     zombie.setHorizontalOrientation(true);
   } else if (zombiePositionX < robotPositionX && zombie.isReversed) {
@@ -103,7 +106,7 @@ void GlobalController::setZombieOrientation(Zombie &zombie) {
 void GlobalController::updateGameParams() {
   gameParams.mapSpeed += 0.1;
   gameParams.robotLeftVelocityX -= 0.15;
-  gameParams.zombieGeneratingTime -= 50;
+  gameParams.zombieGeneratingTime -= 100;
   gameParams.zombieDefaultLeftVelocityX -= 0.1;
   gameParams.zombieDefaultRightVelocityX -= 0.1;
   gameParams.zombieStartXPosition += 10;
