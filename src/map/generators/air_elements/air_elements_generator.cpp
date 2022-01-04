@@ -1,6 +1,6 @@
 #include "air_elements_generator.h"
 
-void AirElementsGenerator::loadTexture() {
+void AirElementsGenerator::loadTextures(float elementsTranslationX) {
   if (!ground1Texture.loadFromFile("assets/map/air_ground_1.png")) {
     std::cout << "Cannot load air ground 1 texture";
   }
@@ -13,7 +13,7 @@ void AirElementsGenerator::loadTexture() {
   if (!doubleLevelReversedTexture.loadFromFile("assets/map/air_double_level_reversed.png")) {
     std::cout << "Cannot load air double level reversed texture";
   }
-  setSprite();
+  setSprites(elementsTranslationX);
 }
 
 void AirElementsGenerator::move() {
@@ -35,7 +35,11 @@ void AirElementsGenerator::generateNewElementsConfiguration(int generatedNumber)
   }
 }
 
-void AirElementsGenerator::setSprite() {
+void AirElementsGenerator::changeElementsTranslation(float newTranslationX) {
+  setSprites(newTranslationX);
+}
+
+void AirElementsGenerator::setSprites(float elementsTranslationX) {
   ground1Spr.setTexture(ground1Texture);
   ground2Spr.setTexture(ground2Texture);
   doubleLevelSpr.setTexture(doubleLevelTexture);
@@ -44,7 +48,8 @@ void AirElementsGenerator::setSprite() {
       ground1Spr,
       ground2Spr,
       doubleLevelSpr,
-      doubleLevelReversedSpr
+      doubleLevelReversedSpr,
+      elementsTranslationX
   );
 }
 

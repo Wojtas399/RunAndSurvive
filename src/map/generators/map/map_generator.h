@@ -18,6 +18,7 @@ private:
   BackgroundGenerator &backgroundGenerator;
   AirElementsGenerator &airElementsGenerator;
   GroundElementsGenerator &groundElementsGenerator;
+  float elementsTranslationX = constants::windowWidth;
 
   void setSprites();
 
@@ -27,7 +28,7 @@ private:
 
   void setGenerators();
 
-  static bool isThereTheLastElementOnTheMap(std::vector<MapElement> elements);
+  bool isThereTheLastElementOnTheMap(std::vector<MapElement> elements) const;
 
 public:
   MapGenerator(

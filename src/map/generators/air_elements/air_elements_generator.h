@@ -22,7 +22,7 @@ private:
   sf::Sprite doubleLevelReversedSpr;
   AirElementsConfigurator airElementsConfigurator;
 
-  void setSprite();
+  void setSprites(float elementsTranslationX);
 
   void setNewElementPosition(int index);
 
@@ -31,13 +31,15 @@ public:
 
   std::vector<MapElement> airElements;
 
-  void loadTexture();
+  void loadTextures(float elementsTranslationX);
 
   void move();
 
   void draw(sf::RenderWindow &window);
 
   void generateNewElementsConfiguration(int generatedNumber);
+
+  void changeElementsTranslation(float newTranslationX);
 };
 
 #endif //R_S_AIR_ELEMENTS_GENERATOR_H

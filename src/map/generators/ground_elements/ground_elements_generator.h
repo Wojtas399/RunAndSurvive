@@ -24,7 +24,7 @@ private:
   sf::Sprite wallSpr;
   GroundElementsConfigurator groundElementsConfigurator;
 
-  void setSprite();
+  void setSprites(float elementsTranslationX);
 
   void setNewElementPosition(int index);
 
@@ -33,13 +33,15 @@ public:
 
   std::vector<MapElement> groundElements;
 
-  void loadTexture();
+  void loadTextures(float elementsTranslationX);
 
   void move();
 
   void draw(sf::RenderWindow &window);
 
   void generateNewElementsConfiguration(int generatedNumber);
+
+  void changeElementsTranslationX(float newTranslationX);
 };
 
 #endif //R_S_GROUND_ELEMENTS_GENERATOR_H

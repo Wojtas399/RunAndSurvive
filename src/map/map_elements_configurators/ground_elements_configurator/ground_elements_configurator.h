@@ -4,7 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "../../../models/map/map_element.h"
-#include "../../../constants.h"
 
 class GroundElementsConfigurator {
 public:
@@ -15,7 +14,8 @@ public:
       sf::Sprite blockDouble,
       sf::Sprite blockTriple,
       sf::Sprite stairs,
-      sf::Sprite wall
+      sf::Sprite wall,
+      float translationX
   );
 };
 

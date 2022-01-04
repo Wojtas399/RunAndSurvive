@@ -53,23 +53,28 @@ void MapGenerator::generateNewElementsConfiguration() {
     int number = rand() % 8;
     groundElementsGenerator.generateNewElementsConfiguration(number);
     airElementsGenerator.generateNewElementsConfiguration(number);
+    if (elementsTranslationX == constants::windowWidth) {
+      elementsTranslationX *= 2;
+      groundElementsGenerator.changeElementsTranslationX(elementsTranslationX);
+      airElementsGenerator.changeElementsTranslation(elementsTranslationX);
+    }
   }
 }
 
 void MapGenerator::setGenerators() {
   backgroundGenerator.loadTexture();
-  groundElementsGenerator.loadTexture();
-  airElementsGenerator.loadTexture();
+  groundElementsGenerator.loadTextures(elementsTranslationX);
+  airElementsGenerator.loadTextures(elementsTranslationX);
   int firstConfigurationNumber = rand() % 8;
   groundElementsGenerator.generateNewElementsConfiguration(firstConfigurationNumber);
   airElementsGenerator.generateNewElementsConfiguration(firstConfigurationNumber);
 }
 
-bool MapGenerator::isThereTheLastElementOnTheMap(std::vector<MapElement> elements) {
+bool MapGenerator::isThereTheLastElementOnTheMap(std::vector<MapElement> elements) const {
   if (!elements.empty()) {
     typedef MapElement MapElem;
     MapElem element = elements[elements.size() - 1];
-    if (element.getSpritePosition().x + static_cast<float>(element.width) <= 1400) {
+    if (element.getSpritePosition().x + static_cast<float>(element.width) <= elementsTranslationX) {
       return true;
     } else {
       return false;
