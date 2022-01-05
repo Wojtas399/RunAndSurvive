@@ -15,16 +15,19 @@ void ZombieAnimations::runAnim(Zombie &zombie) {
   }
 }
 
-void ZombieAnimations::fallAnim(Zombie &zombie) {
-  setNewFallTexture(zombie);
+void ZombieAnimations::idleAnim(Zombie &zombie) {
+  if (zombie.clock.getElapsedTime().asMilliseconds() > 100) {
+    setNewIdleTexture(zombie);
+    zombie.idleTextureCounter++;
+    if (zombie.idleTextureCounter >= 4) {
+      zombie.idleTextureCounter = 0;
+    }
+    zombie.clock.restart();
+  }
 }
 
-void ZombieAnimations::standUpAnim(Zombie &zombie) {
-  if (zombie.standUpClock.getElapsedTime().asMilliseconds() > 100 && zombie.fallDownTextureCounter < 2) {
-    zombie.fallDownTextureCounter++;
-    setNewFallTexture(zombie);
-    zombie.standUpClock.restart();
-  }
+void ZombieAnimations::fallAnim(Zombie &zombie) {
+  setNewFallTexture(zombie);
 }
 
 void ZombieAnimations::attackAnim(Zombie &zombie) {
@@ -56,6 +59,20 @@ void ZombieAnimations::setNewRunTexture(Zombie &zombie) {
       break;
     case woman:
       zombie.setTexture(textures.zombie3RunTextures[zombie.runTextureCounter]);
+      break;
+  }
+}
+
+void ZombieAnimations::setNewIdleTexture(Zombie &zombie) {
+  switch (zombie.type) {
+    case man1:
+      zombie.setTexture(textures.zombie1IdleTextures[zombie.idleTextureCounter]);
+      break;
+    case man2:
+      zombie.setTexture(textures.zombie2IdleTextures[zombie.idleTextureCounter]);
+      break;
+    case woman:
+      zombie.setTexture(textures.zombie3IdleTextures[zombie.idleTextureCounter]);
       break;
   }
 }

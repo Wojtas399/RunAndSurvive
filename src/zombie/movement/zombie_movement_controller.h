@@ -19,11 +19,13 @@ private:
 
   void fallDown(Zombie &zombie);
 
-  void standUp(Zombie &zombie);
-
   void attack(Zombie &zombie);
 
+  void idle(Zombie &zombie);
+
   void dead(Zombie &zombie);
+
+  void stopMove(Zombie &zombie) const;
 
   bool isCollisionForward(Zombie &zombie, float transformationX);
 

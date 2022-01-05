@@ -8,18 +8,21 @@ void ZombieTextures::loadTextures() {
 
 void ZombieTextures::loadZ1Textures() {
   loadZ1RunTextures();
+  loadZ1IdleTextures();
   loadZ1JumpTextures();
   loadZ1AttackTextures();
 }
 
 void ZombieTextures::loadZ2Textures() {
   loadZ2RunTextures();
+  loadZ2IdleTextures();
   loadZ2JumpTextures();
   loadZ2AttackTextures();
 }
 
 void ZombieTextures::loadZ3Textures() {
   loadZ3RunTextures();
+  loadZ3IdleTextures();
   loadZ3JumpTextures();
   loadZ3AttackTextures();
 }
@@ -43,6 +46,24 @@ void ZombieTextures::loadZ1RunTextures() {
       z1Run4Texture,
       z1Run5Texture,
       z1Run6Texture,
+  });
+}
+
+void ZombieTextures::loadZ1IdleTextures() {
+  if (
+      !z1Idle1Texture.loadFromFile("assets/zombie/zombie1/idle_1.png") ||
+      !z1Idle2Texture.loadFromFile("assets/zombie/zombie1/idle_2.png") ||
+      !z1Idle3Texture.loadFromFile("assets/zombie/zombie1/idle_3.png") ||
+      !z1Idle4Texture.loadFromFile("assets/zombie/zombie1/idle_4.png")
+      ) {
+    std::cout << "Cannot load one of the zombie 1 idle textures\n";
+  }
+
+  zombie1IdleTextures.insert(zombie1IdleTextures.end(), {
+      z1Idle1Texture,
+      z1Idle2Texture,
+      z1Idle3Texture,
+      z1Idle4Texture,
   });
 }
 
@@ -106,6 +127,24 @@ void ZombieTextures::loadZ2RunTextures() {
   });
 }
 
+void ZombieTextures::loadZ2IdleTextures() {
+  if (
+      !z2Idle1Texture.loadFromFile("assets/zombie/zombie2/idle_1.png") ||
+      !z2Idle2Texture.loadFromFile("assets/zombie/zombie2/idle_2.png") ||
+      !z2Idle3Texture.loadFromFile("assets/zombie/zombie2/idle_3.png") ||
+      !z2Idle4Texture.loadFromFile("assets/zombie/zombie2/idle_4.png")
+      ) {
+    std::cout << "Cannot load one of the zombie 2 idle textures\n";
+  }
+
+  zombie2IdleTextures.insert(zombie2IdleTextures.end(), {
+      z2Idle1Texture,
+      z2Idle2Texture,
+      z2Idle3Texture,
+      z2Idle4Texture,
+  });
+}
+
 void ZombieTextures::loadZ2JumpTextures() {
   if (
       !z2Jump1Texture.loadFromFile("assets/zombie/zombie2/jump_1.png") ||
@@ -163,6 +202,24 @@ void ZombieTextures::loadZ3RunTextures() {
       z3Run4Texture,
       z3Run5Texture,
       z3Run6Texture,
+  });
+}
+
+void ZombieTextures::loadZ3IdleTextures() {
+  if (
+      !z3Idle1Texture.loadFromFile("assets/zombie/zombie3/idle_1.png") ||
+      !z3Idle2Texture.loadFromFile("assets/zombie/zombie3/idle_2.png") ||
+      !z3Idle3Texture.loadFromFile("assets/zombie/zombie3/idle_3.png") ||
+      !z3Idle4Texture.loadFromFile("assets/zombie/zombie3/idle_4.png")
+      ) {
+    std::cout << "Cannot load one of the zombie 3 idle textures\n";
+  }
+
+  zombie3IdleTextures.insert(zombie3IdleTextures.end(), {
+      z3Idle1Texture,
+      z3Idle2Texture,
+      z3Idle3Texture,
+      z3Idle4Texture,
   });
 }
 

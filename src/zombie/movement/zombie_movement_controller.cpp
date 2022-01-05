@@ -18,17 +18,17 @@ void ZombieMovementController::move(std::vector<Zombie> &zombies) {
 
 void ZombieMovementController::manageMovementType(Zombie &zombie) {
   switch (zombie.moveType) {
-    case zombieRun:
+    case zombieWalk:
       run(zombie);
       break;
     case zombieFallDown:
       fallDown(zombie);
       break;
-    case zombieStandUp:
-      standUp(zombie);
-      break;
     case zombieAttack:
       attack(zombie);
+      break;
+    case zombieIdle:
+      idle(zombie);
       break;
     case zombieDead:
       dead(zombie);
@@ -63,7 +63,7 @@ void ZombieMovementController::fallDown(Zombie &zombie) {
       !isFreeSpaceUnder(position.x + (zombie.isReversed ? -11.0f : 11.0f), y, zombie.velocityY, zombie)
       ) {
     verticalCorrection(position.x, y, velocityY, zombie);
-    zombie.setNewMoveType(ZombieMoveType::zombieRun);
+    zombie.setNewMoveType(ZombieMoveType::zombieWalk);
     stopVerticalMovement = true;
   }
 
@@ -73,33 +73,35 @@ void ZombieMovementController::fallDown(Zombie &zombie) {
   if (y >= 542) {
     y = 542;
     zombie.velocityY = 0;
-    zombie.setNewMoveType(ZombieMoveType::zombieRun);
+    zombie.setNewMoveType(ZombieMoveType::zombieWalk);
   }
 
   zombie.setPosition(position.x + zombie.velocityX, y);
   animations.fallAnim(zombie);
 }
 
-void ZombieMovementController::standUp(Zombie &zombie) {
-  sf::Vector2<float> position = zombie.getPosition();
-  zombie.setPosition(position.x - gameParams.mapSpeed, position.y);
-  animations.standUpAnim(zombie);
-}
-
 void ZombieMovementController::attack(Zombie &zombie) {
-  sf::Vector2<float> position = zombie.getPosition();
-  zombie.setPosition(position.x - gameParams.mapSpeed, position.y);
+  stopMove(zombie);
   animations.attackAnim(zombie);
   if (zombie.attackTextureCounter >= 6) {
-    zombie.setNewMoveType(ZombieMoveType::zombieRun);
+    zombie.setNewMoveType(ZombieMoveType::zombieWalk);
     zombie.attackTextureCounter = 0;
   }
 }
 
+void ZombieMovementController::idle(Zombie &zombie) {
+  stopMove(zombie);
+  animations.idleAnim(zombie);
+}
+
 void ZombieMovementController::dead(Zombie &zombie) {
+  stopMove(zombie);
+  animations.deadAnim(zombie);
+}
+
+void ZombieMovementController::stopMove(Zombie &zombie) const {
   sf::Vector2<float> position = zombie.getPosition();
   zombie.setPosition(position.x - gameParams.mapSpeed, position.y);
-  animations.deadAnim(zombie);
 }
 
 bool ZombieMovementController::isCollisionForward(Zombie &zombie, float transformationX) {

@@ -13,6 +13,8 @@ private:
 
   void setNewRunTexture(Zombie &zombie);
 
+  void setNewIdleTexture(Zombie &zombie);
+
   void setNewFallTexture(Zombie &zombie);
 
   void setNewAttackTexture(Zombie &zombie);
@@ -26,9 +28,9 @@ public:
 
   void runAnim(Zombie &zombie);
 
-  void fallAnim(Zombie &zombie);
+  void idleAnim(Zombie &zombie);
 
-  void standUpAnim(Zombie &zombie);
+  void fallAnim(Zombie &zombie);
 
   void attackAnim(Zombie &zombie);
 

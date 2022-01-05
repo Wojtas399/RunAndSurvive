@@ -13,6 +13,10 @@ private:
   sf::Texture z1Run4Texture;
   sf::Texture z1Run5Texture;
   sf::Texture z1Run6Texture;
+  sf::Texture z1Idle1Texture;
+  sf::Texture z1Idle2Texture;
+  sf::Texture z1Idle3Texture;
+  sf::Texture z1Idle4Texture;
   sf::Texture z1Jump1Texture;
   sf::Texture z1Jump2Texture;
   sf::Texture z1Jump3Texture;
@@ -30,6 +34,10 @@ private:
   sf::Texture z2Run4Texture;
   sf::Texture z2Run5Texture;
   sf::Texture z2Run6Texture;
+  sf::Texture z2Idle1Texture;
+  sf::Texture z2Idle2Texture;
+  sf::Texture z2Idle3Texture;
+  sf::Texture z2Idle4Texture;
   sf::Texture z2Jump1Texture;
   sf::Texture z2Jump2Texture;
   sf::Texture z2Jump3Texture;
@@ -47,6 +55,10 @@ private:
   sf::Texture z3Run4Texture;
   sf::Texture z3Run5Texture;
   sf::Texture z3Run6Texture;
+  sf::Texture z3Idle1Texture;
+  sf::Texture z3Idle2Texture;
+  sf::Texture z3Idle3Texture;
+  sf::Texture z3Idle4Texture;
   sf::Texture z3Jump1Texture;
   sf::Texture z3Jump2Texture;
   sf::Texture z3Jump3Texture;
@@ -65,11 +77,15 @@ private:
 
   void loadZ1RunTextures();
 
+  void loadZ1IdleTextures();
+
   void loadZ1JumpTextures();
 
   void loadZ1AttackTextures();
 
   void loadZ2RunTextures();
+
+  void loadZ2IdleTextures();
 
   void loadZ2JumpTextures();
 
@@ -77,18 +93,23 @@ private:
 
   void loadZ3RunTextures();
 
+  void loadZ3IdleTextures();
+
   void loadZ3JumpTextures();
 
   void loadZ3AttackTextures();
 
 public:
   std::vector<sf::Texture> zombie1RunTextures;
+  std::vector<sf::Texture> zombie1IdleTextures;
   std::vector<sf::Texture> zombie1JumpTextures;
   std::vector<sf::Texture> zombie1AttackTextures;
   std::vector<sf::Texture> zombie2RunTextures;
+  std::vector<sf::Texture> zombie2IdleTextures;
   std::vector<sf::Texture> zombie2JumpTextures;
   std::vector<sf::Texture> zombie2AttackTextures;
   std::vector<sf::Texture> zombie3RunTextures;
+  std::vector<sf::Texture> zombie3IdleTextures;
   std::vector<sf::Texture> zombie3JumpTextures;
   std::vector<sf::Texture> zombie3AttackTextures;
 

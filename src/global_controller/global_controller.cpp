@@ -52,7 +52,6 @@ void GlobalController::checkCollisions() {
         robotZombieCollisions.isRobotCollisionWithZombie(robot, zombie) &&
         zombie.moveType != ZombieMoveType::zombieDead
         ) {
-      setZombieOrientation(zombie);
       if (
           zombie.attackBreakClock.getElapsedTime().asMilliseconds() > 1000 &&
           zombie.moveType != ZombieMoveType::zombieDead &&
@@ -60,7 +59,14 @@ void GlobalController::checkCollisions() {
           ) {
         zombie.setNewMoveType(ZombieMoveType::zombieAttack);
         zombie.attackBreakClock.restart();
+        setZombieOrientation(zombie);
+      } else if (robot.moveType == RobotMoveType::idle && zombie.moveType != ZombieMoveType::zombieAttack) {
+        zombie.setNewMoveType(ZombieMoveType::zombieIdle);
+      } else {
+        setZombieOrientation(zombie);
       }
+    } else if (zombie.moveType == ZombieMoveType::zombieIdle) {
+      zombie.setNewMoveType(ZombieMoveType::zombieWalk);
     }
     for (Bullet &bullet: bullets) {
       if (
