@@ -71,9 +71,6 @@ void MapGenerator::setGenerators() {
   backgroundGenerator.loadTexture();
   groundElementsGenerator.loadTextures(elementsTranslationX);
   airElementsGenerator.loadTextures(elementsTranslationX);
-  int firstConfigurationNumber = rand() % 8;
-  groundElementsGenerator.generateNewElementsConfiguration(firstConfigurationNumber);
-  airElementsGenerator.generateNewElementsConfiguration(firstConfigurationNumber);
 }
 
 bool MapGenerator::isThereTheLastElementOnTheMap(std::vector<MapElement> elements) const {

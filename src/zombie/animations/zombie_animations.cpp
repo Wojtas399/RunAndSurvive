@@ -4,9 +4,9 @@ void ZombieAnimations::loadTextures() {
   textures.loadTextures();
 }
 
-void ZombieAnimations::runAnim(Zombie &zombie) {
+void ZombieAnimations::walkAnim(Zombie &zombie) {
   if (zombie.clock.getElapsedTime().asMilliseconds() > 100) {
-    setNewRunTexture(zombie);
+    setNewWalkTexture(zombie);
     zombie.runTextureCounter++;
     if (zombie.runTextureCounter >= 6) {
       zombie.runTextureCounter = 0;
@@ -49,16 +49,16 @@ void ZombieAnimations::deadAnim(Zombie &zombie) {
   }
 }
 
-void ZombieAnimations::setNewRunTexture(Zombie &zombie) {
+void ZombieAnimations::setNewWalkTexture(Zombie &zombie) {
   switch (zombie.type) {
     case man1:
-      zombie.setTexture(textures.zombie1RunTextures[zombie.runTextureCounter]);
+      zombie.setTexture(textures.zombie1WalkTextures[zombie.runTextureCounter]);
       break;
     case man2:
-      zombie.setTexture(textures.zombie2RunTextures[zombie.runTextureCounter]);
+      zombie.setTexture(textures.zombie2WalkTextures[zombie.runTextureCounter]);
       break;
     case woman:
-      zombie.setTexture(textures.zombie3RunTextures[zombie.runTextureCounter]);
+      zombie.setTexture(textures.zombie3WalkTextures[zombie.runTextureCounter]);
       break;
   }
 }

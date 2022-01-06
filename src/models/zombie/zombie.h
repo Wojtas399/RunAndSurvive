@@ -25,7 +25,7 @@ public:
   int fallDownTextureCounter = 0;
   int attackTextureCounter = 0;
   int deadTextureCounter = 0;
-  float width = 300 * constants::zombieScale;
+  float width = 400 * constants::zombieScale;
   float height = 384 * constants::zombieScale;
   float velocityY = 0;
   float velocityX = 0;

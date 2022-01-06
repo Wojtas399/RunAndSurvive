@@ -11,7 +11,7 @@ private:
   ZombieTextures &textures;
   LifeService &lifeService;
 
-  void setNewRunTexture(Zombie &zombie);
+  void setNewWalkTexture(Zombie &zombie);
 
   void setNewIdleTexture(Zombie &zombie);
 
@@ -26,7 +26,7 @@ public:
 
   void loadTextures();
 
-  void runAnim(Zombie &zombie);
+  void walkAnim(Zombie &zombie);
 
   void idleAnim(Zombie &zombie);
 

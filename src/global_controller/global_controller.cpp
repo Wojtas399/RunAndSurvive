@@ -50,7 +50,8 @@ void GlobalController::checkCollisions() {
   for (Zombie &zombie: zombies) {
     if (
         robotZombieCollisions.isRobotCollisionWithZombie(robot, zombie) &&
-        zombie.moveType != ZombieMoveType::zombieDead
+        zombie.moveType != ZombieMoveType::zombieDead &&
+        zombie.moveType != ZombieMoveType::zombieFallDown
         ) {
       if (
           zombie.attackBreakClock.getElapsedTime().asMilliseconds() > 1000 &&
@@ -76,7 +77,7 @@ void GlobalController::checkCollisions() {
         zombie.setNewMoveType(ZombieMoveType::zombieDead);
         bullet.isExplosion = true;
         setBulletExplosionPosition(bullet, zombie);
-        float zombieXCenter = zombie.isReversed ? -60 : -3;
+        float zombieXCenter = zombie.isReversed ? -75 : 5;
         uiController.addPointsForZombie(
             zombie.getPosition().x - gameParams.mapSpeed + zombieXCenter,
             zombie.getPosition().y
@@ -89,14 +90,14 @@ void GlobalController::checkCollisions() {
 void GlobalController::setBulletExplosionPosition(Bullet &bullet, Zombie &zombie) {
   sf::Vector2<float> zombiePosition = zombie.getPosition();
   bullet.setMuzzlePosition(
-      zombiePosition.x + (zombie.isReversed ? -28.0f : 22.0f),
+      zombiePosition.x + (zombie.isReversed ? -42.0f : 36.0f),
       zombiePosition.y
   );
 }
 
 void GlobalController::setZombieOrientation(Zombie &zombie) {
   float robotXCenter = robot.getPosition().x - (robot.isReversed ? 60.0f : 3.0f);
-  float zombieXCenter = zombie.getPosition().x - (zombie.isReversed ? 60.0f : 3.0f);
+  float zombieXCenter = zombie.getPosition().x + (zombie.isReversed ? -75.0f : 5.0f);
   if (zombieXCenter > robotXCenter && !zombie.isReversed) {
     zombie.setHorizontalOrientation(true);
   } else if (zombieXCenter < robotXCenter && zombie.isReversed) {

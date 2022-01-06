@@ -15,7 +15,7 @@ private:
 
   void manageMovementType(Zombie &zombie);
 
-  void run(Zombie &zombie);
+  void walk(Zombie &zombie);
 
   void fallDown(Zombie &zombie);
 
@@ -27,11 +27,13 @@ private:
 
   void stopMove(Zombie &zombie) const;
 
-  bool isCollisionForward(Zombie &zombie, float transformationX);
+  bool isCollisionForward(float x, float y, float transformationX, bool isReversed);
 
-  bool isFreeSpaceUnder(float x, float y, float transformationY, Zombie& zombie);
+  bool isFreeSpaceUnder(float x, float y, float transformationY, bool isReversed);
 
-  void verticalCorrection(float x, float y, float &transformationY, Zombie &zombie);
+  void verticalCorrection(float x, float y, float &transformationY, bool isReversed);
+
+  void horizontalCorrection(float &x, float y, float translationX, bool isReversed);
 public:
   ZombieMovementController(
       GameParams &gameParams,
