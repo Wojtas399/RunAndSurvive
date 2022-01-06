@@ -72,6 +72,7 @@ void GlobalController::checkCollisions() {
     for (Bullet &bullet: bullets) {
       if (
           zombie.moveType != ZombieMoveType::zombieDead &&
+          !bullet.isExplosion &&
           bulletCollisions.isCollisionWithZombie(bullet, zombie)
           ) {
         zombie.setNewMoveType(ZombieMoveType::zombieDead);
@@ -108,7 +109,7 @@ void GlobalController::setZombieOrientation(Zombie &zombie) {
 void GlobalController::updateGameParams() {
   gameParams.mapSpeed += 0.1;
   gameParams.robotLeftVelocityX -= 0.15;
-  gameParams.zombieGeneratingTime -= 200;
+  gameParams.zombieGeneratingTime -= 400;
   gameParams.zombieDefaultLeftVelocityX -= 0.1;
   gameParams.zombieDefaultRightVelocityX -= 0.1;
   gameParams.zombieStartXPosition += 10;

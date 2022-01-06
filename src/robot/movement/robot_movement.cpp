@@ -86,7 +86,7 @@ void RobotMovement::idle(float &velocityY) {
     verticalPositionCorrection(x, y, velocityY);
     y = y + velocityY > 532 ? 532 : y + velocityY;
   }
-  if (!isCollisionForward(x, y, robot.isReversed ? -4 : 4) || robot.isReversed) {
+  if (!isCollisionForward(x, y, robot.isReversed ? -4 : 4)) {
     robot.moveType = RobotMoveType::run;
   }
   robot.setPosition(x, y);
