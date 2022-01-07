@@ -41,7 +41,7 @@ void ZombieMovementController::walk(Zombie &zombie) {
   float x = position.x;
   float y = position.y;
   bool isReversed = zombie.isReversed;
-  float velocityX = zombie.velocityX;
+  float velocityX = isReversed ? zombie.velocityXLeft : zombie.velocityXRight;
   if (isCollisionForward(x, y, velocityX, isReversed)) {
     zombie.setHorizontalOrientation(!isReversed);
   }

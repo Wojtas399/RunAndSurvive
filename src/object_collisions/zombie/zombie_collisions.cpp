@@ -7,8 +7,8 @@ bool ZombieCollisions::isCollisionWithGroundElement(float x, float y, bool isRev
       spriteWidth,
       spriteHeight,
       isReversed,
-      26,
-      26,
+      30,
+      30,
       5
   );
 }
@@ -20,8 +20,8 @@ bool ZombieCollisions::isCollisionWithAirElement(float x, float y, bool isRevers
       spriteWidth,
       spriteHeight,
       isReversed,
-      26,
-      26,
+      30,
+      30,
       5,
       5
   );
