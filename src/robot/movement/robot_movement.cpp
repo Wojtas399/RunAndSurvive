@@ -9,12 +9,12 @@ void RobotMovement::run(float &velocityX, float &velocityY, bool &isFastRun) {
   } else {
     x += velocityX;
   }
-  if (!isCollisionBottom(x, y, 4) && y < 432) {
+  if (!isCollisionBottom(x, y, 4) && y < 532) {
     robot.moveType = RobotMoveType::jump;
     velocityY = 0.045;
   }
   robot.setPosition(x, y);
-  if (robot.isShoot) {
+  if (robot.isShoot && canShoot()) {
     robotAnimations.runShootAnim(robot.sprite, isFastRun);
   } else {
     robotAnimations.runAnim(robot.sprite, isFastRun);
@@ -49,7 +49,7 @@ void RobotMovement::jump(
   }
   if (isCollisionForward(x, y, velocityX)) {
     horizontalPositionCorrection(x, y, velocityX);
-    velocityX = -constants::mapSpeed;
+    velocityX = -gameParams.mapSpeed;
   }
 
   x += velocityX;
@@ -62,8 +62,8 @@ void RobotMovement::jump(
   if (y < maxYPosition) {
     y += gravity;
   }
-  if (y >= 432) {
-    y = 432;
+  if (y >= 532) {
+    y = 532;
     maxYPosition = y - 80;
     robot.moveType = RobotMoveType::run;
   }
@@ -76,20 +76,21 @@ void RobotMovement::idle(float &velocityY) {
   sf::Vector2<float> position = robot.getPosition();
   float x = position.x;
   float y = position.y;
-  x -= constants::mapSpeed;
+  float translationX = robot.isReversed ? -5.0f : 5.0f;
+  x -= gameParams.mapSpeed;
   if (
-      y < 432 &&
+      y < 532 &&
       velocityY > 0 &&
-      isCollisionForward(x, y, robot.isReversed ? -5.0f : 5.0f)
+      isCollisionForward(x, y, translationX)
       ) {
     verticalPositionCorrection(x, y, velocityY);
-    y = y + velocityY > 432 ? 432 : y + velocityY;
+    y = y + velocityY > 532 ? 532 : y + velocityY;
   }
-  if (!isCollisionForward(x, y, robot.isReversed ? -4 : 4) || robot.isReversed) {
+  if (!isCollisionForward(x, y, robot.isReversed ? -4 : 4)) {
     robot.moveType = RobotMoveType::run;
   }
   robot.setPosition(x, y);
-  if (robot.isShoot) {
+  if (robot.isShoot && canShoot()) {
     robotAnimations.shootAnim(robot.sprite);
   } else {
     robotAnimations.idleAnim(robot.sprite);
@@ -98,7 +99,7 @@ void RobotMovement::idle(float &velocityY) {
 
 void RobotMovement::slide(float &velocityX) {
   sf::Vector2<float> position = robot.getPosition();
-  float x = position.x +  (robot.isReversed ? velocityX + 0.5f : 0);
+  float x = position.x + (robot.isReversed ? velocityX + 0.5f : 0);
   robot.setPosition(x, position.y);
   robotAnimations.slideAnim(robot.sprite);
 }
@@ -141,4 +142,13 @@ void RobotMovement::verticalPositionCorrection(float x, float y, float &translat
   while (isCollisionBottom(x + helper, y, translationY)) {
     translationY -= 0.5;
   }
+}
+
+bool RobotMovement::canShoot() {
+  sf::Vector2<float> position = robot.getPosition();
+  float x = position.x;
+  float y = position.y;
+  float translationX = robot.isReversed ? -5.0f : 5.0f;
+  return !isGroundCollisionForward(x, y, translationX) &&
+         !collisions.isCollisionWithAirElement(x + translationX, y, 18);
 }

@@ -3,7 +3,11 @@
 void RobotController::loadTextures() {
   animations.loadTextures();
   robot.sprite.setScale(scale, scale);
-  robot.sprite.setPosition(600, 432);
+  setInitialPosition();
+}
+
+void RobotController::setInitialPosition() {
+  robot.sprite.setPosition(645, 532);
 }
 
 void RobotController::move() {

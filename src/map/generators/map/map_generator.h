@@ -14,30 +14,38 @@ private:
   sf::Texture groundTexture;
   sf::Sprite groundSpr1;
   sf::Sprite groundSpr2;
+  GameParams &gameParams;
   BackgroundGenerator &backgroundGenerator;
   AirElementsGenerator &airElementsGenerator;
   GroundElementsGenerator &groundElementsGenerator;
+  float elementsTranslationX = constants::windowWidth;
 
   void setSprites();
 
-  static void setNewPosition(sf::Sprite &sprite);
+  void setElementsTranslation();
+
+  void setNewPosition(sf::Sprite &sprite) const;
 
   void generateNewElementsConfiguration();
 
   void setGenerators();
 
-  static bool isThereTheLastElementOnTheMap(std::vector<MapElement> elements);
+  bool isThereTheLastElementOnTheMap(std::vector<MapElement> elements) const;
 
 public:
   MapGenerator(
+      GameParams &gameParams,
       BackgroundGenerator &backgroundGenerator,
       GroundElementsGenerator &groundElementsGenerator,
       AirElementsGenerator &airElementsGenerator
-  ) : backgroundGenerator(backgroundGenerator),
+  ) : gameParams(gameParams),
+      backgroundGenerator(backgroundGenerator),
       groundElementsGenerator(groundElementsGenerator),
       airElementsGenerator(airElementsGenerator) {}
 
   void load();
+
+  void setInitialParams();
 
   void draw(sf::RenderWindow &window);
 

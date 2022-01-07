@@ -8,14 +8,16 @@
 class ZombieCollisions {
 private:
   MapElementsCollisions &mapElementsCollisions;
+  float spriteWidth = 400 * constants::zombieScale;
+  float spriteHeight = 384 * constants::zombieScale;
+
 public:
-  explicit ZombieCollisions(
-      MapElementsCollisions &mapElementsCollisions
-  ) : mapElementsCollisions(mapElementsCollisions) {}
+  explicit ZombieCollisions(MapElementsCollisions &mapElementsCollisions)
+      : mapElementsCollisions(mapElementsCollisions) {}
 
-  bool isCollisionWithGroundElement(float x, float y, const Zombie& zombie);
+  bool isCollisionWithGroundElement(float x, float y, bool isReversed);
 
-  bool isCollisionWithAirElement(float x, float y, const Zombie& zombie);
+  bool isCollisionWithAirElement(float x, float y, bool isReversed);
 };
 
 

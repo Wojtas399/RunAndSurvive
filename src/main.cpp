@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include "iostream"
 #include "constants.h"
 #include "map/generators/background/background_generator.h"
 #include "map/generators/ground_elements/ground_elements_generator.h"
@@ -9,17 +10,27 @@
 #include "zombie/textures/zombie_textures.h"
 #include "zombie/zombie_controller.h"
 #include "global_controller/global_controller.h"
+#include "ui/points_service/points_service.h"
+#include "ui/life_service/life_service.h"
+#include "ui/zobie_points_service/zombie_points_service.h"
 
 int main() {
   srand(time(NULL));
 
   sf::RenderWindow window(sf::VideoMode(constants::windowWidth, constants::windowHeight), "Run & Survive");
   sf::Clock mainClock;
+
+  //Global
+  GameParams gameParams;
+  LifeService lifeService;
+  PointsService pointsService;
+  ZombiePointsService zombiePointsService(gameParams);
+  UIController uiController(lifeService, pointsService, zombiePointsService);
   //Map
-  BackgroundGenerator backgroundGenerator;
-  GroundElementsGenerator groundElementsGenerator;
-  AirElementsGenerator airElementsGenerator;
-  MapGenerator mapGenerator(backgroundGenerator, groundElementsGenerator, airElementsGenerator);
+  BackgroundGenerator backgroundGenerator(gameParams);
+  GroundElementsGenerator groundElementsGenerator(gameParams);
+  AirElementsGenerator airElementsGenerator(gameParams);
+  MapGenerator mapGenerator(gameParams, backgroundGenerator, groundElementsGenerator, airElementsGenerator);
   MapElementsCollisions mapElementsCollisions(
       airElementsGenerator.airElements,
       groundElementsGenerator.groundElements
@@ -30,19 +41,21 @@ int main() {
   RobotAnimations robotAnimations(robotTextures);
   RobotCollisions robotCollisions(mapElementsCollisions, robot);
   BulletCollisions bulletCollisions(mapElementsCollisions);
-  RobotMovement robotMovement(robot, robotAnimations, robotCollisions);
-  RobotShootController robotShootController(robot, robotTextures, bulletCollisions);
-  RobotMovementController robotMovementController(robot, robotCollisions, robotMovement, robotShootController);
+  RobotMovement robotMovement(gameParams, robot, robotAnimations, robotCollisions);
+  RobotShootController robotShootController(gameParams, robot, robotTextures, bulletCollisions);
+  RobotMovementController robotMovementController(gameParams, robot, robotCollisions, robotMovement, robotShootController);
   RobotController robotController(robot, robotAnimations, robotMovementController, robotShootController);
   //Zombie
   ZombieTextures zombieTextures;
-  ZombieAnimations zombieAnimations(zombieTextures);
+  ZombieAnimations zombieAnimations(zombieTextures, lifeService);
   ZombieCollisions zombieCollisions(mapElementsCollisions);
-  ZombieMovementController zombieMovementController(zombieAnimations, zombieCollisions);
-  ZombieController zombieController(zombieMovementController);
+  ZombieMovementController zombieMovementController(gameParams, zombieAnimations, zombieCollisions);
+  ZombieController zombieController(gameParams, zombieMovementController);
 
   RobotZombieCollisions robotZombieCollisions;
   GlobalController globalController(
+      gameParams,
+      uiController,
       robot,
       mapGenerator,
       robotController,
@@ -52,23 +65,26 @@ int main() {
   );
   globalController.loadTextures();
 
-  bool isGameStarted = false;
-
   while (window.isOpen()) {
     if (mainClock.getElapsedTime().asMilliseconds() > 10) {
       sf::Event event{};
       while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed || robot.getPosition().x + robot.spriteWidth < 0) {
+        if (event.type == sf::Event::Closed) {
           window.close();
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-          isGameStarted = true;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !gameParams.isGameStarted) {
+          globalController.setInitialGameParams();
+          gameParams.isGameStarted = true;
         }
         robotController.keyController();
       }
 
-      if (isGameStarted) {
-        globalController.moveElements();
+      if (robot.getPosition().x + robot.spriteWidth < 0 || lifeService.livesAmount == 0) {
+        gameParams.isGameStarted = false;
+      }
+
+      if (gameParams.isGameStarted) {
+        globalController.step();
       }
 
       window.clear();

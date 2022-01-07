@@ -36,6 +36,8 @@ public:
 
   void loadTextures();
 
+  void setInitialPosition();
+
   void move();
 
   void draw(sf::RenderWindow &window) const;

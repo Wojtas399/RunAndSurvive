@@ -4,9 +4,14 @@ void ZombieController::loadTextures() {
   movementController.loadAnimationsTextures();
 }
 
+void ZombieController::setInitialParams() {
+  zombies.clear();
+  clock.restart();
+}
+
 void ZombieController::move() {
   movementController.move(zombies);
-  if (clock.getElapsedTime().asMilliseconds() > 4000) {
+  if (clock.getElapsedTime().asMilliseconds() > gameParams.zombieGeneratingTime) {
     addZombie();
     clock.restart();
   }
@@ -23,9 +28,9 @@ void ZombieController::addZombie() {
   float speed =  static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/0.4));
   Zombie newZombie(getZombieType(index));
   newZombie.setHorizontalOrientation(true);
-  newZombie.setPosition(1600, 50);
-  newZombie.velocityXLeft = -2.5f - speed;
-  newZombie.velocityXRight = -0.5f + speed;
+  newZombie.setPosition(gameParams.zombieStartXPosition, 0);
+  newZombie.velocityXLeft = gameParams.zombieDefaultLeftVelocityX - speed;
+  newZombie.velocityXRight = gameParams.zombieDefaultRightVelocityX + speed;
   newZombie.velocityX = newZombie.velocityXLeft;
   newZombie.setNewMoveType(ZombieMoveType::zombieFallDown);
   zombies.push_back(newZombie);

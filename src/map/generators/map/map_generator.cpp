@@ -8,6 +8,14 @@ void MapGenerator::load() {
   setGenerators();
 }
 
+void MapGenerator::setInitialParams() {
+  elementsTranslationX = constants::windowWidth;
+  backgroundGenerator.setInitialPosition();
+  airElementsGenerator.airElements.clear();
+  groundElementsGenerator.groundElements.clear();
+  setElementsTranslation();
+}
+
 void MapGenerator::draw(sf::RenderWindow &window) {
   backgroundGenerator.draw(window);
   window.draw(groundSpr1);
@@ -28,17 +36,19 @@ void MapGenerator::move() {
 void MapGenerator::setSprites() {
   groundSpr1.setTexture(groundTexture);
   groundSpr2.setTexture(groundTexture);
-  groundSpr1.setPosition(0, 514);
-  groundSpr2.setPosition(1408, 514);
+  groundSpr1.setPosition(0, 614);
+  groundSpr2.setPosition(1408, 614);
 }
 
-void MapGenerator::setNewPosition(sf::Sprite &sprite) {
+void MapGenerator::setElementsTranslation() {
+  groundElementsGenerator.changeElementsTranslationX(elementsTranslationX);
+  airElementsGenerator.changeElementsTranslation(elementsTranslationX);
+}
+
+void MapGenerator::setNewPosition(sf::Sprite &sprite) const {
   sf::Vector2<float> position = sprite.getPosition();
-  if (position.x < -1400) {
-    sprite.setPosition(static_cast<float>(1408), position.y);
-  } else {
-    sprite.setPosition(static_cast<float>(position.x - constants::mapSpeed), position.y);
-  }
+  float x = position.x - gameParams.mapSpeed + (position.x <= -1408 ? 2 * 1408 : 0.0f);
+  sprite.setPosition(x, position.y);
 }
 
 void MapGenerator::generateNewElementsConfiguration() {
@@ -50,25 +60,24 @@ void MapGenerator::generateNewElementsConfiguration() {
     int number = rand() % 8;
     groundElementsGenerator.generateNewElementsConfiguration(number);
     airElementsGenerator.generateNewElementsConfiguration(number);
-    std::cout << "Ground elements amount: " << groundElementsGenerator.groundElements.size() << "\n";
-    std::cout << "Air elements amount: " << airElementsGenerator.airElements.size() << "\n";
+    if (elementsTranslationX == constants::windowWidth) {
+      elementsTranslationX *= 2;
+      setElementsTranslation();
+    }
   }
 }
 
 void MapGenerator::setGenerators() {
   backgroundGenerator.loadTexture();
-  groundElementsGenerator.loadTexture();
-  airElementsGenerator.loadTexture();
-  int firstConfigurationNumber = rand() % 8;
-  groundElementsGenerator.generateNewElementsConfiguration(firstConfigurationNumber);
-  airElementsGenerator.generateNewElementsConfiguration(firstConfigurationNumber);
+  groundElementsGenerator.loadTextures(elementsTranslationX);
+  airElementsGenerator.loadTextures(elementsTranslationX);
 }
 
-bool MapGenerator::isThereTheLastElementOnTheMap(std::vector<MapElement> elements) {
+bool MapGenerator::isThereTheLastElementOnTheMap(std::vector<MapElement> elements) const {
   if (!elements.empty()) {
     typedef MapElement MapElem;
     MapElem element = elements[elements.size() - 1];
-    if (element.getSpritePosition().x + static_cast<float>(element.width) <= 1400) {
+    if (element.getSpritePosition().x + static_cast<float>(element.width) <= elementsTranslationX) {
       return true;
     } else {
       return false;

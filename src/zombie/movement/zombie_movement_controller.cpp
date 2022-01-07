@@ -10,7 +10,6 @@ void ZombieMovementController::move(std::vector<Zombie> &zombies) {
     float newXPosition = position.x + zombies[i].velocityX;
     if (newXPosition < -100 || zombies[i].deadTextureCounter >= 8) {
       zombies.erase(zombies.begin() + i);
-      std::cout << "Zombies on the screen: " << zombies.size() << "\n";
     } else {
       manageMovementType(zombies[i]);
     }
@@ -19,17 +18,17 @@ void ZombieMovementController::move(std::vector<Zombie> &zombies) {
 
 void ZombieMovementController::manageMovementType(Zombie &zombie) {
   switch (zombie.moveType) {
-    case zombieRun:
-      run(zombie);
+    case zombieWalk:
+      walk(zombie);
       break;
     case zombieFallDown:
       fallDown(zombie);
       break;
-    case zombieStandUp:
-      standUp(zombie);
-      break;
     case zombieAttack:
       attack(zombie);
+      break;
+    case zombieIdle:
+      idle(zombie);
       break;
     case zombieDead:
       dead(zombie);
@@ -37,88 +36,102 @@ void ZombieMovementController::manageMovementType(Zombie &zombie) {
   }
 }
 
-void ZombieMovementController::run(Zombie &zombie) {
+void ZombieMovementController::walk(Zombie &zombie) {
   sf::Vector2<float> position = zombie.getPosition();
-  if (isCollisionForward(zombie, zombie.velocityX)) {
-    zombie.setHorizontalOrientation(!zombie.isReversed);
+  float x = position.x;
+  float y = position.y;
+  bool isReversed = zombie.isReversed;
+  float velocityX = isReversed ? zombie.velocityXLeft : zombie.velocityXRight;
+  if (isCollisionForward(x, y, velocityX, isReversed)) {
+    zombie.setHorizontalOrientation(!isReversed);
   }
-  if (
-      position.y < 442 &&
-      isFreeSpaceUnder(position.x + (zombie.isReversed ? -11.0f : 11.0f), position.y, 10, zombie)
-      ) {
+  if (position.y < 542 && isFreeSpaceUnder(x, y, 10, isReversed)) {
     zombie.setNewMoveType(ZombieMoveType::zombieFallDown);
   }
   position = zombie.getPosition();
   zombie.setPosition(position.x + zombie.velocityX, position.y);
-  animations.runAnim(zombie);
+  animations.walkAnim(zombie);
 }
 
 void ZombieMovementController::fallDown(Zombie &zombie) {
   sf::Vector2<float> position = zombie.getPosition();
   float y = position.y;
+  float x = position.x;
+  bool isReversed = zombie.isReversed;
   float velocityY = zombie.velocityY;
+  float velocityX = zombie.isReversed ? zombie.velocityXLeft : zombie.velocityXRight;
   bool stopVerticalMovement = false;
 
-  if (
-      velocityY > 0 &&
-      !isFreeSpaceUnder(position.x + (zombie.isReversed ? -11.0f : 11.0f), y, zombie.velocityY, zombie)
-      ) {
-    verticalCorrection(position.x, y, velocityY, zombie);
-    zombie.setNewMoveType(ZombieMoveType::zombieRun);
+  if (velocityY > 0 && !isFreeSpaceUnder(x, y, velocityY, isReversed)) {
+    verticalCorrection(x, y, velocityY, isReversed);
+    zombie.setNewMoveType(ZombieMoveType::zombieWalk);
     stopVerticalMovement = true;
+  }
+  if (isCollisionForward(x, y, velocityX, isReversed)) {
+    horizontalCorrection(x, y, velocityX, isReversed);
+    velocityX = -gameParams.mapSpeed;
   }
 
   y += velocityY;
+  x += velocityX;
   zombie.velocityY = stopVerticalMovement ? 0 : velocityY + constants::zombieAccelerationY;
 
-  if (y >= 442) {
-    y = 442;
+  if (y >= 542) {
+    y = 542;
     zombie.velocityY = 0;
-    zombie.setNewMoveType(ZombieMoveType::zombieRun);
+    zombie.setNewMoveType(ZombieMoveType::zombieWalk);
   }
 
-  zombie.setPosition(position.x + zombie.velocityX, y);
+  zombie.setPosition(x, y);
   animations.fallAnim(zombie);
 }
 
-void ZombieMovementController::standUp(Zombie &zombie) {
-  sf::Vector2<float> position = zombie.getPosition();
-  zombie.setPosition(position.x - constants::mapSpeed, position.y);
-  animations.standUpAnim(zombie);
-}
-
 void ZombieMovementController::attack(Zombie &zombie) {
-  sf::Vector2<float> position = zombie.getPosition();
-  zombie.setPosition(position.x - constants::mapSpeed, position.y);
+  stopMove(zombie);
   animations.attackAnim(zombie);
   if (zombie.attackTextureCounter >= 6) {
-    zombie.setNewMoveType(ZombieMoveType::zombieRun);
+    zombie.setNewMoveType(ZombieMoveType::zombieWalk);
     zombie.attackTextureCounter = 0;
   }
 }
 
+void ZombieMovementController::idle(Zombie &zombie) {
+  stopMove(zombie);
+  animations.idleAnim(zombie);
+}
+
 void ZombieMovementController::dead(Zombie &zombie) {
-  sf::Vector2<float> position = zombie.getPosition();
-  zombie.setPosition(position.x - constants::mapSpeed, position.y);
+  stopMove(zombie);
   animations.deadAnim(zombie);
 }
 
-bool ZombieMovementController::isCollisionForward(Zombie &zombie, float transformationX) {
+void ZombieMovementController::stopMove(Zombie &zombie) const {
   sf::Vector2<float> position = zombie.getPosition();
-  return collisions.isCollisionWithGroundElement(position.x + transformationX, position.y - 4, zombie) ||
-         collisions.isCollisionWithAirElement(position.x + transformationX, position.y - 4, zombie);
+  zombie.setPosition(position.x - gameParams.mapSpeed, position.y);
 }
 
-bool ZombieMovementController::isFreeSpaceUnder(float x, float y, float transformationY, Zombie &zombie) {
-  return !collisions.isCollisionWithGroundElement(x, y + transformationY, zombie) &&
-         !collisions.isCollisionWithAirElement(x, y + transformationY, zombie);
+bool ZombieMovementController::isCollisionForward(float x, float y, float transformationX, bool isReversed) {
+  return collisions.isCollisionWithGroundElement(x + transformationX, y, isReversed) ||
+         collisions.isCollisionWithAirElement(x + transformationX, y, isReversed);
 }
 
-void ZombieMovementController::verticalCorrection(float x, float y, float &transformationY, Zombie &zombie) {
-  float helper = !isCollisionForward(zombie, zombie.isReversed ? -5 : 5)
+bool ZombieMovementController::isFreeSpaceUnder(float x, float y, float transformationY, bool isReversed) {
+  return !collisions.isCollisionWithGroundElement(x, y + transformationY, isReversed) &&
+         !collisions.isCollisionWithAirElement(x, y + transformationY, isReversed);
+}
+
+void ZombieMovementController::verticalCorrection(float x, float y, float &transformationY, bool isReversed) {
+  float helper = !isCollisionForward(x, y, isReversed ? -5 : 5, isReversed)
                  ? 0
-                 : zombie.isReversed ? 5.0f : -5.0f;
-  while (!isFreeSpaceUnder(x + helper, y, transformationY, zombie)) {
+                 : isReversed ? 5.0f : -5.0f;
+  while (!isFreeSpaceUnder(x + helper, y, transformationY, isReversed)) {
     transformationY -= 0.5;
+  }
+}
+
+void ZombieMovementController::horizontalCorrection(float &x, float y, float translationX, bool isReversed) {
+  float counter = isReversed ? 0.5 : -0.5;
+  while (isCollisionForward(x, y, translationX, isReversed)) {
+    x += counter;
   }
 }

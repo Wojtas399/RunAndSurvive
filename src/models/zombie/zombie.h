@@ -9,7 +9,7 @@ enum ZombieType {
 };
 
 enum ZombieMoveType {
-  zombieRun, zombieFallDown, zombieStandUp, zombieDead, zombieAttack,
+  zombieWalk, zombieFallDown, zombieDead, zombieAttack, zombieIdle,
 };
 
 class Zombie {
@@ -18,14 +18,14 @@ public:
   ZombieMoveType moveType = ZombieMoveType::zombieFallDown;
   sf::Sprite sprite;
   sf::Clock clock;
-  sf::Clock standUpClock;
   sf::Clock attackBreakClock;
   bool isReversed = true;
   int runTextureCounter = 0;
+  int idleTextureCounter = 0;
   int fallDownTextureCounter = 0;
   int attackTextureCounter = 0;
   int deadTextureCounter = 0;
-  float width = 300 * constants::zombieScale;
+  float width = 400 * constants::zombieScale;
   float height = 384 * constants::zombieScale;
   float velocityY = 0;
   float velocityX = 0;

@@ -1,6 +1,6 @@
 #include "ground_elements_generator.h"
 
-void GroundElementsGenerator::loadTexture() {
+void GroundElementsGenerator::loadTextures(float elementsTranslationX) {
   if (!blockTexture.loadFromFile("assets/map/ground_block.png")) {
     std::cout << "Cannot load ground block texture";
   }
@@ -16,7 +16,7 @@ void GroundElementsGenerator::loadTexture() {
   if (!wallTexture.loadFromFile("assets/map/ground_wall.png")) {
     std::cout << "Cannot load ground wall texture";
   }
-  setSprite();
+  setSprites(elementsTranslationX);
 }
 
 void GroundElementsGenerator::move() {
@@ -38,7 +38,11 @@ void GroundElementsGenerator::generateNewElementsConfiguration(int generatedNumb
   }
 }
 
-void GroundElementsGenerator::setSprite() {
+void GroundElementsGenerator::changeElementsTranslationX(float newTranslationX) {
+  setSprites(newTranslationX);
+}
+
+void GroundElementsGenerator::setSprites(float elementsTranslationX) {
   blockSpr.setTexture(blockTexture);
   blockDoubleSpr.setTexture(blockDoubleTexture);
   blockTripleSpr.setTexture(blockTripleTexture);
@@ -49,7 +53,8 @@ void GroundElementsGenerator::setSprite() {
       blockDoubleSpr,
       blockTripleSpr,
       stairsSpr,
-      wallSpr
+      wallSpr,
+      elementsTranslationX
   );
 }
 
@@ -59,6 +64,6 @@ void GroundElementsGenerator::setNewElementPosition(int index) {
   if (position.x <= -400) {
     groundElements.erase(groundElements.begin() + index);
   } else {
-    element.sprite.setPosition(position.x - constants::mapSpeed, position.y);
+    element.sprite.setPosition(position.x - gameParams.mapSpeed, position.y);
   }
 }

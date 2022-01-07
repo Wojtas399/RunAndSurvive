@@ -6,9 +6,11 @@
 #include "../../models/robot/robot.h"
 #include "../textures/robot_textures.h"
 #include "../../object_collisions/bullet/bullet_collisions.h"
+#include "../../game_params/game_params.h"
 #include <iostream>
 
 class RobotShootController {
+  GameParams &gameParams;
   Robot &robot;
   RobotTextures &robotTextures;
   BulletCollisions &bulletCollisions;
@@ -31,10 +33,11 @@ class RobotShootController {
 
 public:
   RobotShootController(
+      GameParams &gameParams,
       Robot &robot,
       RobotTextures &robotTextures,
       BulletCollisions &bulletCollisions
-      ): robot(robot), robotTextures(robotTextures), bulletCollisions(bulletCollisions) {}
+      ): gameParams(gameParams), robot(robot), robotTextures(robotTextures), bulletCollisions(bulletCollisions) {}
 
   std::vector<Bullet> allBullets;
 

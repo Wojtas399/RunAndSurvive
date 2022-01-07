@@ -4,12 +4,23 @@ void ZombieAnimations::loadTextures() {
   textures.loadTextures();
 }
 
-void ZombieAnimations::runAnim(Zombie &zombie) {
+void ZombieAnimations::walkAnim(Zombie &zombie) {
   if (zombie.clock.getElapsedTime().asMilliseconds() > 100) {
-    setNewRunTexture(zombie);
+    setNewWalkTexture(zombie);
     zombie.runTextureCounter++;
     if (zombie.runTextureCounter >= 6) {
       zombie.runTextureCounter = 0;
+    }
+    zombie.clock.restart();
+  }
+}
+
+void ZombieAnimations::idleAnim(Zombie &zombie) {
+  if (zombie.clock.getElapsedTime().asMilliseconds() > 100) {
+    setNewIdleTexture(zombie);
+    zombie.idleTextureCounter++;
+    if (zombie.idleTextureCounter >= 4) {
+      zombie.idleTextureCounter = 0;
     }
     zombie.clock.restart();
   }
@@ -19,17 +30,12 @@ void ZombieAnimations::fallAnim(Zombie &zombie) {
   setNewFallTexture(zombie);
 }
 
-void ZombieAnimations::standUpAnim(Zombie &zombie) {
-  if (zombie.standUpClock.getElapsedTime().asMilliseconds() > 100 && zombie.fallDownTextureCounter < 2) {
-    zombie.fallDownTextureCounter++;
-    setNewFallTexture(zombie);
-    zombie.standUpClock.restart();
-  }
-}
-
 void ZombieAnimations::attackAnim(Zombie &zombie) {
-  if (zombie.clock.getElapsedTime().asMilliseconds() > 100 && zombie.attackTextureCounter < 6) {
+  if (zombie.clock.getElapsedTime().asMilliseconds() > 80 && zombie.attackTextureCounter < 6) {
     setNewAttackTexture(zombie);
+    if (zombie.attackTextureCounter == 2) {
+      lifeService.subtractLife();
+    }
     zombie.attackTextureCounter++;
     zombie.clock.restart();
   }
@@ -43,16 +49,30 @@ void ZombieAnimations::deadAnim(Zombie &zombie) {
   }
 }
 
-void ZombieAnimations::setNewRunTexture(Zombie &zombie) {
+void ZombieAnimations::setNewWalkTexture(Zombie &zombie) {
   switch (zombie.type) {
     case man1:
-      zombie.setTexture(textures.zombie1RunTextures[zombie.runTextureCounter]);
+      zombie.setTexture(textures.zombie1WalkTextures[zombie.runTextureCounter]);
       break;
     case man2:
-      zombie.setTexture(textures.zombie2RunTextures[zombie.runTextureCounter]);
+      zombie.setTexture(textures.zombie2WalkTextures[zombie.runTextureCounter]);
       break;
     case woman:
-      zombie.setTexture(textures.zombie3RunTextures[zombie.runTextureCounter]);
+      zombie.setTexture(textures.zombie3WalkTextures[zombie.runTextureCounter]);
+      break;
+  }
+}
+
+void ZombieAnimations::setNewIdleTexture(Zombie &zombie) {
+  switch (zombie.type) {
+    case man1:
+      zombie.setTexture(textures.zombie1IdleTextures[zombie.idleTextureCounter]);
+      break;
+    case man2:
+      zombie.setTexture(textures.zombie2IdleTextures[zombie.idleTextureCounter]);
+      break;
+    case woman:
+      zombie.setTexture(textures.zombie3IdleTextures[zombie.idleTextureCounter]);
       break;
   }
 }

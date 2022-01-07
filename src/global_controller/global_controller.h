@@ -8,29 +8,45 @@
 #include "../robot/robot_controller.h"
 #include "../zombie/zombie_controller.h"
 #include "../object_collisions/robot_zombie/robot_zombie_collisions.h"
+#include "../game_params/game_params.h"
+#include "../ui/ui_controller.h"
 
 class GlobalController {
 private:
+  GameParams &gameParams;
+  UIController &uiController;
   Robot &robot;
   MapGenerator &mapGenerator;
   RobotController &robotController;
   ZombieController &zombieController;
   BulletCollisions &bulletCollisions;
   RobotZombieCollisions &robotZombieCollisions;
+  sf::Clock gameClock;
+  sf::Clock pointsClock;
+
+  void moveElements();
+
+  void checkCollisions();
 
   void setBulletExplosionPosition(Bullet &bullet, Zombie &zombie);
 
   void setZombieOrientation(Zombie &zombie);
 
+  void updateGameParams();
+
 public:
   GlobalController(
+      GameParams &gameParams,
+      UIController &uiController,
       Robot &robot,
       MapGenerator &mapGenerator,
       RobotController &robotController,
       ZombieController &zombieController,
       BulletCollisions &bulletCollisions,
       RobotZombieCollisions &robotZombieCollisions
-  ) : robot(robot),
+  ) : gameParams(gameParams),
+      uiController(uiController),
+      robot(robot),
       mapGenerator(mapGenerator),
       robotController(robotController),
       zombieController(zombieController),
@@ -39,9 +55,11 @@ public:
 
   void loadTextures();
 
-  void moveElements();
+  void step();
 
   void draw(sf::RenderWindow &window);
+
+  void setInitialGameParams();
 };
 
 

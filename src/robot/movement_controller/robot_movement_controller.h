@@ -8,6 +8,7 @@
 
 class RobotMovementController {
 private:
+  GameParams &gameParams;
   Robot &robot;
   RobotCollisions &collisions;
   RobotMovement &robotMovement;
@@ -16,7 +17,7 @@ private:
   float velocityY = 0;
   float accelerationY = 0;
   float gravity = 0.00006;
-  float maxYPosition = 352;
+  float maxYPosition = 452;
   bool isFastRun = false;
   bool jumpAfterTopCollision = false;
   sf::Clock shootClock;
@@ -53,11 +54,16 @@ private:
 
 public:
   RobotMovementController(
+      GameParams &gameParams,
       Robot &robot,
       RobotCollisions &robotCollisions,
       RobotMovement &robotMovement,
       RobotShootController &robotShootController
-  ) : robot(robot), collisions(robotCollisions), robotMovement(robotMovement), shootController(robotShootController) {}
+  ) : gameParams(gameParams),
+      robot(robot),
+      collisions(robotCollisions),
+      robotMovement(robotMovement),
+      shootController(robotShootController) {}
 
   void move(
       bool isKeyUpPressed,

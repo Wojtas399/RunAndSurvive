@@ -97,8 +97,8 @@ void RobotMovementController::moveDown() {
       robot.moveType = RobotMoveType::idle;
     }
   } else if (robot.moveType == RobotMoveType::jump) {
-    accelerationY = 0.7;
-  } else if (position.y < 432 && !isCollisionBottom()) {
+    accelerationY = 0.9;
+  } else if (position.y < 532 && !isCollisionBottom()) {
     velocityY = 0.045;
     robot.moveType = RobotMoveType::jump;
     maxYPosition = position.y;
@@ -114,13 +114,15 @@ void RobotMovementController::neitherMoveUpNorMoveDown() {
 }
 
 void RobotMovementController::moveLeft() {
-  velocityX = constants::robotLeftVelocityX;
+  velocityX = gameParams.robotLeftVelocityX;
   isFastRun = true;
   setReversedRobotParams();
 }
 
 void RobotMovementController::moveRight() {
-  velocityX = constants::robotRightVelocityX;
+  velocityX = robot.getPosition().x + (robot.spriteWidth - 20) > constants::windowWidth
+      ? 0
+      : constants::robotRightVelocityX;
   isFastRun = true;
   if (robot.moveType == RobotMoveType::slide && !isCollisionAtTheTop()) {
     robot.moveType = RobotMoveType::run;

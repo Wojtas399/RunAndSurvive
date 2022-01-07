@@ -44,7 +44,7 @@ void RobotAnimations::jumpAnim(sf::Sprite &robotSprite, float velocityY, float m
 }
 
 void RobotAnimations::idleAnim(sf::Sprite &robotSprite) {
-  if (clock.getElapsedTime().asSeconds() > 0.09f) {
+  if (clock.getElapsedTime().asMilliseconds() > 65) {
     robotSprite.setTexture(textures.idleTextures[idleTextureCounter]);
     idleTextureCounter++;
     if (idleTextureCounter >= textures.idleTextures.size()) {
