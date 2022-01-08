@@ -60,6 +60,8 @@ public:
   void draw(sf::RenderWindow &window);
 
   void setInitialGameParams();
+
+  void displayResult(sf::RenderWindow &window);
 };
 
 

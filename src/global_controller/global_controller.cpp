@@ -109,11 +109,15 @@ void GlobalController::setZombieOrientation(Zombie &zombie) {
 void GlobalController::updateGameParams() {
   gameParams.mapSpeed += 0.1;
   gameParams.robotLeftVelocityX -= 0.15;
-  gameParams.zombieGeneratingTime -= 300;
+  gameParams.zombieGeneratingTime -= 200;
   gameParams.zombieDefaultLeftVelocityX -= 0.1;
   gameParams.zombieDefaultRightVelocityX -= 0.1;
   gameParams.zombieStartXPosition += 10;
   gameParams.bulletLeftVelocityX -= 0.1;
   std::cout << "CHANGED PARAMS!\n";
   gameClock.restart();
+}
+
+void GlobalController::displayResult(sf::RenderWindow &window) {
+  uiController.displayResult(window);
 }

@@ -25,7 +25,8 @@ int main() {
   LifeService lifeService;
   PointsService pointsService;
   ZombiePointsService zombiePointsService(gameParams);
-  UIController uiController(lifeService, pointsService, zombiePointsService);
+  EndGameService endGameService;
+  UIController uiController(lifeService, pointsService, zombiePointsService, endGameService);
   //Map
   BackgroundGenerator backgroundGenerator(gameParams);
   GroundElementsGenerator groundElementsGenerator(gameParams);
@@ -89,6 +90,9 @@ int main() {
 
       window.clear();
       globalController.draw(window);
+      if (!gameParams.isGameStarted && pointsService.points > 0) {
+        globalController.displayResult(window);
+      }
       window.display();
       mainClock.restart();
     }

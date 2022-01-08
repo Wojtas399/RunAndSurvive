@@ -4,6 +4,7 @@ void UIController::loadTextures() {
   lifeService.loadTexture();
   pointsService.loadTextures();
   zombiePointsService.loadTexture();
+  endGameService.loadTexture();
 }
 
 void UIController::move() {
@@ -29,4 +30,8 @@ void UIController::addPointForSecond() {
 void UIController::addPointsForZombie(float zombieXPosition, float zombieYPosition) {
   pointsService.addPointsForZombie();
   zombiePointsService.addZombiePoints(zombieXPosition, zombieYPosition);
+}
+
+void UIController::displayResult(sf::RenderWindow &window) {
+  endGameService.draw(pointsService.pointSprites, window);
 }
