@@ -4,7 +4,20 @@ void UIController::loadTextures() {
   lifeService.loadTexture();
   pointsService.loadTextures();
   zombiePointsService.loadTexture();
+  buttonsService.loadTextures();
   endGameService.loadTexture();
+}
+
+int UIController::endScreenKeyController() {
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+    endGameService.selectButton(0);
+    return -1;
+  } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+    endGameService.selectButton(1);
+    return -1;
+  } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+    return endGameService.selectedButton;
+  }
 }
 
 void UIController::move() {

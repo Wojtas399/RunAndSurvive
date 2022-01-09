@@ -24,6 +24,8 @@ private:
   sf::Clock gameClock;
   sf::Clock pointsClock;
 
+  void setInitialGameParams();
+
   void moveElements();
 
   void checkCollisions();
@@ -53,13 +55,17 @@ public:
       bulletCollisions(bulletCollisions),
       robotZombieCollisions(robotZombieCollisions) {}
 
+  void robotKeyController();
+
+  void endScreenKeyController();
+
   void loadTextures();
+
+  void startGame();
 
   void step();
 
   void draw(sf::RenderWindow &window);
-
-  void setInitialGameParams();
 
   void displayResult(sf::RenderWindow &window);
 };

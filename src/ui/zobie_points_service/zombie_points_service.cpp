@@ -1,7 +1,7 @@
 #include "zombie_points_service.h"
 
 void ZombiePointsService::loadTexture() {
-  if (!zombiePointsTexture.loadFromFile("assets/ui/zombiePoints.png")) {
+  if (!zombiePointsTexture.loadFromFile("assets/ui/points/zombiePoints.png")) {
     std::cout << "Cannot load +3 texture\n";
   }
 }

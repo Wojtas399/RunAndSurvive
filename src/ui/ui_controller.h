@@ -13,18 +13,24 @@ private:
   PointsService &pointsService;
   ZombiePointsService &zombiePointsService;
   EndGameService &endGameService;
+  ButtonsService &buttonsService;
+
 public:
   UIController(
       LifeService &lifeService,
       PointsService &pointsService,
       ZombiePointsService &zombiePointsService,
-      EndGameService &endGameService
+      EndGameService &endGameService,
+      ButtonsService &buttonsService
   ) : lifeService(lifeService),
       pointsService(pointsService),
       zombiePointsService(zombiePointsService),
-      endGameService(endGameService) {}
+      endGameService(endGameService),
+      buttonsService(buttonsService) {}
 
   void loadTextures();
+
+  int endScreenKeyController();
 
   void move();
 

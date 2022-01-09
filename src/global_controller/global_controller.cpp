@@ -1,10 +1,26 @@
 #include "global_controller.h"
 
+void GlobalController::robotKeyController() {
+  robotController.keyController();
+}
+
+void GlobalController::endScreenKeyController() {
+  int selectedButton = uiController.endScreenKeyController();
+  if (selectedButton == 0) {
+    startGame();
+  }
+}
+
 void GlobalController::loadTextures() {
   mapGenerator.load();
   robotController.loadTextures();
   zombieController.loadTextures();
   uiController.loadTextures();
+}
+
+void GlobalController::startGame() {
+  setInitialGameParams();
+  gameParams.isGameStarted = true;
 }
 
 void GlobalController::step() {

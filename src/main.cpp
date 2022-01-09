@@ -25,8 +25,15 @@ int main() {
   LifeService lifeService;
   PointsService pointsService;
   ZombiePointsService zombiePointsService(gameParams);
-  EndGameService endGameService;
-  UIController uiController(lifeService, pointsService, zombiePointsService, endGameService);
+  ButtonsService buttonsService;
+  EndGameService endGameService(buttonsService);
+  UIController uiController(
+      lifeService,
+      pointsService,
+      zombiePointsService,
+      endGameService,
+      buttonsService
+  );
   //Map
   BackgroundGenerator backgroundGenerator(gameParams);
   GroundElementsGenerator groundElementsGenerator(gameParams);
@@ -44,7 +51,8 @@ int main() {
   BulletCollisions bulletCollisions(mapElementsCollisions);
   RobotMovement robotMovement(gameParams, robot, robotAnimations, robotCollisions);
   RobotShootController robotShootController(gameParams, robot, robotTextures, bulletCollisions);
-  RobotMovementController robotMovementController(gameParams, robot, robotCollisions, robotMovement, robotShootController);
+  RobotMovementController robotMovementController(gameParams, robot, robotCollisions, robotMovement,
+                                                  robotShootController);
   RobotController robotController(robot, robotAnimations, robotMovementController, robotShootController);
   //Zombie
   ZombieTextures zombieTextures;
@@ -73,11 +81,18 @@ int main() {
         if (event.type == sf::Event::Closed) {
           window.close();
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !gameParams.isGameStarted) {
-          globalController.setInitialGameParams();
-          gameParams.isGameStarted = true;
+        if (
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Space) &&
+            !gameParams.isGameStarted &&
+            pointsService.points == 0
+            ) {
+          globalController.startGame();
         }
-        robotController.keyController();
+        if (gameParams.isGameStarted) {
+          globalController.robotKeyController();
+        } else if (pointsService.points > 0) {
+          globalController.endScreenKeyController();
+        }
       }
 
       if (robot.getPosition().x + robot.spriteWidth < 0 || lifeService.livesAmount == 0) {
