@@ -4,10 +4,35 @@ void GlobalController::robotKeyController() {
   robotController.keyController();
 }
 
-void GlobalController::endScreenKeyController() {
+void GlobalController::menuScreenKeyController(sf::RenderWindow &window, bool &isMenuOpen, bool &isInstructionOpen) {
+  int selectedButton = uiController.menuScreenKeyController();
+  if (selectedButton == 0) {
+    isMenuOpen = false;
+    startGame();
+  } else if (selectedButton == 1) {
+    isMenuOpen = false;
+    isInstructionOpen = true;
+  } else if (selectedButton == 2) {
+    window.close();
+  }
+}
+
+void GlobalController::instructionScreenKeyController(bool &isMenuOpen, bool &isInstructionOpen) {
+  int selectedButton = uiController.instructionScreenKeyController();
+  if (selectedButton == 0) {
+    isInstructionOpen = false;
+    isMenuOpen = true;
+  }
+}
+
+void GlobalController::endScreenKeyController(bool &isMenuOpen) {
   int selectedButton = uiController.endScreenKeyController();
   if (selectedButton == 0) {
+    isMenuOpen = false;
     startGame();
+  } else if (selectedButton == 1) {
+    isMenuOpen = true;
+    setInitialGameParams();
   }
 }
 
@@ -41,6 +66,21 @@ void GlobalController::draw(sf::RenderWindow &window) {
   uiController.draw(window);
 }
 
+void GlobalController::displayMenu(sf::RenderWindow &window) {
+  mapGenerator.draw(window);
+  uiController.displayMenu(window);
+}
+
+void GlobalController::displayInstruction(sf::RenderWindow &window) {
+  mapGenerator.draw(window);
+  uiController.displayInstruction(window);
+}
+
+void GlobalController::displayResult(sf::RenderWindow &window) {
+  draw(window);
+  uiController.displayResult(window);
+}
+
 void GlobalController::setInitialGameParams() {
   pointsClock.restart();
   uiController.setInitialParams();
@@ -50,6 +90,7 @@ void GlobalController::setInitialGameParams() {
   zombieController.setInitialParams();
   gameClock.restart();
   pointsClock.restart();
+  robot.moveType = RobotMoveType::run;
 }
 
 void GlobalController::moveElements() {
@@ -132,8 +173,4 @@ void GlobalController::updateGameParams() {
   gameParams.bulletLeftVelocityX -= 0.1;
   std::cout << "CHANGED PARAMS!\n";
   gameClock.restart();
-}
-
-void GlobalController::displayResult(sf::RenderWindow &window) {
-  uiController.displayResult(window);
 }

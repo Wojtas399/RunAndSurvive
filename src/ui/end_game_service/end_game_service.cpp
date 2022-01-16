@@ -5,7 +5,7 @@ void EndGameService::loadTexture() {
     std::cout << "Cannot load result screen texture\n";
   }
   resultScreenSprite.setTexture(resultScreenTexture);
-  selectButton(0);
+  setButtons();
 }
 
 void EndGameService::draw(const std::vector<sf::Sprite> &pointsSprites, sf::RenderWindow &window) {
@@ -26,15 +26,24 @@ void EndGameService::draw(const std::vector<sf::Sprite> &pointsSprites, sf::Rend
   }
 }
 
-void EndGameService::selectButton(int buttonIndex) {
+void EndGameService::moveLeft() {
+  selectedButton = selectedButton == 0 ? 1 : 0;
+  setButtons();
+}
+
+void EndGameService::moveRight() {
+  selectedButton = selectedButton == 1 ? 0 : 1;
+  setButtons();
+}
+
+void EndGameService::setButtons() {
   buttons.clear();
-  selectedButton = buttonIndex;
-  if (buttonIndex == 0) {
+  if (selectedButton == 0) {
     buttons.insert(buttons.begin(), {
       buttonsService.restartButtonClickedSprite,
       buttonsService.menuButtonSprite,
     });
-  } else if (buttonIndex == 1) {
+  } else if (selectedButton == 1) {
     buttons.insert(buttons.begin(), {
       buttonsService.restartButtonSprite,
       buttonsService.menuButtonClickedSprite,

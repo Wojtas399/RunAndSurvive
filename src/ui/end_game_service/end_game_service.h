@@ -12,6 +12,8 @@ private:
   sf::Sprite resultScreenSprite;
   std::vector<sf::Sprite> buttons;
 
+  void setButtons();
+
 public:
   explicit EndGameService(ButtonsService &buttonsService) : buttonsService(buttonsService) {}
 
@@ -21,7 +23,9 @@ public:
 
   void draw(const std::vector<sf::Sprite> &pointsSprites, sf::RenderWindow &window);
 
-  void selectButton(int buttonIndex);
+  void moveLeft();
+
+  void moveRight();
 };
 
 

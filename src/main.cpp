@@ -19,6 +19,8 @@ int main() {
 
   sf::RenderWindow window(sf::VideoMode(constants::windowWidth, constants::windowHeight), "Run & Survive");
   sf::Clock mainClock;
+  bool isMenuOpen = true;
+  bool isInstructionOpen = false;
 
   //Global
   GameParams gameParams;
@@ -26,11 +28,15 @@ int main() {
   PointsService pointsService;
   ZombiePointsService zombiePointsService(gameParams);
   ButtonsService buttonsService;
+  MenuService menuService(buttonsService);
+  InstructionService instructionService(buttonsService);
   EndGameService endGameService(buttonsService);
   UIController uiController(
       lifeService,
       pointsService,
       zombiePointsService,
+      menuService,
+      instructionService,
       endGameService,
       buttonsService
   );
@@ -51,8 +57,13 @@ int main() {
   BulletCollisions bulletCollisions(mapElementsCollisions);
   RobotMovement robotMovement(gameParams, robot, robotAnimations, robotCollisions);
   RobotShootController robotShootController(gameParams, robot, robotTextures, bulletCollisions);
-  RobotMovementController robotMovementController(gameParams, robot, robotCollisions, robotMovement,
-                                                  robotShootController);
+  RobotMovementController robotMovementController(
+      gameParams,
+      robot,
+      robotCollisions,
+      robotMovement,
+      robotShootController
+  );
   RobotController robotController(robot, robotAnimations, robotMovementController, robotShootController);
   //Zombie
   ZombieTextures zombieTextures;
@@ -81,17 +92,16 @@ int main() {
         if (event.type == sf::Event::Closed) {
           window.close();
         }
-        if (
-            sf::Keyboard::isKeyPressed(sf::Keyboard::Space) &&
-            !gameParams.isGameStarted &&
-            pointsService.points == 0
-            ) {
-          globalController.startGame();
-        }
         if (gameParams.isGameStarted) {
           globalController.robotKeyController();
-        } else if (pointsService.points > 0) {
-          globalController.endScreenKeyController();
+        } else if (event.type == sf::Event::KeyPressed) {
+          if (isInstructionOpen) {
+            globalController.instructionScreenKeyController(isMenuOpen, isInstructionOpen);
+          } else if (isMenuOpen && event.type == sf::Event::KeyPressed) {
+            globalController.menuScreenKeyController(window, isMenuOpen, isInstructionOpen);
+          } else {
+            globalController.endScreenKeyController(isMenuOpen);
+          }
         }
       }
 
@@ -104,9 +114,16 @@ int main() {
       }
 
       window.clear();
-      globalController.draw(window);
-      if (!gameParams.isGameStarted && pointsService.points > 0) {
-        globalController.displayResult(window);
+      if (!gameParams.isGameStarted) {
+        if (isMenuOpen) {
+          globalController.displayMenu(window);
+        } else if (isInstructionOpen) {
+          globalController.displayInstruction(window);
+        } else {
+          globalController.displayResult(window);
+        }
+      } else {
+        globalController.draw(window);
       }
       window.display();
       mainClock.restart();

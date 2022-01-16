@@ -57,7 +57,11 @@ public:
 
   void robotKeyController();
 
-  void endScreenKeyController();
+  void menuScreenKeyController(sf::RenderWindow &window, bool &isMenuOpen, bool &isInstructionOpen);
+
+  void instructionScreenKeyController(bool &isMenuOpen, bool &isInstructionOpen);
+
+  void endScreenKeyController(bool &isMenuOpen);
 
   void loadTextures();
 
@@ -66,6 +70,10 @@ public:
   void step();
 
   void draw(sf::RenderWindow &window);
+
+  void displayMenu(sf::RenderWindow &window);
+
+  void displayInstruction(sf::RenderWindow &window);
 
   void displayResult(sf::RenderWindow &window);
 };

@@ -38,7 +38,9 @@ add_executable(R_S
         src/ui/zobie_points_service/zombie_points_service.cpp
         src/models/anim/anim.cpp
         src/ui/ui_controller.cpp src/ui/end_game_service/end_game_service.cpp
-        src/ui/buttons_service/buttons_service.cpp)
+        src/ui/buttons_service/buttons_service.cpp
+        src/ui/menu_service/menu_service.cpp
+        src/ui/instruction_service/instruction_service.cpp)
 include_directories(/usr/local/include)
 
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)

@@ -1,6 +1,7 @@
 #include "robot_movement.h"
 
 void RobotMovement::run(float &velocityX, float &velocityY, bool &isFastRun) {
+  velocityY = 0;
   sf::Vector2<float> position = robot.getPosition();
   float x = position.x;
   float y = position.y;
@@ -46,6 +47,7 @@ void RobotMovement::jump(
   if (velocityY > 0 && isCollisionBottom(x + (robot.isReversed ? 10.0f : -10.0f), y, velocityY)) {
     verticalPositionCorrection(x, y, velocityY);
     robot.moveType = RobotMoveType::run;
+    accelerationY = constants::robotAccelerationY;
   }
   if (isCollisionForward(x, y, velocityX)) {
     horizontalPositionCorrection(x, y, velocityX);
