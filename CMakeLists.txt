@@ -40,7 +40,8 @@ add_executable(R_S
         src/ui/ui_controller.cpp src/ui/end_game_service/end_game_service.cpp
         src/ui/buttons_service/buttons_service.cpp
         src/ui/menu_service/menu_service.cpp
-        src/ui/instruction_service/instruction_service.cpp)
+        src/ui/instruction_service/instruction_service.cpp
+        src/ui/bonus_service/bonus_service.cpp)
 include_directories(/usr/local/include)
 
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)

@@ -8,6 +8,7 @@
 #include "end_game_service/end_game_service.h"
 #include "menu_service/menu_service.h"
 #include "instruction_service/instruction_service.h"
+#include "bonus_service/bonus_service.h"
 
 class UIController {
 private:
@@ -18,6 +19,7 @@ private:
   InstructionService &instructionService;
   EndGameService &endGameService;
   ButtonsService &buttonsService;
+  BonusService &bonusService;
 
 public:
   UIController(
@@ -27,14 +29,18 @@ public:
       MenuService &menuService,
       InstructionService &instructionService,
       EndGameService &endGameService,
-      ButtonsService &buttonsService
+      ButtonsService &buttonsService,
+      BonusService &bonusService
   ) : lifeService(lifeService),
       pointsService(pointsService),
       zombiePointsService(zombiePointsService),
       menuService(menuService),
       instructionService(instructionService),
       endGameService(endGameService),
-      buttonsService(buttonsService) {}
+      buttonsService(buttonsService),
+      bonusService(bonusService) {}
+
+  int &points = pointsService.points;
 
   void loadTextures();
 
@@ -59,6 +65,8 @@ public:
   void displayInstruction(sf::RenderWindow &window);
 
   void displayResult(sf::RenderWindow &window);
+
+  void displayBonus(sf::RenderWindow &window);
 };
 
 

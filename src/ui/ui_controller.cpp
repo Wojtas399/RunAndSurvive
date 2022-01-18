@@ -8,6 +8,7 @@ void UIController::loadTextures() {
   menuService.loadTexture();
   instructionService.loadTexture();
   endGameService.loadTexture();
+  bonusService.loadTexture();
 }
 
 int UIController::menuScreenKeyController() {
@@ -74,4 +75,8 @@ void UIController::displayInstruction(sf::RenderWindow &window) {
 
 void UIController::displayResult(sf::RenderWindow &window) {
   endGameService.draw(pointsService.pointSprites, window);
+}
+
+void UIController::displayBonus(sf::RenderWindow &window) {
+  bonusService.draw(window);
 }

@@ -31,6 +31,7 @@ int main() {
   MenuService menuService(buttonsService);
   InstructionService instructionService(buttonsService);
   EndGameService endGameService(buttonsService);
+  BonusService bonusService;
   UIController uiController(
       lifeService,
       pointsService,
@@ -38,7 +39,8 @@ int main() {
       menuService,
       instructionService,
       endGameService,
-      buttonsService
+      buttonsService,
+      bonusService
   );
   //Map
   BackgroundGenerator backgroundGenerator(gameParams);

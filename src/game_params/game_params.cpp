@@ -8,4 +8,6 @@ void GameParams::setInitialValues() {
   zombieDefaultRightVelocityX = initialZombieDefaultRightVelocityX;
   zombieStartXPosition = initialZombieStartXPosition;
   bulletLeftVelocityX = initialBulletLeftVelocityX;
+  isBulletBonusOn = initialIsBulletBonusOn;
+  bulletBonusClock.restart();
 }

@@ -10,6 +10,7 @@ public:
   sf::Sprite muzzleSprite;
   float width = 172 * constants::bulletScale;
   float height = 139 * constants::bulletScale;
+  int lives = 2;
   float speed = 0.06f;
   bool isReversed = false;
   int bulletCounter = 0;

@@ -36,6 +36,10 @@ private:
 
   void updateGameParams();
 
+  void robotAndZombieCollisions(Zombie &zombie);
+
+  void bulletAndZombieCollisions(Zombie &zombie, Bullet &bullet);
+
 public:
   GlobalController(
       GameParams &gameParams,
