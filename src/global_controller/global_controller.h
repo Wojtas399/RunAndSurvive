@@ -24,6 +24,8 @@ private:
   sf::Clock gameClock;
   sf::Clock pointsClock;
 
+  void setInitialGameParams();
+
   void moveElements();
 
   void checkCollisions();
@@ -33,6 +35,10 @@ private:
   void setZombieOrientation(Zombie &zombie);
 
   void updateGameParams();
+
+  void robotAndZombieCollisions(Zombie &zombie);
+
+  void bulletAndZombieCollisions(Zombie &zombie, Bullet &bullet);
 
 public:
   GlobalController(
@@ -53,13 +59,27 @@ public:
       bulletCollisions(bulletCollisions),
       robotZombieCollisions(robotZombieCollisions) {}
 
+  void robotKeyController();
+
+  void menuScreenKeyController(sf::RenderWindow &window, bool &isMenuOpen, bool &isInstructionOpen);
+
+  void instructionScreenKeyController(bool &isMenuOpen, bool &isInstructionOpen);
+
+  void endScreenKeyController(bool &isMenuOpen);
+
   void loadTextures();
+
+  void startGame();
 
   void step();
 
   void draw(sf::RenderWindow &window);
 
-  void setInitialGameParams();
+  void displayMenu(sf::RenderWindow &window);
+
+  void displayInstruction(sf::RenderWindow &window);
+
+  void displayResult(sf::RenderWindow &window);
 };
 
 

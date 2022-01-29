@@ -2,16 +2,16 @@
 
 void PointsService::loadTextures() {
   if (
-      !number0Texture.loadFromFile("assets/ui/0.png") ||
-      !number1Texture.loadFromFile("assets/ui/1.png") ||
-      !number2Texture.loadFromFile("assets/ui/2.png") ||
-      !number3Texture.loadFromFile("assets/ui/3.png") ||
-      !number4Texture.loadFromFile("assets/ui/4.png") ||
-      !number5Texture.loadFromFile("assets/ui/5.png") ||
-      !number6Texture.loadFromFile("assets/ui/6.png") ||
-      !number7Texture.loadFromFile("assets/ui/7.png") ||
-      !number8Texture.loadFromFile("assets/ui/8.png") ||
-      !number9Texture.loadFromFile("assets/ui/9.png")
+      !number0Texture.loadFromFile("assets/ui/points/0.png") ||
+      !number1Texture.loadFromFile("assets/ui/points/1.png") ||
+      !number2Texture.loadFromFile("assets/ui/points/2.png") ||
+      !number3Texture.loadFromFile("assets/ui/points/3.png") ||
+      !number4Texture.loadFromFile("assets/ui/points/4.png") ||
+      !number5Texture.loadFromFile("assets/ui/points/5.png") ||
+      !number6Texture.loadFromFile("assets/ui/points/6.png") ||
+      !number7Texture.loadFromFile("assets/ui/points/7.png") ||
+      !number8Texture.loadFromFile("assets/ui/points/8.png") ||
+      !number9Texture.loadFromFile("assets/ui/points/9.png")
       ) {
     std::cout << "Cannot load one of the point textures";
   }

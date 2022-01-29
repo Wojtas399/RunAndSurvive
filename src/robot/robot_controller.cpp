@@ -8,6 +8,7 @@ void RobotController::loadTextures() {
 
 void RobotController::setInitialPosition() {
   robot.sprite.setPosition(645, 532);
+  shootController.allBullets.clear();
 }
 
 void RobotController::move() {
